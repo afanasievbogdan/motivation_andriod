@@ -3,9 +3,7 @@ package com.bogdan.motivation
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color

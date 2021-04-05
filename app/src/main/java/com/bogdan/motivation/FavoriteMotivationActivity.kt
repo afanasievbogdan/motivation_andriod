@@ -165,4 +165,8 @@ class FavoriteMotivationActivity : AppCompatActivity() {
 
     }
 
+    fun categoriesSelectionOnClicked(view: View) {
+        startActivity(Intent(applicationContext, CategoriesActivity::class.java))
+    }
+
 }
