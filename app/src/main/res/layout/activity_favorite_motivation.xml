@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/almost_black"
+    tools:context=".MotivationActivity"
+    android:orientation="vertical">
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/floating_btn"
+        android:contentDescription="@string/next"
+        android:fontFamily="@font/cynthonext"
+        android:onClick="categoriesSelectionOnClicked"
+        android:text="@string/btn_favorite"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        app:icon="@drawable/ic_apps" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_edit_fav"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
+        android:background="@drawable/floating_btn"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="30dp"
+        app:icon="@drawable/ic_brush"
+        android:contentDescription="@string/next"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_account_fav"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
+        android:background="@drawable/floating_btn"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="30dp"
+        app:icon="@drawable/ic_account"
+        android:contentDescription="@string/next"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager2_fav"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>

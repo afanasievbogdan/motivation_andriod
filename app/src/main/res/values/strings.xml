@@ -1,0 +1,58 @@
+<resources>
+
+    <string name="app_name">Motivation</string>
+
+    <!-- Hello Activity Strings -->
+    <string name="tv_self_care">Self care.</string>
+    <string name="tv_self_love">Self love.</string>
+    <string name="tv_self_growth">Self growth.</string>
+
+    <string name="btn_get_started">Get started</string>
+
+    <!-- Notification Settings Activity Strings -->
+    <string name="tv_explanation_notif">Set daily Motivation reminders.</string>
+
+    <string name="tv_how_many">How many</string>
+    <string name="btn_plus">+</string>
+    <string name="tv_quantity_default">10X</string>
+    <string name="btn_minus">-</string>
+
+    <string name="tv_start_at">Start at</string>
+    <string name="btn_min_time_default">09:00</string>
+
+    <string name="tv_end_at">End at</string>
+    <string name="btn_max_time_default">22:00</string>
+
+    <string name="btn_continue">Continue</string>
+
+
+    <!-- Theme Settings Activity Strings -->
+    <string name="tv_explanation_theme">What areas of your life would you like to improve?</string>
+
+    <string name="tv_letting_go">Letting go</string>
+    <string name="tv_happiness">Happiness</string>
+    <string name="tv_physical_health">Physical Health</string>
+    <string name="tv_self_esteem">Self-esteem</string>
+    <string name="tv_faith_spirituality">Faith &amp; Spirituality</string>
+    <string name="tv_stress_anxiety">Stress &amp; Anxiety</string>
+    <string name="tv_achieving_goals">Achieving goals</string>
+    <string name="tv_relationships">Relationships</string>
+
+    <!-- Motivation Activity Strings -->
+    <string name="quoteText">! Default Quote Text !</string>
+    <string name="authorText">! Default Author Text !</string>
+    <string name="btn_general">General</string>
+    <string name="btn_favorite">Favorite</string>
+
+
+    <!-- Pop-up window Strings -->
+    <string name="tv_explanation_popup">Swipe to read quotes</string>
+    <string name="btn_got_it">Got it!</string>
+
+    <!-- Technical Strings -->
+    <string name="next">Next</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
