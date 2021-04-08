@@ -76,7 +76,9 @@ class MainActivity : AppCompatActivity() {
             cursorNotifOpen.close()
             databaseNotifOpen.close()
 
-            val repeatInterval = (endTime.toInt() - startTime.toInt()) * 60 / notifQuantity.toInt()
+            var repeatInterval = (endTime.toInt() - startTime.toInt()) * 60 / notifQuantity.toInt()
+            if (repeatInterval < 16)
+                repeatInterval = 16
 
             val myConstraints: Constraints = Constraints.Builder()
                 .setRequiresBatteryNotLow(true)

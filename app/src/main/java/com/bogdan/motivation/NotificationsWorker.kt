@@ -59,7 +59,9 @@ class NotificationsWorker(appContext: Context, workerParams: WorkerParameters):
         val builder = NotificationCompat.Builder(applicationContext, channelId)
         builder
             .setContentTitle("Daily Motivation")
+            //.setContentText(notificationsText)
             .setContentText(notificationsText)
+            .setStyle(NotificationCompat.BigTextStyle())
             .setSmallIcon(R.mipmap.ic_launcher_round)
             .setAutoCancel(true)
             .priority = NotificationCompat.PRIORITY_DEFAULT
@@ -97,9 +99,8 @@ class NotificationsWorker(appContext: Context, workerParams: WorkerParameters):
         cursor1.close()
     }
 
-    @SuppressLint("SimpleDateFormat")
     private fun isCorrectTime() : Boolean{
-        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+        val sdf = SimpleDateFormat("dd/M/yyyy HH:mm:ss")
         val currentDate = sdf.format(Date())
         val currentHour = currentDate.substring(10,12)
 
@@ -117,7 +118,7 @@ class NotificationsWorker(appContext: Context, workerParams: WorkerParameters):
         }
         cursor.close()
 
-        return currentHour.toInt() > start.toInt() && currentHour.toInt() < end.toInt()
+        return currentHour.toInt() >= start.toInt() && currentHour.toInt() < end.toInt()
     }
 
 }
