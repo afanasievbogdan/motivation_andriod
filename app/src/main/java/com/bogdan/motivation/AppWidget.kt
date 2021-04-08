@@ -85,7 +85,7 @@ private fun getRandomQuoteFromDb(context: Context) : String{
         "SELECT $KEY_QUOTE, $KEY_AUTHOR FROM $TABLE_ALL_QUOTES WHERE $KEY_ID = $mRandom", null
     )
 
-    var text = "text"
+    var text = "Мы сами должны стать теми переменами, которые хотим видеть в мире. Махатма Ганди"
     if (cursor1.moveToFirst()) {
         val quote = cursor1.getString(0)
         val author = cursor1.getString(1)

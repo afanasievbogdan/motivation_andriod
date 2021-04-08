@@ -59,7 +59,6 @@ class NotificationsWorker(appContext: Context, workerParams: WorkerParameters):
         val builder = NotificationCompat.Builder(applicationContext, channelId)
         builder
             .setContentTitle("Daily Motivation")
-            //.setContentText(notificationsText)
             .setContentText(notificationsText)
             .setStyle(NotificationCompat.BigTextStyle())
             .setSmallIcon(R.mipmap.ic_launcher_round)
