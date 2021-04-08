@@ -9,18 +9,25 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- Custom Colors -->
-        <!-- Button Color -->
+
+    <!-- Button Color -->
     <color name="black_grey">#272727</color>
-        <!-- Settings Background-->
+    <!-- Settings Background-->
     <color name="light_grey">#f9f9f9</color>
-        <!-- Theme Buttons Color -->
+    <!-- Theme Buttons Color -->
     <color name="grey">#cdd1d3</color>
-        <!--  Motivation Background  -->
+    <!--  Motivation Background  -->
     <color name="almost_black">#151515</color>
-        <!-- Motivation Buttons -->
+    <!-- Motivation Buttons -->
     <color name="dark_grey">#474747</color>
-        <!-- Like Buttons -->
+    <!-- Like Buttons -->
     <color name="red">#EF3A3A</color>
-        <!-- Categories Button -->
+    <!-- Categories Button -->
     <color name="medium_grey">#e4e5ea</color>
+
+
+    <color name="light_blue_50">#FFE1F5FE</color>
+    <color name="light_blue_200">#FF81D4FA</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
 </resources>

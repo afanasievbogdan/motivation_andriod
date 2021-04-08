@@ -1,7 +1,9 @@
 package com.bogdan.motivation
 
 import android.app.TimePickerDialog
+import android.content.ContentValues
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -17,6 +19,8 @@ import java.util.*
 import kotlin.system.exitProcess
 
 class NotificationSettingsActivity : AppCompatActivity(),  TimePickerDialog.OnTimeSetListener{
+
+    var dbHelper: DBHelper? = null
 
     var tvExplanationNotif: TextView? = null
     var horizontalLayout1: LinearLayout? = null
@@ -145,6 +149,23 @@ class NotificationSettingsActivity : AppCompatActivity(),  TimePickerDialog.OnTi
     }
 
     fun onBntContinueClicked(view: View){
+        dbHelper = DBHelper(applicationContext)
+        val database: SQLiteDatabase = dbHelper!!.writableDatabase
+
+        val contentValues = ContentValues()
+
+        contentValues.put(KEY_ID, 1)
+        contentValues.put(KEY_QUANTITY, tvQuantityDefault!!.text.toString().substringBefore("X"))
+        contentValues.put(KEY_START_TIME, startTime!!.text.toString().substring(0,2))
+        contentValues.put(KEY_END_TIME, endTime!!.text.toString().substring(0,2))
+
+        database.insertWithOnConflict(
+            TABLE_NOTIFICATION,
+            null,
+            contentValues,
+            SQLiteDatabase.CONFLICT_IGNORE
+        )
+
         startActivity(Intent(applicationContext, ThemePickerActivity::class.java))
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
     }

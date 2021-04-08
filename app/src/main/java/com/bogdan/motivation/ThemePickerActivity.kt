@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlin.system.exitProcess
 
@@ -183,8 +184,51 @@ class ThemePickerActivity : AppCompatActivity() {
     }
 
     fun onBntContinue2Clicked(view: View){
-        startActivity(Intent(applicationContext, MainActivity::class.java))
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+        if (tvLettingGoPressed || tvFaithSpiritualityPressed || tvHappinessPressed
+            || tvStressAnxietyPressed || tvPhysicalHealthPressed || tvAchievingGoalsPressed
+            || tvSelfEsteemPressed || tvRelationshipsPressed){
+            dbHelper = DBHelper(applicationContext)
+            val database: SQLiteDatabase = dbHelper!!.writableDatabase
+
+            val contentValues = ContentValues()
+
+            contentValues.put(KEY_ID, 1)
+            if (!tvLettingGoPressed) {
+                contentValues.put(KEY_LETTING_GO, 1)
+            }else contentValues.put(KEY_LETTING_GO, 0)
+            if (!tvFaithSpiritualityPressed) {
+                contentValues.put(KEY_FAITH_SPIRITUALITY, 1)
+            }else contentValues.put(KEY_FAITH_SPIRITUALITY, 0)
+            if (!tvHappinessPressed) {
+                contentValues.put(KEY_HAPPINESS, 1)
+            }else contentValues.put(KEY_HAPPINESS, 0)
+            if (!tvStressAnxietyPressed) {
+                contentValues.put(KEY_STRESS_ANXIETY, 1)
+            }else contentValues.put(KEY_STRESS_ANXIETY, 0)
+            if (!tvPhysicalHealthPressed) {
+                contentValues.put(KEY_PHYSICAL_HEALTH, 1)
+            }else contentValues.put(KEY_PHYSICAL_HEALTH, 0)
+            if (!tvAchievingGoalsPressed) {
+                contentValues.put(KEY_ACHIEVING_GOALS, 1)
+            }else contentValues.put(KEY_ACHIEVING_GOALS, 0)
+            if (!tvSelfEsteemPressed) {
+                contentValues.put(KEY_SELF_ESTEEM, 1)
+            }else contentValues.put(KEY_SELF_ESTEEM, 0)
+            if (!tvRelationshipsPressed) {
+                contentValues.put(KEY_RELATIONSHIP, 1)
+            }else contentValues.put(KEY_RELATIONSHIP, 0)
+
+            database.insertWithOnConflict(
+                TABLE_THEMES,
+                null,
+                contentValues,
+                SQLiteDatabase.CONFLICT_IGNORE
+            )
+
+            startActivity(Intent(applicationContext, MainActivity::class.java))
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+        }else Toast.makeText(applicationContext, "Choose at least one category", Toast.LENGTH_SHORT).show()
+
     }
 
 }

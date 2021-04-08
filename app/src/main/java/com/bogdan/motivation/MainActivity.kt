@@ -1,21 +1,21 @@
 package com.bogdan.motivation
 
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import okhttp3.*
 import java.io.IOException
 import java.util.*
-
-private lateinit var prefs: SharedPreferences
-
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -52,12 +52,49 @@ class MainActivity : AppCompatActivity() {
         }
 
         cursor.close()
-        database.close()
 
         if (isPermitted == "0") {
             startActivity(Intent(applicationContext, HelloActivity::class.java))
         } else if (isPermitted == "1") {
             getQuoteFromApi()
+
+            val databaseNotifOpen: SQLiteDatabase = dbHelper!!.writableDatabase
+
+            val cursorNotifOpen: Cursor = database.rawQuery(
+                "SELECT $KEY_QUANTITY, $KEY_START_TIME, $KEY_END_TIME FROM $TABLE_NOTIFICATION WHERE $KEY_ID = 1", null
+            )
+
+            var notifQuantity = "0"
+            var startTime = "0"
+            var endTime = "0"
+            if (cursorNotifOpen.moveToFirst()) {
+                notifQuantity = cursorNotifOpen.getString(0)
+                startTime = cursorNotifOpen.getString(1)
+                endTime = cursorNotifOpen.getString(2)
+            }
+
+            cursorNotifOpen.close()
+            databaseNotifOpen.close()
+
+            val repeatInterval = (endTime.toInt() - startTime.toInt()) * 60 / notifQuantity.toInt()
+
+            val myConstraints: Constraints = Constraints.Builder()
+                .setRequiresBatteryNotLow(true)
+                .build()
+
+            val workRequest = PeriodicWorkRequest.Builder(
+                NotificationsWorker::class.java,
+                repeatInterval.toLong(), TimeUnit.MINUTES,
+                repeatInterval.toLong()-1, TimeUnit.MINUTES)
+                .setConstraints(myConstraints)
+                .build()
+
+            WorkManager.getInstance().enqueueUniquePeriodicWork(
+                "WORK_TAG",
+                ExistingPeriodicWorkPolicy.REPLACE,
+                workRequest
+            )
+
             val helloActivity = Intent(applicationContext, MotivationActivity::class.java)
             android.os.Handler().postDelayed({ startActivity(helloActivity) }, 2000)
         }
@@ -101,6 +138,8 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+
 
     class Root(
         var id: Int,
