@@ -7,12 +7,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
+import com.bogdan.motivation.databinding.ActivityCategoriesBinding
+import com.bogdan.motivation.databinding.ActivityHelloBinding
 import java.util.ArrayList
 
 class CategoriesActivity : AppCompatActivity() {
 
-    var bntGeneralChose: Button? = null
-    var bntFavoriteChose: Button? = null
+    private var binding: ActivityCategoriesBinding? = null
+
+//    var bntGeneralChose: Button? = null
+//    var bntFavoriteChose: Button? = null
 
     var dbHelper: DBHelper? = null
 
@@ -20,19 +24,21 @@ class CategoriesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_categories)
+        binding = ActivityCategoriesBinding.inflate(layoutInflater)
+        val view = binding?.root
+        setContentView(view)
 
         dbHelper = DBHelper(applicationContext)
         getQuoteFromDB()
 
-        bntGeneralChose = findViewById(R.id.btn_general_chose)
-        bntFavoriteChose = findViewById(R.id.btn_favorite_chose)
+//        bntGeneralChose = findViewById(R.id.btn_general_chose)
+//        bntFavoriteChose = findViewById(R.id.btn_favorite_chose)
 
-        bntGeneralChose?.setOnClickListener {
+        binding?.btnGeneralChose?.setOnClickListener {
             startActivity(Intent(applicationContext, MotivationActivity::class.java))
         }
 
-        bntFavoriteChose?.setOnClickListener {
+        binding?.btnFavoriteChose?.setOnClickListener {
             if (quotesIsEmptyList.size > 0) {
                 startActivity(Intent(applicationContext, FavoriteMotivationActivity::class.java))
             }

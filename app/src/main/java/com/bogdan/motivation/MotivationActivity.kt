@@ -20,6 +20,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.bogdan.motivation.databinding.ActivityMotivationBinding
+import com.bogdan.motivation.databinding.ActivityThemePickerBinding
 import com.google.android.material.button.MaterialButton
 import java.util.*
 import kotlin.system.exitProcess
@@ -29,11 +31,13 @@ class MotivationActivity : AppCompatActivity() {
 
     var dialog: Dialog? = null
 
-    var btnGeneral: MaterialButton? = null
-    var btnEdit: MaterialButton? = null
-    var btnAcc: MaterialButton? = null
+    private var binding: ActivityMotivationBinding? = null
 
-    var viewPager2: ViewPager2? = null
+//    var btnGeneral: MaterialButton? = null
+//    var btnEdit: MaterialButton? = null
+//    var btnAcc: MaterialButton? = null
+
+//    var viewPager2: ViewPager2? = null
 
     var dbHelper: DBHelper? = null
 
@@ -41,7 +45,9 @@ class MotivationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_motivation)
+        binding = ActivityMotivationBinding.inflate(layoutInflater)
+        val view = binding?.root
+        setContentView(view)
 
         dbHelper = DBHelper(applicationContext)
 
@@ -87,17 +93,17 @@ class MotivationActivity : AppCompatActivity() {
         dbHelper = DBHelper(applicationContext)
         getQuoteFromDB()
 
-        viewPager2 = findViewById(R.id.viewPager2)
-        viewPager2?.orientation = ViewPager2.ORIENTATION_VERTICAL
-        viewPager2?.adapter = MyViewPager2Adapter(quotesList)
+//        viewPager2 = findViewById(R.id.viewPager2)
+        binding?.viewPager2?.orientation = ViewPager2.ORIENTATION_VERTICAL
+        binding?.viewPager2?.adapter = MyViewPager2Adapter(quotesList)
 
-        btnGeneral = findViewById(R.id.btn_general)
-        btnEdit = findViewById(R.id.btn_edit)
-        btnAcc = findViewById(R.id.btn_account)
+//        btnGeneral = findViewById(R.id.btn_general)
+//        btnEdit = findViewById(R.id.btn_edit)
+//        btnAcc = findViewById(R.id.btn_account)
 
-        btnGeneral?.alpha = 0.66F
-        btnEdit?.alpha = 0.66F
-        btnAcc?.alpha = 0.66F
+        binding?.btnGeneral?.alpha = 0.66F
+        binding?.btnEdit?.alpha = 0.66F
+        binding?.btnAccount?.alpha = 0.66F
 
     }
 

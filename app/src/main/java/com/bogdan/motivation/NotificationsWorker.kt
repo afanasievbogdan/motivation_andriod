@@ -99,9 +99,8 @@ class NotificationsWorker(appContext: Context, workerParams: WorkerParameters):
     }
 
     private fun isCorrectTime() : Boolean{
-        val sdf = SimpleDateFormat("dd/M/yyyy HH:mm:ss")
-        val currentDate = sdf.format(Date())
-        val currentHour = currentDate.substring(10,12)
+        val sdf = SimpleDateFormat("HH")
+        val currentHour = sdf.format(Date())
 
         val database: SQLiteDatabase = dbHelper!!.writableDatabase
 

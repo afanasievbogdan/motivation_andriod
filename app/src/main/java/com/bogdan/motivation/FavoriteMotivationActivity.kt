@@ -14,16 +14,20 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.bogdan.motivation.databinding.ActivityFavoriteMotivationBinding
+import com.bogdan.motivation.databinding.ActivityHelloBinding
 import com.google.android.material.button.MaterialButton
 import java.util.ArrayList
 
 class FavoriteMotivationActivity : AppCompatActivity() {
 
-    private var btnFavorite: MaterialButton? = null
-    private var btnEditFav: MaterialButton? = null
-    private var btnAccFav: MaterialButton? = null
+    private var binding: ActivityFavoriteMotivationBinding? = null
 
-    var viewPager2Fav: ViewPager2? = null
+//    private var btnFavorite: MaterialButton? = null
+//    private var btnEditFav: MaterialButton? = null
+//    private var btnAccFav: MaterialButton? = null
+
+//    var viewPager2Fav: ViewPager2? = null
 
     var dbHelper: DBHelper? = null
 
@@ -31,22 +35,24 @@ class FavoriteMotivationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_favorite_motivation)
+        binding = ActivityFavoriteMotivationBinding.inflate(layoutInflater)
+        val view = binding?.root
+        setContentView(view)
 
         dbHelper = DBHelper(applicationContext)
         getQuoteFromDB()
 
-        viewPager2Fav = findViewById(R.id.viewPager2_fav)
-        viewPager2Fav?.orientation = ViewPager2.ORIENTATION_VERTICAL
-        viewPager2Fav?.adapter = MyViewPager2AdapterFav(quotesFavList)
+//        viewPager2Fav = findViewById(R.id.viewPager2_fav)
+        binding?.viewPager2Fav?.orientation = ViewPager2.ORIENTATION_VERTICAL
+        binding?.viewPager2Fav?.adapter = MyViewPager2AdapterFav(quotesFavList)
 
-        btnFavorite = findViewById(R.id.btn_favorite)
-        btnEditFav = findViewById(R.id.btn_edit_fav)
-        btnAccFav = findViewById(R.id.btn_account_fav)
+//        btnFavorite = findViewById(R.id.btn_favorite)
+//        btnEditFav = findViewById(R.id.btn_edit_fav)
+//        btnAccFav = findViewById(R.id.btn_account_fav)
 
-        btnFavorite?.alpha = 0.66F
-        btnEditFav?.alpha = 0.66F
-        btnAccFav?.alpha = 0.66F
+        binding?.btnFavorite?.alpha = 0.66F
+        binding?.btnEditFav?.alpha = 0.66F
+        binding?.btnAccountFav?.alpha = 0.66F
 
     }
 

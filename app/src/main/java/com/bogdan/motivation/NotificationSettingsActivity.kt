@@ -13,6 +13,8 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.TimePicker
+import com.bogdan.motivation.databinding.ActivityHelloBinding
+import com.bogdan.motivation.databinding.ActivityNotificationSettingsBinding
 import java.sql.Time
 import java.text.DateFormat
 import java.util.*
@@ -22,13 +24,15 @@ class NotificationSettingsActivity : AppCompatActivity(),  TimePickerDialog.OnTi
 
     var dbHelper: DBHelper? = null
 
-    var tvExplanationNotif: TextView? = null
-    var horizontalLayout1: LinearLayout? = null
-    var horizontalLayout2: LinearLayout? = null
-    var horizontalLayout3: LinearLayout? = null
-    var btnContinue: Button? = null
+    private var binding: ActivityNotificationSettingsBinding? = null
 
-    var tvQuantityDefault: TextView? = null
+//    var tvExplanationNotif: TextView? = null
+//    var horizontalLayout1: LinearLayout? = null
+//    var horizontalLayout2: LinearLayout? = null
+//    var horizontalLayout3: LinearLayout? = null
+//    var btnContinue: Button? = null
+//
+//    var tvQuantityDefault: TextView? = null
 
     var tvExplanationAnimation: Animation? = null
     var horizontalLayout1Animation: Animation? = null
@@ -36,8 +40,8 @@ class NotificationSettingsActivity : AppCompatActivity(),  TimePickerDialog.OnTi
     var horizontalLayout3Animation: Animation? = null
     var btnContinueAnimation: Animation? = null
 
-    var startTime: TextView? = null
-    var endTime: TextView? = null
+//    var startTime: TextView? = null
+//    var endTime: TextView? = null
 
     var hour = 0
     var minute = 0
@@ -47,17 +51,19 @@ class NotificationSettingsActivity : AppCompatActivity(),  TimePickerDialog.OnTi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_notification_settings)
+        binding = ActivityNotificationSettingsBinding.inflate(layoutInflater)
+        val view = binding?.root
+        setContentView(view)
 
-        tvExplanationNotif = findViewById(R.id.textNotifExplanations)
-        horizontalLayout1 = findViewById(R.id.horizontalLayout1)
-        horizontalLayout2 = findViewById(R.id.horizontalLayout2)
-        horizontalLayout3 = findViewById(R.id.horizontalLayout3)
-        btnContinue = findViewById(R.id.btnContinue)
+//        tvExplanationNotif = findViewById(R.id.textNotifExplanations)
+//        horizontalLayout1 = findViewById(R.id.horizontalLayout1)
+//        horizontalLayout2 = findViewById(R.id.horizontalLayout2)
+//        horizontalLayout3 = findViewById(R.id.horizontalLayout3)
+//        btnContinue = findViewById(R.id.btnContinue)
 
-        tvQuantityDefault = findViewById(R.id.notif_quantity)
-        startTime = findViewById(R.id.start_time)
-        endTime = findViewById(R.id.end_time)
+//        tvQuantityDefault = findViewById(R.id.notif_quantity)
+//        startTime = findViewById(R.id.start_time)
+//        endTime = findViewById(R.id.end_time)
 
         tvExplanationAnimation = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_anim)
         horizontalLayout1Animation = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_anim_2)
@@ -71,11 +77,11 @@ class NotificationSettingsActivity : AppCompatActivity(),  TimePickerDialog.OnTi
         horizontalLayout3Animation?.startOffset = 2000
         btnContinueAnimation?.startOffset = 2250
 
-        tvExplanationNotif?.startAnimation(tvExplanationAnimation)
-        horizontalLayout1?.startAnimation(horizontalLayout1Animation)
-        horizontalLayout2?.startAnimation(horizontalLayout2Animation)
-        horizontalLayout3?.startAnimation(horizontalLayout3Animation)
-        btnContinue?.startAnimation(btnContinueAnimation)
+        binding?.textNotifExplanations?.startAnimation(tvExplanationAnimation)
+        binding?.horizontalLayout1?.startAnimation(horizontalLayout1Animation)
+        binding?.horizontalLayout2?.startAnimation(horizontalLayout2Animation)
+        binding?.horizontalLayout3?.startAnimation(horizontalLayout3Animation)
+        binding?.btnContinue?.startAnimation(btnContinueAnimation)
 
         pickStartTime()
         pickEndTime()
@@ -83,19 +89,19 @@ class NotificationSettingsActivity : AppCompatActivity(),  TimePickerDialog.OnTi
 
 
     fun onBtnMinusClicked(view: View){
-        var number = tvQuantityDefault?.text.toString().substringBefore("X").toInt()
+        var number = binding?.notifQuantity?.text.toString().substringBefore("X").toInt()
         if (number > 0)
         number --
         else number = 0
-        tvQuantityDefault?.text = number.toString() + "X"
+        binding?.notifQuantity?.text = number.toString() + "X"
     }
 
     fun onBtnPlusClicked(view: View){
-        var number = tvQuantityDefault?.text.toString().substringBefore("X").toInt()
+        var number = binding?.notifQuantity?.text.toString().substringBefore("X").toInt()
         if (number <30)
             number ++
         else number = 30
-        tvQuantityDefault?.text = number.toString() + "X"
+        binding?.notifQuantity?.text = number.toString() + "X"
     }
 
     private fun getTimeCalendar(){
@@ -107,7 +113,7 @@ class NotificationSettingsActivity : AppCompatActivity(),  TimePickerDialog.OnTi
     var listener: Int = 0
 
     private fun pickStartTime(){
-        startTime?.setOnClickListener {
+        binding?.startTime?.setOnClickListener {
             getTimeCalendar()
 
             TimePickerDialog(this, R.style.TimePickerTheme,this, hour, minute, true).show()
@@ -116,7 +122,7 @@ class NotificationSettingsActivity : AppCompatActivity(),  TimePickerDialog.OnTi
     }
 
     private fun pickEndTime(){
-        endTime?.setOnClickListener {
+        binding?.endTime?.setOnClickListener {
             getTimeCalendar()
 
             TimePickerDialog(this, R.style.TimePickerTheme, this, hour, minute, true).show()
@@ -134,9 +140,9 @@ class NotificationSettingsActivity : AppCompatActivity(),  TimePickerDialog.OnTi
         savedHour = hourOfDay
         savedMinute = minute
         if (listener == 1) {
-            startTime?.text = editHour + ":" + editMinute
+            binding?.startTime?.text = editHour + ":" + editMinute
         }else if (listener == 2){
-            endTime?.text = editHour + ":" + editMinute
+            binding?.endTime?.text = editHour + ":" + editMinute
         }
     }
 
@@ -155,9 +161,9 @@ class NotificationSettingsActivity : AppCompatActivity(),  TimePickerDialog.OnTi
         val contentValues = ContentValues()
 
         contentValues.put(KEY_ID, 1)
-        contentValues.put(KEY_QUANTITY, tvQuantityDefault!!.text.toString().substringBefore("X"))
-        contentValues.put(KEY_START_TIME, startTime!!.text.toString().substring(0,2))
-        contentValues.put(KEY_END_TIME, endTime!!.text.toString().substring(0,2))
+        contentValues.put(KEY_QUANTITY, binding?.notifQuantity!!.text.toString().substringBefore("X"))
+        contentValues.put(KEY_START_TIME, binding?.startTime!!.text.toString().substring(0,2))
+        contentValues.put(KEY_END_TIME, binding?.endTime!!.text.toString().substring(0,2))
 
         database.insertWithOnConflict(
             TABLE_NOTIFICATION,

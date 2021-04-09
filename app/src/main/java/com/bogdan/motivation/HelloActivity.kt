@@ -9,15 +9,18 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.bogdan.motivation.databinding.ActivityHelloBinding
 import kotlin.system.exitProcess
 
 class HelloActivity : AppCompatActivity() {
 
-    var imgView : ImageView? = null
-    var tvLabel1: TextView? = null
-    var tvLabel2: TextView? = null
-    var tvLabel3: TextView? = null
-    var btnGetStarted: Button? =null
+    private var binding: ActivityHelloBinding? = null
+
+//    var imgView : ImageView? = null
+//    var tvLabel1: TextView? = null
+//    var tvLabel2: TextView? = null
+//    var tvLabel3: TextView? = null
+//    var btnGetStarted: Button? =null
 
     var imageAnimation: Animation? = null
     var tv1Animation: Animation? = null
@@ -27,14 +30,15 @@ class HelloActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_hello)
-        supportActionBar?.hide()
+        binding = ActivityHelloBinding.inflate(layoutInflater)
+        val view = binding?.root
+        setContentView(view)
 
-        imgView = findViewById(R.id.imgHelloView)
-        tvLabel1 = findViewById(R.id.tv1)
-        tvLabel2 = findViewById(R.id.tv2)
-        tvLabel3 = findViewById(R.id.tv3)
-        btnGetStarted = findViewById(R.id.btnStart)
+//        imgView = findViewById(R.id.imgHelloView)
+//        tvLabel1 = findViewById(R.id.tv1)
+//        tvLabel2 = findViewById(R.id.tv2)
+//        tvLabel3 = findViewById(R.id.tv3)
+//        btnGetStarted = findViewById(R.id.btnStart)
 
         imageAnimation = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_anim)
         tv1Animation = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_anim)
@@ -47,11 +51,11 @@ class HelloActivity : AppCompatActivity() {
         tv3Animation?.startOffset = 2250
         btnAnimation?.startOffset = 3000
 
-        imgView?.startAnimation(imageAnimation)
-        tvLabel1?.startAnimation(tv1Animation)
-        tvLabel2?.startAnimation(tv2Animation)
-        tvLabel3?.startAnimation(tv3Animation)
-        btnGetStarted?.startAnimation(btnAnimation)
+        binding?.imgHelloView?.startAnimation(imageAnimation)
+        binding?.tv1?.startAnimation(tv1Animation)
+        binding?.tv2?.startAnimation(tv2Animation)
+        binding?.tv3?.startAnimation(tv3Animation)
+        binding?.btnStart?.startAnimation(btnAnimation)
 
 
     }
