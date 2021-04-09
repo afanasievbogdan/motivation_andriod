@@ -2,6 +2,8 @@
 
     <string name="app_name">Motivation</string>
 
+<!--TODO название стрингов в формате - where_description (home_self_care)-->
+
     <!-- Hello Activity Strings -->
     <string name="tv_self_care">Self care.</string>
     <string name="tv_self_love">Self love.</string>

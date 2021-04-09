@@ -3,7 +3,7 @@ package com.bogdan.motivation
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-
+//TODO все константы должны быть в отдельном файле - object. В этом случае должен использоваться data class (в роле модели) для работы с БД, ну пока оставь, вернемся позже
 const val DATABASE_VERSION = 1
 const val DATABASE_NAME = "QuoteDB"
 

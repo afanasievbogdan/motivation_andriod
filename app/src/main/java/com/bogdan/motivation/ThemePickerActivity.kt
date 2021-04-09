@@ -89,7 +89,7 @@ class ThemePickerActivity : AppCompatActivity() {
 
 
     }
-
+    //todo это плохо :)
     private var tvLettingGoPressed = false
     private var tvFaithSpiritualityPressed = false
     private var tvHappinessPressed = false

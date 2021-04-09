@@ -13,11 +13,14 @@ import java.util.ArrayList
 
 class CategoriesActivity : AppCompatActivity() {
 
+    //TODO binding через latenit var или get() можешь почитать в документации
     private var binding: ActivityCategoriesBinding? = null
 
 //    var bntGeneralChose: Button? = null
 //    var bntFavoriteChose: Button? = null
 
+
+    //TODO обращай внимания на подсказки студии, эти переменные должны быть private. К реализации БД вернемся уже когда будет разобрано большинство проблем
     var dbHelper: DBHelper? = null
 
     var quotesIsEmptyList = ArrayList<Quote>()
@@ -28,8 +31,11 @@ class CategoriesActivity : AppCompatActivity() {
         val view = binding?.root
         setContentView(view)
 
+        //TODO зачем тебе создавать в каждой активити новый инстанс БД? Скорее всего, он должен быть просто object - 1 на весь проект
         dbHelper = DBHelper(applicationContext)
         getQuoteFromDB()
+
+        //TODO удали все комменты с findviewbyid, так же в репозиторий пушить их в прицнипе не стоит (с логикой)
 
 //        bntGeneralChose = findViewById(R.id.btn_general_chose)
 //        bntFavoriteChose = findViewById(R.id.btn_favorite_chose)
@@ -48,7 +54,7 @@ class CategoriesActivity : AppCompatActivity() {
         }
 
     }
-
+    //TODO выглядит страшно, вернемся позже ))
     private fun getQuoteFromDB(){
         val database: SQLiteDatabase = dbHelper!!.writableDatabase
 

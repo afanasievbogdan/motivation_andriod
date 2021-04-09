@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.widget.RemoteViews
 import kotlin.random.Random
 
+//TODO мы так поняли ты этот класс просто скопировал, так что вернемся к нему позже
 /**
  * Implementation of App Widget functionality.
  */

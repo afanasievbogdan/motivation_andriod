@@ -5,6 +5,7 @@ import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     var dbHelper: DBHelper? = null
 
+    //TODO разделяй подобные операции на функции с хорошими названиями
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -102,6 +104,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // TODO разделить на функции, реквест должен быть переиспользуемым и настройка okhttp должна быть в отдельном классе - object
+    // TODO так же рекомендуем использовать moshi or kotlinx serialization в качестве сериализатора
     private fun getQuoteFromApi() {
         val client = OkHttpClient()
 
@@ -142,7 +146,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
+    //TODO для моделей в котлине существует data class, также это нужно выносить в отдельный файл
     class Root(
         var id: Int,
         var quote: String,

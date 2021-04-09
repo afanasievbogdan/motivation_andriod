@@ -105,11 +105,11 @@ class NotificationSettingsActivity : AppCompatActivity(),  TimePickerDialog.OnTi
     }
 
     private fun getTimeCalendar(){
-        val calendar : Calendar = Calendar.getInstance()
+        val calendar = Calendar.getInstance()
         hour = calendar.get(Calendar.HOUR)
         minute = calendar.get(Calendar.MINUTE)
     }
-
+    //TODO ?)
     var listener: Int = 0
 
     private fun pickStartTime(){
@@ -129,7 +129,7 @@ class NotificationSettingsActivity : AppCompatActivity(),  TimePickerDialog.OnTi
             listener = 2
         }
     }
-
+    //TODO эту функцию нужно рефакторить
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         var editHour = hourOfDay.toString()
         var editMinute = minute.toString()

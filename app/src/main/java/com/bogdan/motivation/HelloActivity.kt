@@ -40,6 +40,7 @@ class HelloActivity : AppCompatActivity() {
 //        tvLabel3 = findViewById(R.id.tv3)
 //        btnGetStarted = findViewById(R.id.btnStart)
 
+        //TODO подобные операции выноси в функции и называй так, чтобы было понятно по названию что она делает
         imageAnimation = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_anim)
         tv1Animation = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_anim)
         tv2Animation = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_anim)

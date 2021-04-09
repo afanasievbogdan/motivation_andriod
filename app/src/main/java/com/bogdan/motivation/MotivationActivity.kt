@@ -65,6 +65,7 @@ class MotivationActivity : AppCompatActivity() {
         cursor.close()
 
         if (isPermitted == "0") {
+            //TODO используй .apply{} ну и выноси в функции
             dialog = Dialog(this)
             dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog!!.setContentView(R.layout.getit_dialog)
@@ -111,6 +112,7 @@ class MotivationActivity : AppCompatActivity() {
         val database: SQLiteDatabase = dbHelper!!.writableDatabase
 
         val cursor: Cursor = database.query(
+
             TABLE_ALL_QUOTES,
             null,
             null,
@@ -133,7 +135,7 @@ class MotivationActivity : AppCompatActivity() {
 
         cursor.close()
     }
-
+//TODO про адаптер и вх уже писали
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textQuote: TextView = itemView.findViewById(R.id.textQuote)
         val textAuthor: TextView = itemView.findViewById(R.id.textAuthor)
@@ -161,6 +163,7 @@ class MotivationActivity : AppCompatActivity() {
             return quotesValue.count()
         }
 
+        //TODO нужен ли тут этот сапресс?
         @SuppressLint("UseCompatLoadingForDrawables")
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             val database: SQLiteDatabase = dbHelper!!.writableDatabase

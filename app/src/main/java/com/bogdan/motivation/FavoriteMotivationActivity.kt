@@ -49,7 +49,7 @@ class FavoriteMotivationActivity : AppCompatActivity() {
 //        btnFavorite = findViewById(R.id.btn_favorite)
 //        btnEditFav = findViewById(R.id.btn_edit_fav)
 //        btnAccFav = findViewById(R.id.btn_account_fav)
-
+        //TODO это можно сделать в xml
         binding?.btnFavorite?.alpha = 0.66F
         binding?.btnEditFav?.alpha = 0.66F
         binding?.btnAccountFav?.alpha = 0.66F
@@ -84,7 +84,7 @@ class FavoriteMotivationActivity : AppCompatActivity() {
 
         cursor.close()
     }
-
+    //TODO вьюхолдер может быть вложенным классом адаптера, но не активити
     inner class MyViewHolderFav(itemView: View) : RecyclerView.ViewHolder(itemView){
         val textQuote: TextView = itemView.findViewById(R.id.textQuote)
         val textAuthor: TextView = itemView.findViewById(R.id.textAuthor)
@@ -92,6 +92,7 @@ class FavoriteMotivationActivity : AppCompatActivity() {
         var imageLike: ImageButton = itemView.findViewById(R.id.imageLike)
     }
 
+    //TODO адаптер должен быть отдельным классом обязательно
     inner class MyViewPager2AdapterFav(private val quotesValue: List<Quote>) : RecyclerView.Adapter<MyViewHolderFav>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderFav {
             val view = LayoutInflater.from(parent.context)
@@ -109,7 +110,7 @@ class FavoriteMotivationActivity : AppCompatActivity() {
         override fun getItemCount(): Int {
             return quotesValue.count()
         }
-
+        //TODO обращайся к БД в активити/фрагменте, а в адаптер передавай готовый лист
         override fun onBindViewHolder(holderFav: MyViewHolderFav, position: Int) {
             val database: SQLiteDatabase = dbHelper!!.writableDatabase
             val contentValues = ContentValues()
@@ -170,7 +171,7 @@ class FavoriteMotivationActivity : AppCompatActivity() {
         }
 
     }
-
+    //TODO создавай лисенеры в активити/фрагменте, а не xml
     fun categoriesSelectionOnClicked(view: View) {
         startActivity(Intent(applicationContext, CategoriesActivity::class.java))
     }
