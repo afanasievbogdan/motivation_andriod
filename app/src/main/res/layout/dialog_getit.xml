@@ -7,15 +7,15 @@
     android:id="@+id/dialog_get_it"
     android:layout_gravity="center"
     android:layout_marginVertical="100dp"
-    android:layout_marginHorizontal="40dp"
-    >
+    android:layout_marginHorizontal="40dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp"
         android:gravity="center"
-        android:background="@drawable/theme_popup"
+        android:background="@drawable/background_popup"
         >
 
         <com.airbnb.lottie.LottieAnimationView
@@ -34,16 +34,16 @@
             android:paddingBottom="20sp"
             android:gravity="center"
             android:fontFamily="@font/cynthonext"
-            android:text="@string/tv_explanation_popup"
+            android:text="@string/popup_explanation"
             />
 
         <Button
             android:id="@+id/btn_got_it"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@drawable/submit_btn"
+            android:background="@drawable/btn_submit"
             android:gravity="center"
-            android:text="@string/btn_got_it"
+            android:text="@string/popup_btn_gotit"
             android:textAllCaps="false" />
 
     </LinearLayout>

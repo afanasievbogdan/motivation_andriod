@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/almost_black"
-    tools:context=".MotivationActivity"
+    android:background="@color/cod_gray"
+    tools:context=".activities.MotivationActivity"
     android:orientation="vertical">
-
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_general"
-        android:layout_width="95dp"
+        android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="15dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/floating_btn"
+        android:background="@drawable/btn_floating"
         android:contentDescription="@string/next"
         android:fontFamily="@font/cynthonext"
-        android:onClick="categoriesSelectionOnClicked"
-        android:text="@string/btn_general"
+        android:text="@string/motivation_btn_general"
         android:textAllCaps="false"
         android:textSize="12sp"
         app:iconPadding="0dp"
+        android:alpha="0.66"
         android:paddingHorizontal="10dp"
         app:icon="@drawable/ic_apps" />
 
@@ -33,13 +33,14 @@
         android:id="@+id/btn_edit"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/floating_btn"
+        android:background="@drawable/btn_floating"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="20dp"
         app:iconPadding="0dp"
         android:padding="10dp"
+        android:alpha="0.66"
         app:icon="@drawable/ic_brush"
         android:contentDescription="@string/next"/>
 
@@ -50,12 +51,13 @@
         app:iconGravity="textEnd"
         app:iconPadding="0dp"
         android:padding="10dp"
-        android:background="@drawable/floating_btn"
+        android:background="@drawable/btn_floating"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="20dp"
         app:icon="@drawable/ic_account"
+        android:alpha="0.66"
         android:contentDescription="@string/next"/>
 
         <androidx.viewpager2.widget.ViewPager2

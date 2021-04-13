@@ -13,9 +13,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-        //TODO зачем тут мультидекс и саппорт лайбрари ?
         multiDexEnabled true
-        vectorDrawables.useSupportLibrary true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -42,11 +40,10 @@ android {
 
 dependencies {
 
+    // SYSTEM
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
-
-    //TODO с большим количеством зависимостей будет удобнее работать если их группировать пример -
 
     // UI
     implementation 'com.google.android.material:material:1.3.0'
@@ -56,15 +53,19 @@ dependencies {
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+    // TESTS
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    // MULTIDEX
     implementation 'com.android.support:multidex:1.0.3'
 
+    // API
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.12.2"
 
+    // Worker
     implementation "androidx.work:work-runtime-ktx:2.5.0"
 
 }

@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.Motivation" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black_grey</item>
+        <item name="colorPrimary">@color/mine_shaft</item>
         <!--        <item name="colorPrimaryVariant">@color/purple_700</item>-->
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -19,25 +19,25 @@
     </style>
 
     <style name="SettingsButtonsTheme" parent="Theme.Motivation">
-        <item name="colorPrimary">@color/light_grey</item>
-        <item name="colorOnPrimary">@color/black_grey</item>
+        <item name="colorPrimary">@color/alabaster</item>
+        <item name="colorOnPrimary">@color/mine_shaft</item>
     </style>
 
     <style name="ThemeButtonsTheme" parent="Theme.Motivation">
-        <item name="colorPrimary">@color/grey</item>
-        <item name="colorOnPrimary">@color/black_grey</item>
+        <item name="colorPrimary">@color/iron</item>
+        <item name="colorOnPrimary">@color/mine_shaft</item>
     </style>
 
     <style name="TimePickerTheme" parent="Theme.AppCompat.Dialog">
-        <item name="colorAccent">@color/black_grey</item>
+        <item name="colorAccent">@color/mine_shaft</item>
         <item name="colorOnPrimary">@color/black</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="ThemeOverlay.Motivation.AppWidgetContainer" parent="">
-        <item name="appWidgetBackgroundColor">@color/black_grey</item>
-        <item name="appWidgetTextColor">@color/grey</item>
+        <item name="appWidgetBackgroundColor">@color/mine_shaft</item>
+        <item name="appWidgetTextColor">@color/iron</item>
     </style>
 
 </resources>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NotificationSettingsActivity">
+    tools:context=".activities.NotificationSettingsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,16 +41,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/cynthonextregular"
-                android:text="@string/tv_explanation_notif"
+                android:text="@string/notification_explanation"
                 android:textAlignment="center"
-                android:textColor="@color/black_grey"
+                android:textColor="@color/mine_shaft"
                 android:textSize="18sp" />
 
             <LinearLayout
                 android:id="@+id/horizontalLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:background="@drawable/settings_background"
+                android:background="@drawable/background_settings"
                 android:paddingStart="20dp"
                 android:paddingEnd="30dp"
                 android:orientation="horizontal">
@@ -60,12 +60,12 @@
                     android:layout_width="0dp"
                     android:layout_weight="5"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black_grey"
+                    android:textColor="@color/mine_shaft"
                     android:fontFamily="@font/cynthonext"
                     android:textSize="16sp"
 
                     android:layout_gravity="center"
-                    android:text="@string/tv_how_many" />
+                    android:text="@string/notifications_how_many" />
 
 
                 <TextView
@@ -73,11 +73,11 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="30dp"
-                    android:background="@drawable/settings_btn"
+                    android:background="@drawable/btn_settings"
                     android:fontFamily="@font/cynthonext"
                     android:onClick="onBtnMinusClicked"
-                    android:text="@string/btn_minus"
-                    android:textColor="@color/black_grey"
+                    android:text="@string/notifications_btn_minus"
+                    android:textColor="@color/mine_shaft"
                     android:textSize="24sp"
                     android:gravity="center"
                     android:layout_gravity="center"
@@ -88,22 +88,22 @@
                     android:layout_width="0dp"
                     android:layout_weight="3"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black_grey"
+                    android:textColor="@color/mine_shaft"
                     android:fontFamily="@font/cynthonext"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:text="@string/tv_quantity_default" />
+                    android:text="@string/notifications_quantity_default" />
 
                 <TextView
                     android:id="@+id/btn_plus"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="30dp"
-                    android:background="@drawable/settings_btn"
+                    android:background="@drawable/btn_settings"
                     android:fontFamily="@font/cynthonext"
                     android:onClick="onBtnPlusClicked"
-                    android:text="@string/btn_plus"
-                    android:textColor="@color/black_grey"
+                    android:text="@string/notifications_btn_plus"
+                    android:textColor="@color/mine_shaft"
                     android:textSize="24sp"
                     android:gravity="center"
                     android:layout_gravity="center"
@@ -117,7 +117,7 @@
                 android:layout_marginVertical="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:background="@drawable/settings_background"
+                android:background="@drawable/background_settings"
                 android:paddingStart="20dp"
                 android:paddingEnd="30dp"
                 android:orientation="horizontal">
@@ -127,21 +127,21 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black_grey"
+                    android:textColor="@color/mine_shaft"
                     android:fontFamily="@font/cynthonext"
                     android:textSize="16sp"
                     android:layout_gravity="center"
-                    android:text="@string/tv_start_at" />
+                    android:text="@string/notifications_start_at" />
 
                 <TextView
                     android:id="@+id/start_time"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="30dp"
-                    android:background="@drawable/settings_btn"
+                    android:background="@drawable/btn_settings"
                     android:fontFamily="@font/cynthonextregular"
-                    android:text="@string/btn_min_time_default"
-                    android:textColor="@color/black_grey"
+                    android:text="@string/notifications_btn_min_time_default"
+                    android:textColor="@color/mine_shaft"
                     android:textSize="16sp"
                     android:gravity="center"
                     android:layout_gravity="center"
@@ -154,7 +154,7 @@
                 android:id="@+id/horizontalLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:background="@drawable/settings_background"
+                android:background="@drawable/background_settings"
                 android:paddingStart="20dp"
                 android:paddingEnd="30dp"
                 android:orientation="horizontal">
@@ -164,21 +164,21 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black_grey"
+                    android:textColor="@color/mine_shaft"
                     android:fontFamily="@font/cynthonext"
                     android:textSize="16sp"
                     android:layout_gravity="center"
-                    android:text="@string/tv_end_at" />
+                    android:text="@string/notifications_end_at" />
 
                 <TextView
                     android:id="@+id/end_time"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="30dp"
-                    android:background="@drawable/settings_btn"
+                    android:background="@drawable/btn_settings"
                     android:fontFamily="@font/cynthonextregular"
-                    android:text="@string/btn_max_time_default"
-                    android:textColor="@color/black_grey"
+                    android:text="@string/notifications_btn_max_time_default"
+                    android:textColor="@color/mine_shaft"
                     android:textSize="16sp"
                     android:gravity="center"
                     android:layout_gravity="center"
@@ -202,10 +202,10 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginBottom="25dp"
-                android:background="@drawable/submit_btn"
+                android:background="@drawable/btn_submit"
                 android:fontFamily="@font/cynthonext"
                 android:onClick="onBntContinueClicked"
-                android:text="@string/btn_continue"
+                android:text="@string/settings_btn_continue"
                 android:textAllCaps="false" />
         </LinearLayout>
     </LinearLayout>

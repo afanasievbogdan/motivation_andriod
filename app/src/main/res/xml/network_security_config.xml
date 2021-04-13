@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--TODO зачем это тут? и в принципе зачем :)-->
-<network-security-config>
-    <base-config cleartextTrafficPermitted="true" />
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">31.42.190.127</domain>
-    </domain-config>
-</network-security-config>

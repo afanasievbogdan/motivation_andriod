@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HelloActivity">
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:baselineAligned="false"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    android:orientation="vertical"
+    tools:context=".activities.HelloActivity">
 
         <ImageView
             android:id="@+id/imgHelloView"
@@ -38,9 +29,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/cynthonext"
-                android:text="@string/tv_self_care"
+                android:text="@string/hello_self_care"
                 android:textAlignment="center"
-                android:textColor="@color/black_grey"
+                android:textColor="@color/mine_shaft"
                 android:paddingBottom="4sp"
                 android:textSize="20sp" />
 
@@ -49,9 +40,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/cynthonext"
-                android:text="@string/tv_self_love"
+                android:text="@string/hello_self_love"
                 android:textAlignment="center"
-                android:textColor="@color/black_grey"
+                android:textColor="@color/mine_shaft"
                 android:paddingBottom="4sp"
                 android:textSize="20sp" />
 
@@ -60,9 +51,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/cynthonext"
-                android:text="@string/tv_self_growth"
+                android:text="@string/hello_self_growth"
                 android:textAlignment="center"
-                android:textColor="@color/black_grey"
+                android:textColor="@color/mine_shaft"
                 android:paddingBottom="4sp"
                 android:textSize="20sp" />
 
@@ -81,14 +72,10 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginBottom="25dp"
-                android:background="@drawable/submit_btn"
+                android:background="@drawable/btn_submit"
                 android:fontFamily="@font/cynthonext"
-                android:onClick="onBntStartClicked"
-                android:text="@string/btn_get_started"
+                android:text="@string/hello_btn_get_started"
                 android:textAllCaps="false" />
         </LinearLayout>
 
-    </LinearLayout>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

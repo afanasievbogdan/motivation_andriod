@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--TODO называй цвета в одном стиле (материал или с https://chir.ag/projects/name-that-color/ -->
+<!--TODO https://material.io/resources/color/#!/?view.left=0&view.right=0
+    TODO https://chir.ag/projects/name-that-color/ -->
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -11,24 +13,18 @@
 
     <!-- Custom Colors -->
 
-    <!-- Button Color -->
-    <color name="black_grey">#272727</color>
     <!-- Settings Background-->
-    <color name="light_grey">#f9f9f9</color>
-    <!-- Theme Buttons Color -->
-    <color name="grey">#cdd1d3</color>
-    <!--  Motivation Background  -->
-    <color name="almost_black">#151515</color>
-    <!-- Motivation Buttons -->
-    <color name="dark_grey">#474747</color>
-    <!-- Like Buttons -->
-    <color name="red">#EF3A3A</color>
+    <color name="alabaster">#f9f9f9</color>
     <!-- Categories Button -->
-    <color name="medium_grey">#e4e5ea</color>
-
-
-    <color name="light_blue_50">#FFE1F5FE</color>
-    <color name="light_blue_200">#FF81D4FA</color>
-    <color name="light_blue_600">#FF039BE5</color>
-    <color name="light_blue_900">#FF01579B</color>
+    <color name="athens_gray">#e4e5ea</color>
+    <!-- Theme Buttons Color -->
+    <color name="iron">#cdd1d3</color>
+    <!-- Motivation Buttons -->
+    <color name="tundora">#474747</color>
+    <!-- Button Color -->
+    <color name="mine_shaft">#272727</color>
+    <!--  Motivation Background  -->
+    <color name="cod_gray">#151515</color>
+    <!-- Like Buttons -->
+    <color name="pomegranate">#EF3A3A</color>
 </resources>

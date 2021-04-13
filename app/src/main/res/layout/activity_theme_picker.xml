@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ThemePickerActivity">
+    tools:context=".activities.ThemePickerActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,9 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/cynthonextregular"
-            android:text="@string/tv_explanation_theme"
+            android:text="@string/theme_explanation_theme"
             android:textAlignment="center"
-            android:textColor="@color/black_grey"
+            android:textColor="@color/mine_shaft"
             android:textSize="18sp" />
 
         </LinearLayout>
@@ -60,13 +60,13 @@
                     android:layout_marginVertical="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/theme_btn"
+                    android:background="@drawable/btn_theme"
                     android:fontFamily="@font/cynthonext"
                     android:gravity="center"
                     android:onClick="themeSettingsOnClick"
                     android:paddingVertical="15sp"
-                    android:text="@string/tv_letting_go"
-                    android:textColor="@color/black_grey" />
+                    android:text="@string/theme_letting_go"
+                    android:textColor="@color/mine_shaft" />
 
                 <TextView
                     android:id="@+id/tv_faith_spirituality"
@@ -75,13 +75,13 @@
                     android:layout_marginVertical="5dp"
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/theme_btn"
+                    android:background="@drawable/btn_theme"
                     android:fontFamily="@font/cynthonext"
                     android:gravity="center"
                     android:onClick="themeSettingsOnClick"
                     android:paddingVertical="15sp"
-                    android:text="@string/tv_faith_spirituality"
-                    android:textColor="@color/black_grey" />
+                    android:text="@string/theme_faith_spirituality"
+                    android:textColor="@color/mine_shaft" />
 
             </TableRow>
 
@@ -96,13 +96,13 @@
                     android:layout_marginVertical="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/theme_btn_selector"
+                    android:background="@drawable/btn_selector_theme"
                     android:fontFamily="@font/cynthonext"
                     android:gravity="center"
                     android:onClick="themeSettingsOnClick"
                     android:paddingVertical="15sp"
-                    android:text="@string/tv_happiness"
-                    android:textColor="@color/black_grey" />
+                    android:text="@string/theme_happiness"
+                    android:textColor="@color/mine_shaft" />
 
                 <TextView
                     android:id="@+id/tv_stress_anxiety"
@@ -111,13 +111,13 @@
                     android:layout_marginVertical="5dp"
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/theme_btn"
+                    android:background="@drawable/btn_theme"
                     android:fontFamily="@font/cynthonext"
                     android:gravity="center"
                     android:onClick="themeSettingsOnClick"
                     android:paddingVertical="15sp"
-                    android:text="@string/tv_stress_anxiety"
-                    android:textColor="@color/black_grey" />
+                    android:text="@string/theme_stress_anxiety"
+                    android:textColor="@color/mine_shaft" />
             </TableRow>
 
             <TableRow
@@ -131,13 +131,13 @@
                     android:layout_marginVertical="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/theme_btn"
+                    android:background="@drawable/btn_theme"
                     android:fontFamily="@font/cynthonext"
                     android:gravity="center"
                     android:onClick="themeSettingsOnClick"
                     android:paddingVertical="15sp"
-                    android:text="@string/tv_physical_health"
-                    android:textColor="@color/black_grey" />
+                    android:text="@string/theme_physical_health"
+                    android:textColor="@color/mine_shaft" />
 
                 <TextView
                     android:id="@+id/tv_achieving_goals"
@@ -146,13 +146,13 @@
                     android:layout_marginVertical="5dp"
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/theme_btn"
+                    android:background="@drawable/btn_theme"
                     android:fontFamily="@font/cynthonext"
                     android:gravity="center"
                     android:onClick="themeSettingsOnClick"
                     android:paddingVertical="15sp"
-                    android:text="@string/tv_achieving_goals"
-                    android:textColor="@color/black_grey" />
+                    android:text="@string/theme_achieving_goals"
+                    android:textColor="@color/mine_shaft" />
             </TableRow>
 
             <TableRow
@@ -166,13 +166,13 @@
                     android:layout_marginVertical="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/theme_btn"
+                    android:background="@drawable/btn_theme"
                     android:fontFamily="@font/cynthonext"
                     android:gravity="center"
                     android:onClick="themeSettingsOnClick"
                     android:paddingVertical="15sp"
-                    android:text="@string/tv_self_esteem"
-                    android:textColor="@color/black_grey" />
+                    android:text="@string/theme_self_esteem"
+                    android:textColor="@color/mine_shaft" />
 
                 <TextView
                     android:id="@+id/tv_relationships"
@@ -181,13 +181,13 @@
                     android:layout_marginVertical="5dp"
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/theme_btn"
+                    android:background="@drawable/btn_theme"
                     android:fontFamily="@font/cynthonext"
                     android:gravity="center"
                     android:onClick="themeSettingsOnClick"
                     android:paddingVertical="15sp"
-                    android:text="@string/tv_relationships"
-                    android:textColor="@color/black_grey" />
+                    android:text="@string/theme_relationships"
+                    android:textColor="@color/mine_shaft" />
             </TableRow>
         </TableLayout>
 
@@ -204,10 +204,10 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginBottom="25dp"
-                android:background="@drawable/submit_btn"
+                android:background="@drawable/btn_submit"
                 android:fontFamily="@font/cynthonext"
                 android:onClick="onBntContinue2Clicked"
-                android:text="@string/btn_continue"
+                android:text="@string/settings_btn_continue"
                 android:textAllCaps="false" />
         </LinearLayout>
     </LinearLayout>

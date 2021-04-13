@@ -2,53 +2,50 @@
 
     <string name="app_name">Motivation</string>
 
-<!--TODO название стрингов в формате - where_description (home_self_care)-->
-
     <!-- Hello Activity Strings -->
-    <string name="tv_self_care">Self care.</string>
-    <string name="tv_self_love">Self love.</string>
-    <string name="tv_self_growth">Self growth.</string>
+    <string name="hello_self_care">Self care.</string>
+    <string name="hello_self_love">Self love.</string>
+    <string name="hello_self_growth">Self growth.</string>
 
-    <string name="btn_get_started">Get started</string>
+    <string name="hello_btn_get_started">Get started</string>
 
     <!-- Notification Settings Activity Strings -->
-    <string name="tv_explanation_notif">Set daily Motivation reminders.</string>
+    <string name="notification_explanation">Set daily Motivation reminders.</string>
 
-    <string name="tv_how_many">How many</string>
-    <string name="btn_plus">+</string>
-    <string name="tv_quantity_default">10X</string>
-    <string name="btn_minus">-</string>
+    <string name="notifications_how_many">How many</string>
+    <string name="notifications_btn_plus">+</string>
+    <string name="notifications_quantity_default">10X</string>
+    <string name="notifications_btn_minus">-</string>
 
-    <string name="tv_start_at">Start at</string>
-    <string name="btn_min_time_default">09:00</string>
+    <string name="notifications_start_at">Start at</string>
+    <string name="notifications_btn_min_time_default">09:00</string>
 
-    <string name="tv_end_at">End at</string>
-    <string name="btn_max_time_default">22:00</string>
+    <string name="notifications_end_at">End at</string>
+    <string name="notifications_btn_max_time_default">22:00</string>
 
-    <string name="btn_continue">Continue</string>
+    <string name="settings_btn_continue">Continue</string>
 
     <!-- Theme Settings Activity Strings -->
-    <string name="tv_explanation_theme">What areas of your life would you like to improve?</string>
+    <string name="theme_explanation_theme">What areas of your life would you like to improve?</string>
 
-    <string name="tv_letting_go">Letting go</string>
-    <string name="tv_happiness">Happiness</string>
-    <string name="tv_physical_health">Physical Health</string>
-    <string name="tv_self_esteem">Self-esteem</string>
-    <string name="tv_faith_spirituality">Faith &amp; Spirituality</string>
-    <string name="tv_stress_anxiety">Stress &amp; Anxiety</string>
-    <string name="tv_achieving_goals">Achieving goals</string>
-    <string name="tv_relationships">Relationships</string>
+    <string name="theme_letting_go">Letting go</string>
+    <string name="theme_happiness">Happiness</string>
+    <string name="theme_physical_health">Physical Health</string>
+    <string name="theme_self_esteem">Self-esteem</string>
+    <string name="theme_faith_spirituality">Faith &amp; Spirituality</string>
+    <string name="theme_stress_anxiety">Stress &amp; Anxiety</string>
+    <string name="theme_achieving_goals">Achieving goals</string>
+    <string name="theme_relationships">Relationships</string>
 
     <!-- Motivation Activity Strings -->
-    <string name="quoteText">! Default Quote Text !</string>
-    <string name="authorText">! Default Author Text !</string>
-    <string name="btn_general">General</string>
-    <string name="btn_favorite">Favorite</string>
-
+    <string name="motivation_quote">! Default Quote Text !</string>
+    <string name="motivation_author">! Default Author Text !</string>
+    <string name="motivation_btn_general">General</string>
+    <string name="motivation_btn_favorite">Favorite</string>
 
     <!-- Pop-up window Strings -->
-    <string name="tv_explanation_popup">Swipe to read quotes</string>
-    <string name="btn_got_it">Got it!</string>
+    <string name="popup_explanation">Swipe to read quotes</string>
+    <string name="popup_btn_gotit">Got it!</string>
 
     <!-- Technical Strings -->
     <string name="next">Next</string>
@@ -57,5 +54,4 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

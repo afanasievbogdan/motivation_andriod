@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:orientation="vertical"
-    android:background="@color/almost_black">
+    android:background="@color/cod_gray">
 
     <TextView
         android:id="@+id/textQuote"
@@ -17,7 +17,7 @@
         android:singleLine="false"
         android:paddingHorizontal="50dp"
         android:paddingBottom="10dp"
-        android:text="@string/quoteText"
+        android:text="@string/motivation_quote"
         android:textColor="@color/white"
         android:textSize="24sp" />
 
@@ -30,7 +30,7 @@
         android:gravity="top|center_horizontal"
         android:singleLine="false"
         android:paddingHorizontal="50dp"
-        android:text="@string/authorText"
+        android:text="@string/motivation_author"
         android:textColor="@color/white"
         android:textSize="16sp" />
 
