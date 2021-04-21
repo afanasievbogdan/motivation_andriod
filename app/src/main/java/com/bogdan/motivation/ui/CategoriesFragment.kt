@@ -47,7 +47,8 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         binding.btnFavoriteChose.setOnClickListener {
             dbManager.insetToPermissionsDb("1", "1", "1")
             if (quotesIsEmptyList.size > 0) {
-                val action = CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment()
+                val action =
+                    CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment()
                 findNavController().navigate(action)
             } else {
                 Toast.makeText(context, "You don't have any favourite yet. :(", Toast.LENGTH_LONG)

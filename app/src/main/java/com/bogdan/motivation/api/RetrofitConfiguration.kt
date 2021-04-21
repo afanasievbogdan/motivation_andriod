@@ -15,7 +15,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RetrofitConfiguration {
 
-    fun configureRetrofit(dbManager : DBManager){
+    fun configureRetrofit(dbManager: DBManager) {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 

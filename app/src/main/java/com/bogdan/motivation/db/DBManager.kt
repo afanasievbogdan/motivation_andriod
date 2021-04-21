@@ -220,7 +220,7 @@ class DBManager(context: Context) {
         return isPermitted
     }
 
-    fun readFavoriteOpenFromPermissionDb(): String{
+    fun readFavoriteOpenFromPermissionDb(): String {
         val cursor: Cursor = db.rawQuery(
             "SELECT ${DBConstants.KEY_FAVORITE_OPEN} " +
                     "FROM ${DBConstants.TABLE_PERMISSIONS} " +
