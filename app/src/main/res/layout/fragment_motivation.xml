@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cod_gray"
+    android:orientation="vertical"
+    tools:context=".ui.MotivationFragment">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_general"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="20dp"
+        android:alpha="0.66"
+        android:background="@drawable/btn_floating"
+        android:contentDescription="@string/next"
+        android:fontFamily="@font/cynthonext"
+        android:paddingHorizontal="10dp"
+        android:text="@string/motivation_btn_general"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        app:icon="@drawable/ic_apps"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_edit"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="20dp"
+        android:alpha="0.66"
+        android:background="@drawable/btn_floating"
+        android:contentDescription="@string/next"
+        android:padding="10dp"
+        app:icon="@drawable/ic_brush"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_account"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/btn_general"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_account"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="20dp"
+        android:alpha="0.66"
+        android:background="@drawable/btn_floating"
+        android:contentDescription="@string/next"
+        android:padding="10dp"
+        app:icon="@drawable/ic_account"
+        app:iconGravity="textEnd"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

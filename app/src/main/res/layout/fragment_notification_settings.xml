@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.NotificationSettingsFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_image_notification_bottom"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <ImageView
+        android:id="@+id/imgNotifView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:contentDescription="@string/next"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@id/guideline_image_notification_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/photo_notifications" />
+
+    <TextView
+        android:id="@+id/text_notification_explanations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/cynthonextregular"
+        android:text="@string/notification_explanation"
+        android:textAlignment="center"
+        android:textColor="@color/mine_shaft"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/linear_l"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgNotifView" />
+
+    <LinearLayout
+        android:id="@+id/linear_l"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_continue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_notification_explanations">
+
+        <LinearLayout
+            android:id="@+id/horizontalLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/background_settings"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="30dp">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="5"
+                android:fontFamily="@font/cynthonext"
+                android:text="@string/notifications_how_many"
+
+                android:textColor="@color/mine_shaft"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:id="@+id/btn_minus"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/btn_settings"
+                android:fontFamily="@font/cynthonext"
+                android:gravity="center"
+                android:text="@string/notifications_btn_minus"
+                android:textColor="@color/mine_shaft"
+                android:textSize="24sp"
+                android:theme="@style/SettingsButtonsTheme" />
+
+            <TextView
+                android:id="@+id/notif_quantity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="3"
+                android:fontFamily="@font/cynthonext"
+                android:gravity="center"
+                android:text="@string/notifications_quantity_default"
+                android:textColor="@color/mine_shaft" />
+
+            <TextView
+                android:id="@+id/btn_plus"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/btn_settings"
+                android:fontFamily="@font/cynthonext"
+                android:gravity="center"
+                android:text="@string/notifications_btn_plus"
+                android:textColor="@color/mine_shaft"
+                android:textSize="24sp"
+                android:theme="@style/SettingsButtonsTheme" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/horizontalLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/background_settings"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="30dp">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/cynthonext"
+                android:text="@string/notifications_start_at"
+                android:textColor="@color/mine_shaft"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/start_time"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/btn_settings"
+                android:fontFamily="@font/cynthonextregular"
+                android:gravity="center"
+                android:text="@string/notifications_btn_min_time_default"
+                android:textColor="@color/mine_shaft"
+                android:textSize="16sp"
+                android:theme="@style/SettingsButtonsTheme" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/horizontalLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/background_settings"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="30dp">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/cynthonext"
+                android:text="@string/notifications_end_at"
+                android:textColor="@color/mine_shaft"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/end_time"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/btn_settings"
+                android:fontFamily="@font/cynthonextregular"
+                android:gravity="center"
+                android:text="@string/notifications_btn_max_time_default"
+                android:textColor="@color/mine_shaft"
+                android:textSize="16sp"
+                android:theme="@style/SettingsButtonsTheme" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_continue"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/btn_submit"
+        android:fontFamily="@font/cynthonext"
+        android:text="@string/settings_btn_continue"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

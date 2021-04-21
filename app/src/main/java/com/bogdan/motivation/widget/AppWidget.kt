@@ -66,7 +66,7 @@ internal fun updateAppWidget(
     intent.putExtra("appWidgetId", appWidgetId)
     val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
     val views = RemoteViews(context.packageName,
-        R.layout.app_widget
+        R.layout.widget_app
     )
     views.setTextViewText(R.id.appwidget_text, dbManager.readRandomQuoteFromQuotesDb())
     views.setOnClickPendingIntent(R.id.appwidget_text, pendingIntent)

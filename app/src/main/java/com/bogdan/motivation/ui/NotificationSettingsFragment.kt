@@ -1,62 +1,80 @@
-package com.bogdan.motivation.activities
+package com.bogdan.motivation.ui
 
+import android.annotation.SuppressLint
 import android.app.TimePickerDialog
-import android.content.Intent
+import android.app.TimePickerDialog.OnTimeSetListener
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.TimePicker
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
-import com.bogdan.motivation.databinding.ActivityNotificationSettingsBinding
+import com.bogdan.motivation.databinding.FragmentNotificationSettingsBinding
 import com.bogdan.motivation.db.DBManager
 import java.util.*
-import kotlin.system.exitProcess
 
-class NotificationSettingsActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetListener {
+@SuppressLint("SetTextI18n")
+class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_settings),
+    OnTimeSetListener {
 
-    private lateinit var binding: ActivityNotificationSettingsBinding
-    private val dbManager = DBManager(applicationContext)
+    private var _binding: FragmentNotificationSettingsBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var dbManager: DBManager
 
     private var hour = 0
     private var minute = 0
     private var savedHour = 0
     private var savedMinute = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityNotificationSettingsBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        dbManager = DBManager(requireContext())
         dbManager.openDb()
+        _binding = FragmentNotificationSettingsBinding.inflate(
+            inflater,
+            container,
+            false
+        )
+        return binding.root
+    }
 
-        onClickBtnPlus()
-        onClickBtnMinus()
-        onClickBntContinue()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setUiAnimations()
 
+        onClickBtnMinus()
+        onClickBtnPlus()
         pickStartTime()
         pickEndTime()
+
+        onClickBntContinue()
     }
 
     private fun setUiAnimations() {
         val tvExplanationAnimation = AnimationUtils.loadAnimation(
-            applicationContext,
+            context,
             R.anim.fade_anim
         )
         val horizontalLayout1Animation = AnimationUtils.loadAnimation(
-            applicationContext,
+            context,
             R.anim.fade_anim_2
         )
         val horizontalLayout2Animation = AnimationUtils.loadAnimation(
-            applicationContext,
+            context,
             R.anim.fade_anim_2
         )
         val horizontalLayout3Animation = AnimationUtils.loadAnimation(
-            applicationContext,
+            context,
             R.anim.fade_anim_2
         )
         val btnContinueAnimation = AnimationUtils.loadAnimation(
-            applicationContext,
+            context,
             R.anim.fade_anim_2
         )
 
@@ -66,12 +84,13 @@ class NotificationSettingsActivity : AppCompatActivity(), TimePickerDialog.OnTim
         horizontalLayout3Animation.startOffset = 2000
         btnContinueAnimation.startOffset = 2250
 
-        binding.textNotifExplanations.startAnimation(tvExplanationAnimation)
+        binding.textNotificationExplanations.startAnimation(tvExplanationAnimation)
         binding.horizontalLayout1.startAnimation(horizontalLayout1Animation)
         binding.horizontalLayout2.startAnimation(horizontalLayout2Animation)
         binding.horizontalLayout3.startAnimation(horizontalLayout3Animation)
         binding.btnContinue.startAnimation(btnContinueAnimation)
     }
+
 
     private fun onClickBtnMinus() {
         binding.btnMinus.setOnClickListener {
@@ -100,17 +119,16 @@ class NotificationSettingsActivity : AppCompatActivity(), TimePickerDialog.OnTim
     }
 
     //TODO ?)
-    private var listener: Int = 0
+    private var isStartTimer = true
 
     private fun pickStartTime() {
         binding.startTime.setOnClickListener {
             getTimeCalendar()
 
             TimePickerDialog(
-                this,
+                activity,
                 R.style.TimePickerTheme, this, hour, minute, true
             ).show()
-            listener = 1
         }
     }
 
@@ -119,10 +137,10 @@ class NotificationSettingsActivity : AppCompatActivity(), TimePickerDialog.OnTim
             getTimeCalendar()
 
             TimePickerDialog(
-                this,
+                activity,
                 R.style.TimePickerTheme, this, hour, minute, true
             ).show()
-            listener = 2
+            isStartTimer = false
         }
     }
 
@@ -136,19 +154,11 @@ class NotificationSettingsActivity : AppCompatActivity(), TimePickerDialog.OnTim
             editMinute = "0$minute"
         savedHour = hourOfDay
         savedMinute = minute
-        if (listener == 1) {
+        if (isStartTimer) {
             binding.startTime.text = "$editHour : $editMinute"
-        } else if (listener == 2) {
+        } else if (!isStartTimer) {
             binding.endTime.text = "$editHour : $editMinute"
         }
-    }
-
-    override fun onBackPressed() {
-        val intent = Intent(Intent.ACTION_MAIN)
-        intent.addCategory(Intent.CATEGORY_HOME)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
-        exitProcess(0)
     }
 
     private fun onClickBntContinue() {
@@ -160,13 +170,15 @@ class NotificationSettingsActivity : AppCompatActivity(), TimePickerDialog.OnTim
 
             dbManager.insetToNotificationsDb(quantity, startTime, endTime)
 
-            startActivity(Intent(applicationContext, ThemePickerActivity::class.java))
-            overridePendingTransition(
-                R.anim.slide_in,
-                R.anim.slide_out
-            )
+            val action =
+                NotificationSettingsFragmentDirections.actionNotificationSettingsFragmentToThemePickerFragment()
+            findNavController().navigate(action)
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }

@@ -5,10 +5,11 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import com.bogdan.motivation.entities.Quote
-import java.util.ArrayList
+import java.util.*
 import kotlin.random.Random
 
 class DBManager(context: Context) {
+
     private val mDBHelper = DBHelper(context)
     lateinit var db: SQLiteDatabase
 
@@ -42,11 +43,13 @@ class DBManager(context: Context) {
             if (moveToFirst()) {
                 val quoteIndex = getColumnIndex(DBConstants.KEY_QUOTE)
                 val authorIndex = getColumnIndex(DBConstants.KEY_AUTHOR)
+                val favoriteIndex = getColumnIndex(DBConstants.KEY_FAVORITE)
                 do {
                     val quoteElement =
                         Quote(
                             getString(quoteIndex),
-                            getString(authorIndex)
+                            getString(authorIndex),
+                            getString(favoriteIndex)
                         )
                     quotesList.add(quoteElement)
                 } while (moveToNext())
@@ -74,9 +77,9 @@ class DBManager(context: Context) {
                     if (cursor.getString(favoriteIndex) == "1") {
                         val quoteElement =
                             Quote(
-                                cursor.getString(
-                                    quoteIndex
-                                ), cursor.getString(authorIndex)
+                                cursor.getString(quoteIndex),
+                                cursor.getString(authorIndex),
+                                cursor.getString(favoriteIndex)
                             )
                         quotesList.add(quoteElement)
                     }
@@ -102,7 +105,7 @@ class DBManager(context: Context) {
         val mRandom = Random.nextInt(count)
 
         val cursor1: Cursor = db.rawQuery(
-            "SELECT $DBConstants.KEY_QUOTE, ${DBConstants.KEY_AUTHOR} " +
+            "SELECT ${DBConstants.KEY_QUOTE}, ${DBConstants.KEY_AUTHOR} " +
                     "FROM ${DBConstants.TABLE_QUOTES} " +
                     "WHERE ${DBConstants.KEY_ID} = $mRandom",
             null
@@ -120,7 +123,7 @@ class DBManager(context: Context) {
         return text
     }
 
-    fun readFavoriteFromQuotesDb(item: String): String {
+    fun readFavoriteKeyFromQuotesDb(item: String): String {
         val cursor: Cursor = db.rawQuery(
             "SELECT ${DBConstants.KEY_FAVORITE} " +
                     "FROM ${DBConstants.TABLE_QUOTES} " +
@@ -137,24 +140,24 @@ class DBManager(context: Context) {
         return isFavourite
     }
 
-    fun insertFavoriteToQuotesDb(isFavorite: String, item: String) {
-        val values = ContentValues().apply {
-            put(DBConstants.KEY_FAVORITE, isFavorite)
-        }
+    fun insertFavoriteKeyToQuotesDb(isFavorite: String, item: String) {
+        val strSQL = "UPDATE ${DBConstants.TABLE_QUOTES} " +
+                "SET ${DBConstants.KEY_FAVORITE} = $isFavorite " +
+                "WHERE ${DBConstants.KEY_QUOTE} = '$item'"
 
-        db.update(
-            DBConstants.TABLE_QUOTES,
-            values,
-            "$DBConstants.KEY_QUOTE = ?",
-            arrayOf(item)
-        )
+        db.execSQL(strSQL)
     }
 
-    fun insetToPermissionsDb(isSettingsPassed: String, isPopupPassed: String) {
+    fun insetToPermissionsDbWithIgnore(
+        isSettingsPassed: String,
+        isPopupPassed: String,
+        isFavoriteOpen: String
+    ) {
         val values = ContentValues().apply {
             put(DBConstants.KEY_ID, 1)
             put(DBConstants.KEY_SETTING_PASSED, isSettingsPassed)
             put(DBConstants.KEY_POPUP_PASSED, isPopupPassed)
+            put(DBConstants.KEY_FAVORITE_OPEN, isFavoriteOpen)
         }
         db.insertWithOnConflict(
             DBConstants.TABLE_PERMISSIONS,
@@ -164,9 +167,28 @@ class DBManager(context: Context) {
         )
     }
 
+    fun insetToPermissionsDb(
+        isSettingsPassed: String,
+        isPopupPassed: String,
+        isFavoriteOpen: String
+    ) {
+        val values = ContentValues().apply {
+            put(DBConstants.KEY_ID, 1)
+            put(DBConstants.KEY_SETTING_PASSED, isSettingsPassed)
+            put(DBConstants.KEY_POPUP_PASSED, isPopupPassed)
+            put(DBConstants.KEY_FAVORITE_OPEN, isFavoriteOpen)
+        }
+        db.insertWithOnConflict(
+            DBConstants.TABLE_PERMISSIONS,
+            null,
+            values,
+            SQLiteDatabase.CONFLICT_REPLACE
+        )
+    }
+
     fun readSettingsFromPermissionsDb(): String {
         val cursor: Cursor = db.rawQuery(
-            "SELECT ${DBConstants.KEY_SETTING_PASSED}" +
+            "SELECT ${DBConstants.KEY_SETTING_PASSED} " +
                     "FROM ${DBConstants.TABLE_PERMISSIONS} " +
                     "WHERE ${DBConstants.KEY_ID} = 1",
             null
@@ -183,7 +205,24 @@ class DBManager(context: Context) {
 
     fun readPopupFromPermissionsDb(): String {
         val cursor: Cursor = db.rawQuery(
-            "SELECT ${DBConstants.KEY_POPUP_PASSED}" +
+            "SELECT ${DBConstants.KEY_POPUP_PASSED} " +
+                    "FROM ${DBConstants.TABLE_PERMISSIONS} " +
+                    "WHERE ${DBConstants.KEY_ID} = 1",
+            null
+        )
+
+        var isPermitted = "0"
+        if (cursor.moveToFirst()) {
+            isPermitted = cursor.getString(0)
+        }
+
+        cursor.close()
+        return isPermitted
+    }
+
+    fun readFavoriteOpenFromPermissionDb(): String{
+        val cursor: Cursor = db.rawQuery(
+            "SELECT ${DBConstants.KEY_FAVORITE_OPEN} " +
                     "FROM ${DBConstants.TABLE_PERMISSIONS} " +
                     "WHERE ${DBConstants.KEY_ID} = 1",
             null
@@ -215,7 +254,7 @@ class DBManager(context: Context) {
 
     fun readQuantityFromNotificationsDb(): String {
         val cursor: Cursor = db.rawQuery(
-            "SELECT ${DBConstants.KEY_QUANTITY}, " +
+            "SELECT ${DBConstants.KEY_QUANTITY} FROM " +
                     "${DBConstants.TABLE_NOTIFICATIONS} WHERE " +
                     "${DBConstants.KEY_ID} = 1",
             null
@@ -232,7 +271,7 @@ class DBManager(context: Context) {
 
     fun readStartTimeFromNotificationsDb(): String {
         val cursor: Cursor = db.rawQuery(
-            "SELECT ${DBConstants.KEY_START_TIME}, " +
+            "SELECT ${DBConstants.KEY_START_TIME} FROM " +
                     "${DBConstants.TABLE_NOTIFICATIONS} WHERE " +
                     "${DBConstants.KEY_ID} = 1",
             null

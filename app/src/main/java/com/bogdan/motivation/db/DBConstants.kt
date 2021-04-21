@@ -22,11 +22,13 @@ object DBConstants {
     const val TABLE_PERMISSIONS = "Permission"
     const val KEY_SETTING_PASSED = "_settingComplete"
     const val KEY_POPUP_PASSED = "_popupComplete"
+    const val KEY_FAVORITE_OPEN = "_favoriteOpen"
 
     const val CREATE_TABLE_PERMISSIONS = "CREATE TABLE $TABLE_PERMISSIONS (" +
             "$KEY_ID integer PRIMARY KEY, " +
             "$KEY_SETTING_PASSED text, " +
-            "$KEY_POPUP_PASSED text)"
+            "$KEY_POPUP_PASSED text, " +
+            "$KEY_FAVORITE_OPEN text)"
 
     const val DROP_TABLE_PERMISSIONS = "DROP TABLE IF EXISTS $TABLE_PERMISSIONS"
 

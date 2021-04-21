@@ -4,8 +4,6 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-//TODO все константы должны быть в отдельном файле - object. В этом случае должен использоваться data class (в роле модели) для работы с БД, ну пока оставь, вернемся позже
-
 class DBHelper(context: Context) :
     SQLiteOpenHelper(
         context,
