@@ -27,6 +27,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
     private var _binding: FragmentMotivationBinding? = null
     private val binding get() = _binding!!
     private lateinit var dbManager: DBManager
+    //todo еррейлист = вар?
     private var quotesList = ArrayList<Quote>()
     private val quotesViewPagerAdapter = QuotesViewPagerAdapter()
 
@@ -40,7 +41,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
         _binding = FragmentMotivationBinding.inflate(inflater, container, false)
         return binding.root
     }
-
+        //todo после super 1 enter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         quotesList =
@@ -52,7 +53,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
 
         initializePopup()
         onClickCategoriesSelection()
-
+//todo 2 with конкретно тут наверное уже перебор) и это можно вынести в отдельную функцию
         with(binding.viewPager2) {
             orientation = ViewPager2.ORIENTATION_VERTICAL
             adapter = quotesViewPagerAdapter
@@ -74,7 +75,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
                 setCancelable(false)
                 show()
             }
-
+            //todo viewBinding тут можно заюзать
             val btnGetIt: Button = dialog.findViewById(R.id.btn_got_it)
             btnGetIt.setOnClickListener {
                 dbManager.insetToPermissionsDb("1", "1", "0")

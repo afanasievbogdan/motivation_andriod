@@ -61,7 +61,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker) {
         binding.gripLayout.startAnimation(gripAnimation)
         binding.btnContinue2.startAnimation(btnContinue2Animation)
     }
-
+    //todo selector drawable
     private var tvLettingGoPressed = false
     private var tvFaithSpiritualityPressed = false
     private var tvHappinessPressed = false
@@ -71,7 +71,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker) {
     private var tvSelfEsteemPressed = false
     private var tvRelationshipsPressed = false
 
-    //selector drawable
+    //todo selector drawable
     private fun themeSettingsOnClick() {
 
         binding.tvLettingGo.setOnClickListener {

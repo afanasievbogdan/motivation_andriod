@@ -17,7 +17,7 @@ class ApplicationActivity : AppCompatActivity() {
         setContentView(view)
         dbManager = DBManager(applicationContext)
         dbManager.openDb()
-
-
+//todo пустые строки
+//todo пустые строки
     }
 }

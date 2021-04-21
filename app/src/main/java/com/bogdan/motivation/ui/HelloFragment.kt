@@ -29,7 +29,7 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
         setUiAnimations()
         onClickBtnGetStarted()
     }
-
+//todo убери цифры из переменных
     private fun setUiAnimations() {
         val imageAnimation = AnimationUtils.loadAnimation(
             context,
@@ -56,7 +56,7 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
         tv2Animation.startOffset = 1500
         tv3Animation.startOffset = 2250
         btnAnimation.startOffset = 3000
-
+            //todo with(binding)
         binding.imgHello.startAnimation(imageAnimation)
         binding.tvSelfCare.startAnimation(tv1Animation)
         binding.tvSelfLove.startAnimation(tv2Animation)

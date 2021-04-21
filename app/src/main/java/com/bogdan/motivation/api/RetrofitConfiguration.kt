@@ -22,7 +22,7 @@ object RetrofitConfiguration {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
             .build()
-
+        //TODO зачем?
         val moshi = Moshi.Builder()
             .add(DateAdapter())
             .addLast(KotlinJsonAdapterFactory())
@@ -35,7 +35,7 @@ object RetrofitConfiguration {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(QuotesApi::class.java)
-
+            //TODO все что ниже должно быть не тут
         val retrofitData = retrofit.getQuotesList()
 
         retrofitData.enqueue(object : Callback<List<Root>?> {

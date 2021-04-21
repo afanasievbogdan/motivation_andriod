@@ -50,7 +50,6 @@ class QuotesViewPagerAdapter :
                 }
 
                 imageLike.setOnClickListener {
-
                     quote.changeFavorite()
                     onClickListener.onFavoriteClickListener(quote.isFavorite, quote.quote)
 

@@ -43,7 +43,7 @@ class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_set
         )
         return binding.root
     }
-
+    //todo обрати тут внимание на enter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUiAnimations()
@@ -55,7 +55,7 @@ class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_set
 
         onClickBntContinue()
     }
-
+//todo чисел в названиях быть не должно
     private fun setUiAnimations() {
         val tvExplanationAnimation = AnimationUtils.loadAnimation(
             context,
@@ -91,7 +91,8 @@ class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_set
         binding.btnContinue.startAnimation(btnContinueAnimation)
     }
 
-
+    //todo тут нужно работать с переменной, а не доставать и обрезать значение из вью
+    // if а в одну строку либо с {}
     private fun onClickBtnMinus() {
         binding.btnMinus.setOnClickListener {
             var number = binding.notifQuantity.text.toString().substringBefore("X").toInt()
@@ -101,7 +102,7 @@ class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_set
             binding.notifQuantity.text = "${number}X"
         }
     }
-
+//todo тоже самое
     private fun onClickBtnPlus() {
         binding.btnPlus.setOnClickListener {
             var number = binding.notifQuantity.text.toString().substringBefore("X").toInt()
@@ -162,7 +163,7 @@ class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_set
     }
 
     private fun onClickBntContinue() {
-
+//todo with(binding)
         binding.btnContinue.setOnClickListener {
             val quantity = binding.notifQuantity.text.toString().substringBefore("X")
             val startTime = binding.startTime.text.toString().substring(0, 2)
