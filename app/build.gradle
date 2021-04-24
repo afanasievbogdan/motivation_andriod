@@ -38,7 +38,7 @@ android {
     }
 
 }
-//todo rxjava?)
+
 dependencies {
 
     // SYSTEM
