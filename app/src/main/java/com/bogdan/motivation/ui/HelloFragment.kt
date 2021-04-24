@@ -64,7 +64,7 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
         tvSelfGrowthAnimation.startOffset = 2250
         btnGetStartedAnimation.startOffset = 3000
 
-        with(binding){
+        with(binding) {
             ivHeader.startAnimation(ivHeaderAnimation)
             tvSelfCare.startAnimation(tvSelfCareAnimation)
             tvSelfLove.startAnimation(tvSelfLoveAnimation)
@@ -76,7 +76,8 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
     private fun onClickBtnGetStarted() {
         binding.btnGetStarted.setOnClickListener {
             findNavController().navigate(
-                HelloFragmentDirections.actionHelloFragmentToNotificationSettingsFragment())
+                HelloFragmentDirections.actionHelloFragmentToNotificationSettingsFragment()
+            )
         }
     }
 }

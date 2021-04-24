@@ -12,5 +12,4 @@ data class Quote(
         isFavorite = favorite == "1"
         return favorite
     }
-
 }

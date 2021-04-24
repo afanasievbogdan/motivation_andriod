@@ -9,19 +9,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.bogdan.motivation.R
-import com.bogdan.motivation.databinding.ActivityApplicationBinding
 import com.bogdan.motivation.databinding.DialogGetitBinding
-import com.bogdan.motivation.interfaces.OnClickListener
 import com.bogdan.motivation.databinding.FragmentMotivationBinding
 import com.bogdan.motivation.db.DBManager
 import com.bogdan.motivation.entities.Quote
+import com.bogdan.motivation.interfaces.OnClickListener
 import com.bogdan.motivation.recycleradapter.QuotesViewPagerAdapter
-import java.util.*
 
 class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListener {
 

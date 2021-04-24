@@ -71,7 +71,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker) {
         }
     }
 
-    //todo selector drawable
+    // todo selector drawable
     private var tvLettingGoPressed = false
     private var tvFaithSpiritualityPressed = false
     private var tvHappinessPressed = false
@@ -81,7 +81,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker) {
     private var tvSelfEsteemPressed = false
     private var tvRelationshipsPressed = false
 
-    //todo selector drawable
+    // todo selector drawable
     private fun themeSettingsOnClick() {
 
 //        binding.tvLettingGo.setOnClickListener {
@@ -116,7 +116,6 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker) {
                         R.color.mine_shaft
                     )
                 )
-
             } else {
                 tvLettingGoPressed = true
                 binding.tvLettingGo.setTextColor(
@@ -285,9 +284,9 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker) {
 
     private fun onBntContinueClicked() {
         binding.btnContinue.setOnClickListener {
-            if (tvLettingGoPressed || tvFaithSpiritualityPressed || tvHappinessPressed
-                || tvStressAnxietyPressed || tvPhysicalHealthPressed || tvAchievingGoalsPressed
-                || tvSelfEsteemPressed || tvRelationshipsPressed
+            if (tvLettingGoPressed || tvFaithSpiritualityPressed || tvHappinessPressed ||
+                tvStressAnxietyPressed || tvPhysicalHealthPressed || tvAchievingGoalsPressed ||
+                tvSelfEsteemPressed || tvRelationshipsPressed
             ) {
                 val contentValuesThemes = ContentValues()
 

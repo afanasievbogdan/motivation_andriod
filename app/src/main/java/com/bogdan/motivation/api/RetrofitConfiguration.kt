@@ -30,7 +30,7 @@ object RetrofitConfiguration {
             .create(QuotesApi::class.java)
     }
 
-    fun getQuotesFromApi(dbManager: DBManager){
+    fun getQuotesFromApi(dbManager: DBManager) {
         val retrofitData = retrofit.getQuotesList()
 
         retrofitData.enqueue(object : Callback<List<Root>?> {
@@ -46,5 +46,4 @@ object RetrofitConfiguration {
             }
         })
     }
-
 }

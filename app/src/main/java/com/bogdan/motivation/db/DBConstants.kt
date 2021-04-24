@@ -12,10 +12,10 @@ object DBConstants {
     const val KEY_FAVORITE = "_favorite"
 
     const val CREATE_TABLE_QUOTES = "CREATE TABLE IF NOT EXISTS $TABLE_QUOTES (" +
-            "$KEY_ID integer PRIMARY KEY, " +
-            "$KEY_QUOTE text UNIQUE, " +
-            "$KEY_AUTHOR text, " +
-            "$KEY_FAVORITE text)"
+        "$KEY_ID integer PRIMARY KEY, " +
+        "$KEY_QUOTE text UNIQUE, " +
+        "$KEY_AUTHOR text, " +
+        "$KEY_FAVORITE text)"
 
     const val DROP_TABLE_QUOTES = "DROP TABLE IF EXISTS $TABLE_QUOTES"
 
@@ -25,10 +25,10 @@ object DBConstants {
     const val KEY_FAVORITE_OPEN = "_favoriteOpen"
 
     const val CREATE_TABLE_PERMISSIONS = "CREATE TABLE $TABLE_PERMISSIONS (" +
-            "$KEY_ID integer PRIMARY KEY, " +
-            "$KEY_SETTING_PASSED text, " +
-            "$KEY_POPUP_PASSED text, " +
-            "$KEY_FAVORITE_OPEN text)"
+        "$KEY_ID integer PRIMARY KEY, " +
+        "$KEY_SETTING_PASSED text, " +
+        "$KEY_POPUP_PASSED text, " +
+        "$KEY_FAVORITE_OPEN text)"
 
     const val DROP_TABLE_PERMISSIONS = "DROP TABLE IF EXISTS $TABLE_PERMISSIONS"
 
@@ -38,10 +38,10 @@ object DBConstants {
     const val KEY_QUANTITY = "_quantity"
 
     const val CREATE_TABLE_NOTIFICATIONS = "CREATE TABLE $TABLE_NOTIFICATIONS (" +
-            "$KEY_ID integer PRIMARY KEY, " +
-            "$KEY_QUANTITY text, " +
-            "$KEY_START_TIME text, " +
-            "$KEY_END_TIME text)"
+        "$KEY_ID integer PRIMARY KEY, " +
+        "$KEY_QUANTITY text, " +
+        "$KEY_START_TIME text, " +
+        "$KEY_END_TIME text)"
 
     const val DROP_TABLE_NOTIFICATIONS = "DROP TABLE IF EXISTS $TABLE_NOTIFICATIONS"
 
@@ -56,15 +56,15 @@ object DBConstants {
     const val KEY_RELATIONSHIP = "_relationShip"
 
     const val CREATE_TABLE_THEMES = "CREATE TABLE $TABLE_THEMES (" +
-            "$KEY_ID integer PRIMARY KEY, " +
-            "$KEY_LETTING_GO text, " +
-            "$KEY_FAITH_SPIRITUALITY text, " +
-            "$KEY_HAPPINESS text, " +
-            "$KEY_STRESS_ANXIETY text, " +
-            "$KEY_PHYSICAL_HEALTH text, " +
-            "$KEY_ACHIEVING_GOALS text, " +
-            "$KEY_SELF_ESTEEM text, " +
-            "$KEY_RELATIONSHIP text)"
+        "$KEY_ID integer PRIMARY KEY, " +
+        "$KEY_LETTING_GO text, " +
+        "$KEY_FAITH_SPIRITUALITY text, " +
+        "$KEY_HAPPINESS text, " +
+        "$KEY_STRESS_ANXIETY text, " +
+        "$KEY_PHYSICAL_HEALTH text, " +
+        "$KEY_ACHIEVING_GOALS text, " +
+        "$KEY_SELF_ESTEEM text, " +
+        "$KEY_RELATIONSHIP text)"
 
     const val DROP_TABLE_THEMES = "DROP TABLE IF EXISTS $TABLE_THEMES"
 }

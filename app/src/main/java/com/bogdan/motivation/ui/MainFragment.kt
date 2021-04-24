@@ -14,7 +14,7 @@ import com.bogdan.motivation.api.RetrofitConfiguration
 import com.bogdan.motivation.databinding.FragmentMainBinding
 import com.bogdan.motivation.db.DBManager
 import com.bogdan.motivation.worker.NotificationsWorker
-import java.util.*
+import java.util.Timer
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.schedule
 
@@ -23,7 +23,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private lateinit var dbManager: DBManager
-    //todo инициализируй бд как синглтон в мейн активити
+    // todo инициализируй бд как синглтон в мейн активити
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,18 +47,19 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         _binding = null
     }
 
-
     private fun chooseActivityToOpen() {
         val isSettingsPassed = dbManager.readSettingsFromPermissionsDb()
         if (isSettingsPassed == "0") {
             findNavController().navigate(
-                MainFragmentDirections.actionMainFragmentToHelloFragment())
+                MainFragmentDirections.actionMainFragmentToHelloFragment()
+            )
         } else if (isSettingsPassed == "1") {
             RetrofitConfiguration.getQuotesFromApi(dbManager)
             setNotificationWorker()
             Timer().schedule(2000) {
                 findNavController().navigate(
-                    MainFragmentDirections.actionMainFragmentToMotivationFragment())
+                    MainFragmentDirections.actionMainFragmentToMotivationFragment()
+                )
             }
         }
     }

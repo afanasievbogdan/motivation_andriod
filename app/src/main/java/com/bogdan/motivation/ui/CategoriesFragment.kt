@@ -11,14 +11,13 @@ import com.bogdan.motivation.R
 import com.bogdan.motivation.databinding.FragmentCategoriesBinding
 import com.bogdan.motivation.db.DBManager
 import com.bogdan.motivation.entities.Quote
-import java.util.*
 
 class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
     private lateinit var dbManager: DBManager
-    //todo почему АррейЛист = вар? и что с названием?
+    // todo почему АррейЛист = вар? и что с названием?
     private var quotesIsEmptyList = ArrayList<Quote>()
 
     override fun onCreateView(
@@ -47,7 +46,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
         binding.btnFavoriteChose.setOnClickListener {
             dbManager.insetToPermissionsDb("1", "1", "1")
-                //todo list.isNotEmpty
+            // todo list.isNotEmpty
             if (quotesIsEmptyList.size > 0) {
                 val action =
                     CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment()

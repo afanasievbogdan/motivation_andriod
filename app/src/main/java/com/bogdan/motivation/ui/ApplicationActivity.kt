@@ -1,7 +1,7 @@
 package com.bogdan.motivation.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.motivation.api.RetrofitConfiguration
 import com.bogdan.motivation.databinding.ActivityApplicationBinding
 import com.bogdan.motivation.db.DBManager

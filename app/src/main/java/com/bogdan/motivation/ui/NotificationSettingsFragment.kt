@@ -14,10 +14,11 @@ import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
 import com.bogdan.motivation.databinding.FragmentNotificationSettingsBinding
 import com.bogdan.motivation.db.DBManager
-import java.util.*
+import java.util.Calendar
 
 @SuppressLint("SetTextI18n")
-class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_settings),
+class NotificationSettingsFragment :
+    Fragment(R.layout.fragment_notification_settings),
     OnTimeSetListener {
 
     private var _binding: FragmentNotificationSettingsBinding? = null
@@ -95,7 +96,6 @@ class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_set
             endTimeContainer.startAnimation(endTimeContainerAnimation)
             btnContinue.startAnimation(btnContinueAnimation)
         }
-
     }
 
     private fun onClickBtnMinus() {
@@ -146,7 +146,7 @@ class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_set
         }
     }
 
-    //TODO эту функцию нужно рефакторить
+    // TODO эту функцию нужно рефакторить
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         var editHour = hourOfDay.toString()
         var editMinute = minute.toString()
@@ -170,7 +170,8 @@ class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_set
                 val endTime = endTime.text.toString().substring(0, 2)
                 dbManager.insetToNotificationsDb(quantity, startTime, endTime)
                 findNavController().navigate(
-                    NotificationSettingsFragmentDirections.actionNotificationSettingsFragmentToThemePickerFragment())
+                    NotificationSettingsFragmentDirections.actionNotificationSettingsFragmentToThemePickerFragment()
+                )
             }
         }
     }

@@ -12,7 +12,7 @@ import androidx.work.WorkerParameters
 import com.bogdan.motivation.R
 import com.bogdan.motivation.db.DBManager
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 
 class NotificationsWorker(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
@@ -74,5 +74,4 @@ class NotificationsWorker(appContext: Context, workerParams: WorkerParameters) :
 
         return currentHour.toInt() >= start.toInt() && currentHour.toInt() < end.toInt()
     }
-
 }
