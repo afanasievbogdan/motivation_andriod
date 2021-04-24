@@ -40,27 +40,27 @@ class QuotesViewPagerAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(quote: Quote) {
             with(binding) {
-                textQuote.text = quote.quote
-                textAuthor.text = quote.author
+                tvQuote.text = quote.quote
+                tvAuthor.text = quote.author
 
                 if (quote.isFavorite) {
-                    imageLike.setImageResource(R.drawable.ic_like_pressed)
+                    btnLike.setImageResource(R.drawable.ic_like_pressed)
                 } else {
-                    imageLike.setImageResource(R.drawable.ic_like_unpressed)
+                    btnLike.setImageResource(R.drawable.ic_like_unpressed)
                 }
 
-                imageLike.setOnClickListener {
+                btnLike.setOnClickListener {
                     quote.changeFavorite()
                     onClickListener.onFavoriteClickListener(quote.isFavorite, quote.quote)
 
                     if (quote.isFavorite) {
-                        imageLike.setImageResource(R.drawable.ic_like_pressed)
+                        btnLike.setImageResource(R.drawable.ic_like_pressed)
                     } else {
-                        imageLike.setImageResource(R.drawable.ic_like_unpressed)
+                        btnLike.setImageResource(R.drawable.ic_like_unpressed)
                     }
                 }
 
-                imageShare.setOnClickListener {
+                btnShare.setOnClickListener {
                     onClickListener.onShareClickListener(quote.quote, quote.author)
                 }
             }

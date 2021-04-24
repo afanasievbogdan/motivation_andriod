@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cod_gray"
     android:orientation="vertical">
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_quote_bottom"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_buttons_bottom"
@@ -21,10 +13,8 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.88" />
 
-    <!-- chained -->
-
     <TextView
-        android:id="@+id/textQuote"
+        android:id="@+id/tv_quote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/cynthonextregular"
@@ -35,12 +25,14 @@
         android:text="@string/motivation_quote"
         android:textColor="@color/white"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@id/guideline_quote_bottom"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_author"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/textAuthor"
+        android:id="@+id/tv_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/cynthonextregular"
@@ -50,30 +42,33 @@
         android:text="@string/motivation_author"
         android:textColor="@color/white"
         android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_like"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline_quote_bottom" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_quote" />
 
     <ImageButton
-        android:id="@+id/imageShare"
+        android:id="@+id/btn_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
+        android:contentDescription="@string/next"
         android:src="@drawable/ic_share"
         app:layout_constraintBottom_toTopOf="@id/guideline_buttons_bottom"
-        app:layout_constraintEnd_toStartOf="@+id/imageLike"
+        app:layout_constraintEnd_toStartOf="@+id/btn_like"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageLike"
+        android:id="@+id/btn_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:background="@null"
+        android:contentDescription="@string/next"
+        android:src="@drawable/ic_like_unpressed"
         app:layout_constraintBottom_toTopOf="@id/guideline_buttons_bottom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imageShare"
-        android:src="@drawable/ic_like_unpressed" />
+        app:layout_constraintStart_toEndOf="@id/btn_share" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
