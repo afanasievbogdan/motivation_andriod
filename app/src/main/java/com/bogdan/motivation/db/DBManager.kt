@@ -123,22 +123,22 @@ class DBManager(context: Context) {
         return text
     }
 
-    fun readFavoriteKeyFromQuotesDb(item: String): String {
-        val cursor: Cursor = db.rawQuery(
-            "SELECT ${DBConstants.KEY_FAVORITE} " +
-                    "FROM ${DBConstants.TABLE_QUOTES} " +
-                    "WHERE ${DBConstants.KEY_QUOTE} = '${item}'",
-            null
-        )
-
-        var isFavourite = "1"
-        if (cursor.moveToFirst()) {
-            isFavourite = cursor.getString(0)
-        }
-
-        cursor.close()
-        return isFavourite
-    }
+//    fun readFavoriteKeyFromQuotesDb(item: String): String {
+//        val cursor: Cursor = db.rawQuery(
+//            "SELECT ${DBConstants.KEY_FAVORITE} " +
+//                    "FROM ${DBConstants.TABLE_QUOTES} " +
+//                    "WHERE ${DBConstants.KEY_QUOTE} = '${item}'",
+//            null
+//        )
+//
+//        var isFavourite = "1"
+//        if (cursor.moveToFirst()) {
+//            isFavourite = cursor.getString(0)
+//        }
+//
+//        cursor.close()
+//        return isFavourite
+//    }
 
     fun insertFavoriteKeyToQuotesDb(isFavorite: String, item: String) {
         val strSQL = "UPDATE ${DBConstants.TABLE_QUOTES} " +
@@ -148,24 +148,24 @@ class DBManager(context: Context) {
         db.execSQL(strSQL)
     }
 
-    fun insetToPermissionsDbWithIgnore(
-        isSettingsPassed: String,
-        isPopupPassed: String,
-        isFavoriteOpen: String
-    ) {
-        val values = ContentValues().apply {
-            put(DBConstants.KEY_ID, 1)
-            put(DBConstants.KEY_SETTING_PASSED, isSettingsPassed)
-            put(DBConstants.KEY_POPUP_PASSED, isPopupPassed)
-            put(DBConstants.KEY_FAVORITE_OPEN, isFavoriteOpen)
-        }
-        db.insertWithOnConflict(
-            DBConstants.TABLE_PERMISSIONS,
-            null,
-            values,
-            SQLiteDatabase.CONFLICT_IGNORE
-        )
-    }
+//    fun insetToPermissionsDbWithIgnore(
+//        isSettingsPassed: String,
+//        isPopupPassed: String,
+//        isFavoriteOpen: String
+//    ) {
+//        val values = ContentValues().apply {
+//            put(DBConstants.KEY_ID, 1)
+//            put(DBConstants.KEY_SETTING_PASSED, isSettingsPassed)
+//            put(DBConstants.KEY_POPUP_PASSED, isPopupPassed)
+//            put(DBConstants.KEY_FAVORITE_OPEN, isFavoriteOpen)
+//        }
+//        db.insertWithOnConflict(
+//            DBConstants.TABLE_PERMISSIONS,
+//            null,
+//            values,
+//            SQLiteDatabase.CONFLICT_IGNORE
+//        )
+//    }
 
     fun insetToPermissionsDb(
         isSettingsPassed: String,

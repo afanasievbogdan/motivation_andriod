@@ -34,33 +34,43 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setUiAnimations()
         themeSettingsOnClick()
         onBntContinueClicked()
     }
 
-    private fun setUiAnimations() {
-        val tvExplanationThemeAnimation = AnimationUtils.loadAnimation(
-            context,
-            R.anim.fade_anim
-        )
-        val gripAnimation = AnimationUtils.loadAnimation(
-            context,
-            R.anim.fade_anim
-        )
-        val btnContinue2Animation = AnimationUtils.loadAnimation(
-            context,
-            R.anim.fade_anim
-        )
+    override fun onDestroyView() {
+        super.onDestroyView()
 
-        tvExplanationThemeAnimation.startOffset = 750
-        gripAnimation.startOffset = 1250
-        btnContinue2Animation.startOffset = 1750
-
-        binding.tvThemeExplanations.startAnimation(tvExplanationThemeAnimation)
-        binding.gripLayout.startAnimation(gripAnimation)
-        binding.btnContinue2.startAnimation(btnContinue2Animation)
+        _binding = null
     }
+
+    private fun setUiAnimations() {
+        val tvThemeExplanationsAnimation = AnimationUtils.loadAnimation(
+            context,
+            R.anim.fade_anim
+        )
+        val categoriesContainerAnimation = AnimationUtils.loadAnimation(
+            context,
+            R.anim.fade_anim
+        )
+        val btnContinueAnimation = AnimationUtils.loadAnimation(
+            context,
+            R.anim.fade_anim
+        )
+
+        tvThemeExplanationsAnimation.startOffset = 750
+        categoriesContainerAnimation.startOffset = 1250
+        btnContinueAnimation.startOffset = 1750
+
+        with(binding) {
+            tvThemeExplanations.startAnimation(tvThemeExplanationsAnimation)
+            categoriesContainer.startAnimation(categoriesContainerAnimation)
+            btnContinue.startAnimation(btnContinueAnimation)
+        }
+    }
+
     //todo selector drawable
     private var tvLettingGoPressed = false
     private var tvFaithSpiritualityPressed = false
@@ -74,10 +84,32 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker) {
     //todo selector drawable
     private fun themeSettingsOnClick() {
 
+//        binding.tvLettingGo.setOnClickListener {
+//            if (tvLettingGoPressed) {
+//                tvLettingGoPressed = false
+//                binding.tvLettingGo.setBackgroundResource(R.drawable.btn_theme)
+//                binding.tvLettingGo.setTextColor(
+//                    ContextCompat.getColor(
+//                        requireContext(),
+//                        R.color.mine_shaft
+//                    )
+//                )
+//
+//            } else {
+//                tvLettingGoPressed = true
+//                binding.tvLettingGo.setBackgroundResource(R.drawable.btn_pressed_theme)
+//                binding.tvLettingGo.setTextColor(
+//                    ContextCompat.getColor(
+//                        requireContext(),
+//                        R.color.white
+//                    )
+//                )
+//            }
+//        }
+
         binding.tvLettingGo.setOnClickListener {
             if (tvLettingGoPressed) {
                 tvLettingGoPressed = false
-                binding.tvLettingGo.setBackgroundResource(R.drawable.btn_theme)
                 binding.tvLettingGo.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
@@ -87,7 +119,6 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker) {
 
             } else {
                 tvLettingGoPressed = true
-                binding.tvLettingGo.setBackgroundResource(R.drawable.btn_pressed_theme)
                 binding.tvLettingGo.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
@@ -253,7 +284,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker) {
     }
 
     private fun onBntContinueClicked() {
-        binding.btnContinue2.setOnClickListener {
+        binding.btnContinue.setOnClickListener {
             if (tvLettingGoPressed || tvFaithSpiritualityPressed || tvHappinessPressed
                 || tvStressAnxietyPressed || tvPhysicalHealthPressed || tvAchievingGoalsPressed
                 || tvSelfEsteemPressed || tvRelationshipsPressed
@@ -296,10 +327,5 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker) {
                 Toast.LENGTH_SHORT
             ).show()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

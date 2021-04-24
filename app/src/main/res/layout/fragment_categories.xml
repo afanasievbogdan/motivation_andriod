@@ -9,14 +9,14 @@
     tools:context=".ui.CategoriesFragment">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_text_categories_bottom"
+        android:id="@+id/guideline_text_categories_top"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.15" />
 
     <TextView
-        android:id="@+id/text_categories"
+        android:id="@+id/tv_categories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/cynthonextregular"
@@ -24,14 +24,15 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline_text_categories_bottom" />
+        app:layout_constraintTop_toBottomOf="@id/guideline_text_categories_top" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_general_chose"
         android:layout_width="120dp"
         android:layout_height="70dp"
-        android:layout_marginVertical="30dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/btn_theme"
         android:fontFamily="@font/cynthonext"
         android:gravity="start|top"
@@ -42,13 +43,13 @@
         app:iconPadding="0dp"
         app:layout_constraintEnd_toStartOf="@+id/btn_favorite_chose"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_categories" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_categories" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_favorite_chose"
         android:layout_width="120dp"
         android:layout_height="70dp"
-        android:layout_marginVertical="30dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/btn_theme"
         android:fontFamily="@font/cynthonext"
         android:gravity="start|top"
@@ -59,6 +60,6 @@
         app:iconPadding="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_general_chose"
-        app:layout_constraintTop_toBottomOf="@+id/text_categories" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_categories" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

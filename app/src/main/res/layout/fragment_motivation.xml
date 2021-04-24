@@ -9,10 +9,12 @@
     android:orientation="vertical"
     tools:context=".ui.MotivationFragment">
 
+    <!-- Image button -->
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_general"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginBottom="20dp"
         android:alpha="0.66"
@@ -24,13 +26,8 @@
         android:textAllCaps="false"
         android:textSize="12sp"
         app:icon="@drawable/ic_apps"
-        app:iconPadding="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_edit"
@@ -45,11 +42,7 @@
         app:icon="@drawable/ic_brush"
         app:iconPadding="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_account"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/btn_general"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintEnd_toStartOf="@+id/btn_account" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_account"
@@ -65,12 +58,10 @@
         app:iconGravity="textEnd"
         app:iconPadding="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager2"
+        android:id="@+id/view_pager_motivation"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

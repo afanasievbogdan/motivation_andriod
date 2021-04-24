@@ -26,54 +26,57 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setUiAnimations()
         onClickBtnGetStarted()
-    }
-//todo убери цифры из переменных
-    private fun setUiAnimations() {
-        val imageAnimation = AnimationUtils.loadAnimation(
-            context,
-            R.anim.fade_anim
-        )
-        val tv1Animation = AnimationUtils.loadAnimation(
-            context,
-            R.anim.fade_anim
-        )
-        val tv2Animation = AnimationUtils.loadAnimation(
-            context,
-            R.anim.fade_anim
-        )
-        val tv3Animation = AnimationUtils.loadAnimation(
-            context,
-            R.anim.fade_anim
-        )
-        val btnAnimation = AnimationUtils.loadAnimation(
-            context,
-            R.anim.fade_anim
-        )
-
-        tv1Animation.startOffset = 750
-        tv2Animation.startOffset = 1500
-        tv3Animation.startOffset = 2250
-        btnAnimation.startOffset = 3000
-            //todo with(binding)
-        binding.imgHello.startAnimation(imageAnimation)
-        binding.tvSelfCare.startAnimation(tv1Animation)
-        binding.tvSelfLove.startAnimation(tv2Animation)
-        binding.tvSelfGrowth.startAnimation(tv3Animation)
-        binding.btnGetStarted.startAnimation(btnAnimation)
-    }
-
-    private fun onClickBtnGetStarted() {
-        binding.btnGetStarted.setOnClickListener {
-            val action = HelloFragmentDirections.actionHelloFragmentToNotificationSettingsFragment()
-            findNavController().navigate(action)
-        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+
         _binding = null
     }
 
+    private fun setUiAnimations() {
+        val ivHeaderAnimation = AnimationUtils.loadAnimation(
+            context,
+            R.anim.fade_anim
+        )
+        val tvSelfCareAnimation = AnimationUtils.loadAnimation(
+            context,
+            R.anim.fade_anim
+        )
+        val tvSelfLoveAnimation = AnimationUtils.loadAnimation(
+            context,
+            R.anim.fade_anim
+        )
+        val tvSelfGrowthAnimation = AnimationUtils.loadAnimation(
+            context,
+            R.anim.fade_anim
+        )
+        val btnGetStartedAnimation = AnimationUtils.loadAnimation(
+            context,
+            R.anim.fade_anim
+        )
+
+        tvSelfCareAnimation.startOffset = 750
+        tvSelfLoveAnimation.startOffset = 1500
+        tvSelfGrowthAnimation.startOffset = 2250
+        btnGetStartedAnimation.startOffset = 3000
+
+        with(binding){
+            ivHeader.startAnimation(ivHeaderAnimation)
+            tvSelfCare.startAnimation(tvSelfCareAnimation)
+            tvSelfLove.startAnimation(tvSelfLoveAnimation)
+            tvSelfGrowth.startAnimation(tvSelfGrowthAnimation)
+            btnGetStarted.startAnimation(btnGetStartedAnimation)
+        }
+    }
+
+    private fun onClickBtnGetStarted() {
+        binding.btnGetStarted.setOnClickListener {
+            findNavController().navigate(
+                HelloFragmentDirections.actionHelloFragmentToNotificationSettingsFragment())
+        }
+    }
 }

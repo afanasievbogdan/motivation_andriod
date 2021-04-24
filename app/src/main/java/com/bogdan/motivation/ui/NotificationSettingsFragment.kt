@@ -24,10 +24,9 @@ class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_set
     private val binding get() = _binding!!
     private lateinit var dbManager: DBManager
 
+    private var notificationQuantity = 10
     private var hour = 0
     private var minute = 0
-    private var savedHour = 0
-    private var savedMinute = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,33 +42,38 @@ class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_set
         )
         return binding.root
     }
-    //todo обрати тут внимание на enter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUiAnimations()
 
+        setUiAnimations()
         onClickBtnMinus()
         onClickBtnPlus()
         pickStartTime()
         pickEndTime()
-
         onClickBntContinue()
     }
-//todo чисел в названиях быть не должно
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
+    }
+
     private fun setUiAnimations() {
-        val tvExplanationAnimation = AnimationUtils.loadAnimation(
+        val tvNotificationExplanationsAnimation = AnimationUtils.loadAnimation(
             context,
             R.anim.fade_anim
         )
-        val horizontalLayout1Animation = AnimationUtils.loadAnimation(
+        val notificationQuantityContainerAnimation = AnimationUtils.loadAnimation(
             context,
             R.anim.fade_anim_2
         )
-        val horizontalLayout2Animation = AnimationUtils.loadAnimation(
+        val startTimeContainerAnimation = AnimationUtils.loadAnimation(
             context,
             R.anim.fade_anim_2
         )
-        val horizontalLayout3Animation = AnimationUtils.loadAnimation(
+        val endTimeContainerAnimation = AnimationUtils.loadAnimation(
             context,
             R.anim.fade_anim_2
         )
@@ -78,38 +82,35 @@ class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_set
             R.anim.fade_anim_2
         )
 
-        tvExplanationAnimation.startOffset = 750
-        horizontalLayout1Animation.startOffset = 1500
-        horizontalLayout2Animation.startOffset = 1750
-        horizontalLayout3Animation.startOffset = 2000
+        tvNotificationExplanationsAnimation.startOffset = 750
+        notificationQuantityContainerAnimation.startOffset = 1500
+        startTimeContainerAnimation.startOffset = 1750
+        endTimeContainerAnimation.startOffset = 2000
         btnContinueAnimation.startOffset = 2250
 
-        binding.textNotificationExplanations.startAnimation(tvExplanationAnimation)
-        binding.horizontalLayout1.startAnimation(horizontalLayout1Animation)
-        binding.horizontalLayout2.startAnimation(horizontalLayout2Animation)
-        binding.horizontalLayout3.startAnimation(horizontalLayout3Animation)
-        binding.btnContinue.startAnimation(btnContinueAnimation)
+        with(binding) {
+            tvNotificationExplanations.startAnimation(tvNotificationExplanationsAnimation)
+            notificationQuantityContainer.startAnimation(notificationQuantityContainerAnimation)
+            startTimeContainer.startAnimation(startTimeContainerAnimation)
+            endTimeContainer.startAnimation(endTimeContainerAnimation)
+            btnContinue.startAnimation(btnContinueAnimation)
+        }
+
     }
 
-    //todo тут нужно работать с переменной, а не доставать и обрезать значение из вью
-    // if а в одну строку либо с {}
     private fun onClickBtnMinus() {
         binding.btnMinus.setOnClickListener {
-            var number = binding.notifQuantity.text.toString().substringBefore("X").toInt()
-            if (number > 0)
-                number--
-            else number = 0
-            binding.notifQuantity.text = "${number}X"
+            if (notificationQuantity > 0) notificationQuantity--
+            else notificationQuantity = 0
+            binding.notificationsQuantity.text = "${notificationQuantity}X"
         }
     }
-//todo тоже самое
+
     private fun onClickBtnPlus() {
         binding.btnPlus.setOnClickListener {
-            var number = binding.notifQuantity.text.toString().substringBefore("X").toInt()
-            if (number < 30)
-                number++
-            else number = 30
-            binding.notifQuantity.text = "${number}X"
+            if (notificationQuantity < 30) notificationQuantity++
+            else notificationQuantity = 30
+            binding.notificationsQuantity.text = "${notificationQuantity}X"
         }
     }
 
@@ -119,7 +120,6 @@ class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_set
         minute = calendar.get(Calendar.MINUTE)
     }
 
-    //TODO ?)
     private var isStartTimer = true
 
     private fun pickStartTime() {
@@ -130,6 +130,7 @@ class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_set
                 activity,
                 R.style.TimePickerTheme, this, hour, minute, true
             ).show()
+            isStartTimer = true
         }
     }
 
@@ -149,37 +150,28 @@ class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_set
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         var editHour = hourOfDay.toString()
         var editMinute = minute.toString()
-        if (hourOfDay.toString().length == 1)
+        if (editHour.length == 1)
             editHour = "0$hourOfDay"
-        if (minute.toString().length == 1)
+        if (editMinute.length == 1)
             editMinute = "0$minute"
-        savedHour = hourOfDay
-        savedMinute = minute
+
         if (isStartTimer) {
             binding.startTime.text = "$editHour : $editMinute"
-        } else if (!isStartTimer) {
+        } else {
             binding.endTime.text = "$editHour : $editMinute"
         }
     }
 
     private fun onClickBntContinue() {
-//todo with(binding)
-        binding.btnContinue.setOnClickListener {
-            val quantity = binding.notifQuantity.text.toString().substringBefore("X")
-            val startTime = binding.startTime.text.toString().substring(0, 2)
-            val endTime = binding.endTime.text.toString().substring(0, 2)
-
-            dbManager.insetToNotificationsDb(quantity, startTime, endTime)
-
-            val action =
-                NotificationSettingsFragmentDirections.actionNotificationSettingsFragmentToThemePickerFragment()
-            findNavController().navigate(action)
+        with(binding) {
+            btnContinue.setOnClickListener {
+                val quantity = notificationsQuantity.text.toString().substringBefore("X")
+                val startTime = startTime.text.toString().substring(0, 2)
+                val endTime = endTime.text.toString().substring(0, 2)
+                dbManager.insetToNotificationsDb(quantity, startTime, endTime)
+                findNavController().navigate(
+                    NotificationSettingsFragmentDirections.actionNotificationSettingsFragmentToThemePickerFragment())
+            }
         }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
 }

@@ -11,11 +11,12 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.bogdan.motivation.R
-import com.bogdan.motivation.`interface`.OnClickListener
+import com.bogdan.motivation.databinding.ActivityApplicationBinding
+import com.bogdan.motivation.databinding.DialogGetitBinding
+import com.bogdan.motivation.interfaces.OnClickListener
 import com.bogdan.motivation.databinding.FragmentMotivationBinding
 import com.bogdan.motivation.db.DBManager
 import com.bogdan.motivation.entities.Quote
@@ -27,8 +28,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
     private var _binding: FragmentMotivationBinding? = null
     private val binding get() = _binding!!
     private lateinit var dbManager: DBManager
-    //todo еррейлист = вар?
-    private var quotesList = ArrayList<Quote>()
+    private val quotesList = ArrayList<Quote>()
     private val quotesViewPagerAdapter = QuotesViewPagerAdapter()
 
     override fun onCreateView(
@@ -41,43 +41,41 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
         _binding = FragmentMotivationBinding.inflate(inflater, container, false)
         return binding.root
     }
-        //todo после super 1 enter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        quotesList =
-            if (dbManager.readFavoriteOpenFromPermissionDb() == "0") {
-                dbManager.readAllQuotesFromQuotesDb()
-            } else {
-                dbManager.readFavouriteQuoteFromQuotesDb()
-            }
+
+        if (dbManager.readFavoriteOpenFromPermissionDb() == "0") {
+            quotesList.addAll(dbManager.readAllQuotesFromQuotesDb())
+        } else {
+            quotesList.addAll(dbManager.readFavouriteQuoteFromQuotesDb())
+        }
 
         initializePopup()
+        initializeViewPager()
         onClickCategoriesSelection()
-//todo 2 with конкретно тут наверное уже перебор) и это можно вынести в отдельную функцию
-        with(binding.viewPager2) {
-            orientation = ViewPager2.ORIENTATION_VERTICAL
-            adapter = quotesViewPagerAdapter
-            with(quotesViewPagerAdapter) {
-                setData(quotesList)
-                onClickListener = this@MotivationFragment
-            }
-        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
     }
 
     private fun initializePopup() {
         val isPopupPassed = dbManager.readPopupFromPermissionsDb()
 
         if (isPopupPassed == "0") {
+            val dialogBinding = DialogGetitBinding.inflate(layoutInflater)
             val dialog = Dialog(requireContext()).apply {
                 requestWindowFeature(Window.FEATURE_NO_TITLE)
-                setContentView(R.layout.dialog_getit)
+                setContentView(dialogBinding.root)
                 window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 setCancelable(false)
                 show()
             }
-            //todo viewBinding тут можно заюзать
-            val btnGetIt: Button = dialog.findViewById(R.id.btn_got_it)
-            btnGetIt.setOnClickListener {
+
+            dialogBinding.btnGotIt.setOnClickListener {
                 dbManager.insetToPermissionsDb("1", "1", "0")
                 dialog.dismiss()
             }
@@ -88,6 +86,15 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
         binding.btnGeneral.setOnClickListener {
             val action = MotivationFragmentDirections.actionMotivationFragmentToCategoriesFragment()
             findNavController().navigate(action)
+        }
+    }
+
+    private fun initializeViewPager() {
+        with(binding.viewPagerMotivation) {
+            orientation = ViewPager2.ORIENTATION_VERTICAL
+            adapter = quotesViewPagerAdapter
+            quotesViewPagerAdapter.setData(quotesList)
+            quotesViewPagerAdapter.onClickListener = this@MotivationFragment
         }
     }
 
@@ -104,10 +111,4 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
         }
         startActivity(sendIntent)
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
 }

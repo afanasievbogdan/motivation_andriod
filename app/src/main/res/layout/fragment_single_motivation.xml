@@ -21,6 +21,8 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.88" />
 
+    <!-- chained -->
+
     <TextView
         android:id="@+id/textQuote"
         android:layout_width="wrap_content"
@@ -57,11 +59,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
+        android:src="@drawable/ic_share"
         app:layout_constraintBottom_toTopOf="@id/guideline_buttons_bottom"
         app:layout_constraintEnd_toStartOf="@+id/imageLike"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_share" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/imageLike"
@@ -72,6 +74,6 @@
         app:layout_constraintBottom_toTopOf="@id/guideline_buttons_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imageShare"
-        app:srcCompat="@drawable/ic_like_unpressed" />
+        android:src="@drawable/ic_like_unpressed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

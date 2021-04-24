@@ -15,19 +15,17 @@
         app:layout_constraintGuide_percent="0.4" />
 
     <ImageView
-        android:id="@+id/imgThemeView"
+        android:id="@+id/iv_header"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:contentDescription="@string/next"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="@id/guidelineImageThemeBottom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/photo_themes" />
 
     <TextView
-        android:id="@+id/tvThemeExplanations"
+        android:id="@+id/tv_theme_explanations"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -36,21 +34,21 @@
         android:textAlignment="center"
         android:textColor="@color/mine_shaft"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@id/gripLayout"
+        app:layout_constraintBottom_toTopOf="@id/categories_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgThemeView" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_header" />
 
     <TableLayout
-        android:id="@+id/gripLayout"
+        android:id="@+id/categories_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="15dp"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@id/btn_continue_2"
+        app:layout_constraintBottom_toTopOf="@id/btn_continue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvThemeExplanations">
+        app:layout_constraintTop_toBottomOf="@+id/tv_theme_explanations">
 
         <TableRow
             android:layout_width="match_parent"
@@ -63,12 +61,13 @@
                 android:layout_marginVertical="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_theme"
+                android:background="@drawable/btn_theme_selector_background"
+                android:textColor="@drawable/btn_theme_selector_text_color"
                 android:fontFamily="@font/cynthonext"
                 android:gravity="center"
                 android:paddingVertical="15sp"
                 android:text="@string/theme_letting_go"
-                android:textColor="@color/mine_shaft" />
+                />
 
             <TextView
                 android:id="@+id/tv_faith_spirituality"
@@ -77,12 +76,12 @@
                 android:layout_marginVertical="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_theme"
+                android:background="@drawable/btn_theme_selector_background"
+                android:textColor="@drawable/btn_theme_selector_text_color"
                 android:fontFamily="@font/cynthonext"
                 android:gravity="center"
                 android:paddingVertical="15sp"
-                android:text="@string/theme_faith_spirituality"
-                android:textColor="@color/mine_shaft" />
+                android:text="@string/theme_faith_spirituality"/>
         </TableRow>
 
         <TableRow
@@ -96,12 +95,12 @@
                 android:layout_marginVertical="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_selector_theme"
+                android:background="@drawable/btn_theme_selector_background"
+                android:textColor="@drawable/btn_theme_selector_text_color"
                 android:fontFamily="@font/cynthonext"
                 android:gravity="center"
                 android:paddingVertical="15sp"
-                android:text="@string/theme_happiness"
-                android:textColor="@color/mine_shaft" />
+                android:text="@string/theme_happiness" />
 
             <TextView
                 android:id="@+id/tv_stress_anxiety"
@@ -110,12 +109,12 @@
                 android:layout_marginVertical="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_theme"
+                android:background="@drawable/btn_theme_selector_background"
+                android:textColor="@drawable/btn_theme_selector_text_color"
                 android:fontFamily="@font/cynthonext"
                 android:gravity="center"
                 android:paddingVertical="15sp"
-                android:text="@string/theme_stress_anxiety"
-                android:textColor="@color/mine_shaft" />
+                android:text="@string/theme_stress_anxiety" />
         </TableRow>
 
         <TableRow
@@ -129,12 +128,12 @@
                 android:layout_marginVertical="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_theme"
+                android:background="@drawable/btn_theme_selector_background"
+                android:textColor="@drawable/btn_theme_selector_text_color"
                 android:fontFamily="@font/cynthonext"
                 android:gravity="center"
                 android:paddingVertical="15sp"
-                android:text="@string/theme_physical_health"
-                android:textColor="@color/mine_shaft" />
+                android:text="@string/theme_physical_health" />
 
             <TextView
                 android:id="@+id/tv_achieving_goals"
@@ -143,12 +142,12 @@
                 android:layout_marginVertical="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_theme"
+                android:background="@drawable/btn_theme_selector_background"
+                android:textColor="@drawable/btn_theme_selector_text_color"
                 android:fontFamily="@font/cynthonext"
                 android:gravity="center"
                 android:paddingVertical="15sp"
-                android:text="@string/theme_achieving_goals"
-                android:textColor="@color/mine_shaft" />
+                android:text="@string/theme_achieving_goals" />
         </TableRow>
 
         <TableRow
@@ -162,12 +161,12 @@
                 android:layout_marginVertical="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_theme"
+                android:background="@drawable/btn_theme_selector_background"
+                android:textColor="@drawable/btn_theme_selector_text_color"
                 android:fontFamily="@font/cynthonext"
                 android:gravity="center"
                 android:paddingVertical="15sp"
-                android:text="@string/theme_self_esteem"
-                android:textColor="@color/mine_shaft" />
+                android:text="@string/theme_self_esteem" />
 
             <TextView
                 android:id="@+id/tv_relationships"
@@ -176,17 +175,17 @@
                 android:layout_marginVertical="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_theme"
+                android:background="@drawable/btn_theme_selector_background"
+                android:textColor="@drawable/btn_theme_selector_text_color"
                 android:fontFamily="@font/cynthonext"
                 android:gravity="center"
                 android:paddingVertical="15sp"
-                android:text="@string/theme_relationships"
-                android:textColor="@color/mine_shaft" />
+                android:text="@string/theme_relationships" />
         </TableRow>
     </TableLayout>
 
     <Button
-        android:id="@+id/btn_continue_2"
+        android:id="@+id/btn_continue"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginHorizontal="25dp"

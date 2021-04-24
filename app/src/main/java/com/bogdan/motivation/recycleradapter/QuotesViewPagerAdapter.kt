@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bogdan.motivation.R
-import com.bogdan.motivation.`interface`.OnClickListener
+import com.bogdan.motivation.interfaces.OnClickListener
 import com.bogdan.motivation.databinding.FragmentSingleMotivationBinding
 import com.bogdan.motivation.entities.Quote
 

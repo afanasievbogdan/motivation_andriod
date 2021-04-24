@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
@@ -38,55 +37,52 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         chooseActivityToOpen()
     }
-//todo ретрофит инициализируй в мейн активити, action - лишняя перменная
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
+    }
+
+
     private fun chooseActivityToOpen() {
         val isSettingsPassed = dbManager.readSettingsFromPermissionsDb()
         if (isSettingsPassed == "0") {
-            val action = MainFragmentDirections.actionMainFragmentToHelloFragment()
-            findNavController().navigate(action)
+            findNavController().navigate(
+                MainFragmentDirections.actionMainFragmentToHelloFragment())
         } else if (isSettingsPassed == "1") {
-            RetrofitConfiguration.configureRetrofit(dbManager)
+            RetrofitConfiguration.getQuotesFromApi(dbManager)
             setNotificationWorker()
-
-            val action = MainFragmentDirections.actionMainFragmentToMotivationFragment()
-            Timer().schedule(2000) { findNavController().navigate(action) }
+            Timer().schedule(2000) {
+                findNavController().navigate(
+                    MainFragmentDirections.actionMainFragmentToMotivationFragment())
+            }
         }
     }
 
     private fun setNotificationWorker() {
+        val workTag = "WORK_TAG"
+
         val notifQuantity = dbManager.readQuantityFromNotificationsDb()
         val startTime = dbManager.readStartTimeFromNotificationsDb()
         val endTime = dbManager.readEndTimeFromNotificationsDb()
 
-        // todo repeatInterval.coerceAtLeast(16)
         var repeatInterval = (endTime.toInt() - startTime.toInt()) * 60 / notifQuantity.toInt()
-        if (repeatInterval < 16)
-            repeatInterval = 16
-        //todo зачем?
-        val myConstraints: Constraints = Constraints.Builder()
-            .setRequiresBatteryNotLow(true)
-            .build()
+        repeatInterval = repeatInterval.coerceAtLeast(16)
 
         val workRequest = PeriodicWorkRequest.Builder(
             NotificationsWorker::class.java,
             repeatInterval.toLong(), TimeUnit.MINUTES,
             repeatInterval.toLong() - 1, TimeUnit.MINUTES
-        )
-            .setConstraints(myConstraints)
-            .build()
-        //todo WORK_TAG в констансту
+        ).build()
+
         WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(
-            "WORK_TAG",
+            workTag,
             ExistingPeriodicWorkPolicy.REPLACE,
             workRequest
         )
     }
-    //todo lifecycle fun вверху должны быть
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
 }
