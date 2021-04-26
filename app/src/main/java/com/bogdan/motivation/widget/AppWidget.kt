@@ -57,7 +57,7 @@ internal fun updateAppWidget(
         context.packageName,
         R.layout.widget_app
     )
-    views.setTextViewText(R.id.appwidget_text, dbManager.readRandomQuoteFromQuotesDb())
-    views.setOnClickPendingIntent(R.id.appwidget_text, pendingIntent)
+    views.setTextViewText(R.id.tv_appwidget, dbManager.readRandomQuoteFromQuotesDb())
+    views.setOnClickPendingIntent(R.id.tv_appwidget, pendingIntent)
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }

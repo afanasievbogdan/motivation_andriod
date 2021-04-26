@@ -122,23 +122,6 @@ class DBManager(context: Context) {
         return text
     }
 
-//    fun readFavoriteKeyFromQuotesDb(item: String): String {
-//        val cursor: Cursor = db.rawQuery(
-//            "SELECT ${DBConstants.KEY_FAVORITE} " +
-//                    "FROM ${DBConstants.TABLE_QUOTES} " +
-//                    "WHERE ${DBConstants.KEY_QUOTE} = '${item}'",
-//            null
-//        )
-//
-//        var isFavourite = "1"
-//        if (cursor.moveToFirst()) {
-//            isFavourite = cursor.getString(0)
-//        }
-//
-//        cursor.close()
-//        return isFavourite
-//    }
-
     fun insertFavoriteKeyToQuotesDb(isFavorite: String, item: String) {
         val strSQL = "UPDATE ${DBConstants.TABLE_QUOTES} " +
             "SET ${DBConstants.KEY_FAVORITE} = $isFavorite " +
@@ -146,25 +129,6 @@ class DBManager(context: Context) {
 
         db.execSQL(strSQL)
     }
-
-//    fun insetToPermissionsDbWithIgnore(
-//        isSettingsPassed: String,
-//        isPopupPassed: String,
-//        isFavoriteOpen: String
-//    ) {
-//        val values = ContentValues().apply {
-//            put(DBConstants.KEY_ID, 1)
-//            put(DBConstants.KEY_SETTING_PASSED, isSettingsPassed)
-//            put(DBConstants.KEY_POPUP_PASSED, isPopupPassed)
-//            put(DBConstants.KEY_FAVORITE_OPEN, isFavoriteOpen)
-//        }
-//        db.insertWithOnConflict(
-//            DBConstants.TABLE_PERMISSIONS,
-//            null,
-//            values,
-//            SQLiteDatabase.CONFLICT_IGNORE
-//        )
-//    }
 
     fun insetToPermissionsDb(
         isSettingsPassed: String,
@@ -300,5 +264,42 @@ class DBManager(context: Context) {
 
         cursor.close()
         return endTime
+    }
+
+    fun insetToThemesDb(theme: String) {
+        val values = ContentValues().apply {
+            put(DBConstants.KEY_ID, 1)
+            put(DBConstants.KEY_LETTING_GO, theme)
+            put(DBConstants.KEY_FAITH_SPIRITUALITY, "0")
+            put(DBConstants.KEY_HAPPINESS, "0")
+            put(DBConstants.KEY_STRESS_ANXIETY, "0")
+            put(DBConstants.KEY_PHYSICAL_HEALTH, "0")
+            put(DBConstants.KEY_ACHIEVING_GOALS, "0")
+            put(DBConstants.KEY_SELF_ESTEEM, "0")
+            put(DBConstants.KEY_RELATIONSHIP, "0")
+        }
+        db.insertWithOnConflict(
+            DBConstants.TABLE_THEMES,
+            null,
+            values,
+            SQLiteDatabase.CONFLICT_REPLACE
+        )
+    }
+
+    fun readFromThemesDb(): String {
+        val cursor: Cursor = db.rawQuery(
+            "SELECT ${DBConstants.KEY_LETTING_GO} FROM " +
+                "${DBConstants.TABLE_THEMES} WHERE " +
+                "${DBConstants.KEY_ID} = 1",
+            null
+        )
+
+        var lettingGo = "0"
+        if (cursor.moveToFirst()) {
+            lettingGo = cursor.getString(0)
+        }
+
+        cursor.close()
+        return lettingGo
     }
 }

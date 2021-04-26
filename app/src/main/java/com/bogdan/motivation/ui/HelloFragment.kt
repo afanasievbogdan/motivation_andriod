@@ -40,23 +40,23 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
     private fun setUiAnimations() {
         val ivHeaderAnimation = AnimationUtils.loadAnimation(
             context,
-            R.anim.fade_anim
+            R.anim.animation_fade_slow
         )
         val tvSelfCareAnimation = AnimationUtils.loadAnimation(
             context,
-            R.anim.fade_anim
+            R.anim.animation_fade_slow
         )
         val tvSelfLoveAnimation = AnimationUtils.loadAnimation(
             context,
-            R.anim.fade_anim
+            R.anim.animation_fade_slow
         )
         val tvSelfGrowthAnimation = AnimationUtils.loadAnimation(
             context,
-            R.anim.fade_anim
+            R.anim.animation_fade_slow
         )
         val btnGetStartedAnimation = AnimationUtils.loadAnimation(
             context,
-            R.anim.fade_anim
+            R.anim.animation_fade_slow
         )
 
         tvSelfCareAnimation.startOffset = 750

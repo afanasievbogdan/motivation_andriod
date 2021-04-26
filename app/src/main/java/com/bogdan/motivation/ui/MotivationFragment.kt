@@ -11,22 +11,24 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.bogdan.motivation.R
 import com.bogdan.motivation.databinding.DialogGetitBinding
 import com.bogdan.motivation.databinding.FragmentMotivationBinding
 import com.bogdan.motivation.db.DBManager
 import com.bogdan.motivation.entities.Quote
-import com.bogdan.motivation.interfaces.OnClickListener
-import com.bogdan.motivation.recycleradapter.QuotesViewPagerAdapter
+import com.bogdan.motivation.interfaces.OnClickListenerMotivation
+import com.bogdan.motivation.recycleradapters.QuotesViewPagerAdapter
 
-class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListener {
+class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListenerMotivation {
 
     private var _binding: FragmentMotivationBinding? = null
     private val binding get() = _binding!!
     private lateinit var dbManager: DBManager
     private val quotesList = ArrayList<Quote>()
     private val quotesViewPagerAdapter = QuotesViewPagerAdapter()
+    private val args: MotivationFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,6 +50,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
             quotesList.addAll(dbManager.readFavouriteQuoteFromQuotesDb())
         }
 
+        binding.btnCategories.text = args.btnCategoriesText
         initializePopup()
         initializeViewPager()
         onClickCategoriesSelection()
@@ -80,9 +83,10 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
     }
 
     private fun onClickCategoriesSelection() {
-        binding.btnGeneral.setOnClickListener {
-            val action = MotivationFragmentDirections.actionMotivationFragmentToCategoriesFragment()
-            findNavController().navigate(action)
+        binding.btnCategories.setOnClickListener {
+            findNavController().navigate(
+                MotivationFragmentDirections.actionMotivationFragmentToCategoriesFragment()
+            )
         }
     }
 
@@ -91,7 +95,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
             orientation = ViewPager2.ORIENTATION_VERTICAL
             adapter = quotesViewPagerAdapter
             quotesViewPagerAdapter.setData(quotesList)
-            quotesViewPagerAdapter.onClickListener = this@MotivationFragment
+            quotesViewPagerAdapter.onClickListenerMotivation = this@MotivationFragment
         }
     }
 

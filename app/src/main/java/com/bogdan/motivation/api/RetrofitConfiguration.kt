@@ -1,5 +1,6 @@
 package com.bogdan.motivation.api
 
+import android.util.Log
 import com.bogdan.motivation.db.DBManager
 import com.bogdan.motivation.entities.Root
 import okhttp3.OkHttpClient
@@ -13,21 +14,27 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 object RetrofitConfiguration {
 
     private lateinit var retrofit: QuotesApi
+    private const val BASE_URL = "http://10.0.2.2:3000/"
 
-    fun configureRetrofit() {
+    private fun configureOkHttp(): OkHttpClient {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
-        val okHttpClient = OkHttpClient.Builder()
+        return OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
             .build()
+    }
 
-        retrofit = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:3000/")
-            .client(okHttpClient)
+    private fun configureRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(configureOkHttp())
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
-            .create(QuotesApi::class.java)
+    }
+
+    fun configureQuotesApi() {
+        retrofit = configureRetrofit().create(QuotesApi::class.java)
     }
 
     fun getQuotesFromApi(dbManager: DBManager) {
@@ -42,7 +49,7 @@ object RetrofitConfiguration {
             }
 
             override fun onFailure(call: Call<List<Root>?>, t: Throwable) {
-                println("!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                Log.w("Get Quotes Method", t)
             }
         })
     }

@@ -17,8 +17,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
     private lateinit var dbManager: DBManager
-    // todo почему АррейЛист = вар? и что с названием?
-    private var quotesIsEmptyList = ArrayList<Quote>()
+    private val quotesList = ArrayList<Quote>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,24 +32,27 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        quotesIsEmptyList = dbManager.readFavouriteQuoteFromQuotesDb()
+        quotesList.addAll(dbManager.readFavouriteQuoteFromQuotesDb())
         onClickCategories()
     }
 
     private fun onClickCategories() {
         binding.btnGeneralChose.setOnClickListener {
             dbManager.insetToPermissionsDb("1", "1", "0")
-            val action = CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment()
+            val action = CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment(
+                "General"
+            )
             findNavController().navigate(action)
         }
 
         binding.btnFavoriteChose.setOnClickListener {
             dbManager.insetToPermissionsDb("1", "1", "1")
-            // todo list.isNotEmpty
-            if (quotesIsEmptyList.size > 0) {
-                val action =
-                    CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment()
-                findNavController().navigate(action)
+            if (quotesList.isNotEmpty()) {
+                findNavController().navigate(
+                    CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment(
+                        "Favorite"
+                    )
+                )
             } else {
                 Toast.makeText(context, "You don't have any favourite yet. :(", Toast.LENGTH_LONG)
                     .show()

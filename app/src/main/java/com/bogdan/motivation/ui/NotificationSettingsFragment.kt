@@ -25,6 +25,7 @@ class NotificationSettingsFragment :
     private val binding get() = _binding!!
     private lateinit var dbManager: DBManager
 
+    private var isStartTimer = true
     private var notificationQuantity = 10
     private var hour = 0
     private var minute = 0
@@ -64,23 +65,27 @@ class NotificationSettingsFragment :
     private fun setUiAnimations() {
         val tvNotificationExplanationsAnimation = AnimationUtils.loadAnimation(
             context,
-            R.anim.fade_anim
+            R.anim.animation_fade_slow
         )
+
         val notificationQuantityContainerAnimation = AnimationUtils.loadAnimation(
             context,
-            R.anim.fade_anim_2
+            R.anim.animation_fade_fast
         )
+
         val startTimeContainerAnimation = AnimationUtils.loadAnimation(
             context,
-            R.anim.fade_anim_2
+            R.anim.animation_fade_fast
         )
+
         val endTimeContainerAnimation = AnimationUtils.loadAnimation(
             context,
-            R.anim.fade_anim_2
+            R.anim.animation_fade_fast
         )
+
         val btnContinueAnimation = AnimationUtils.loadAnimation(
             context,
-            R.anim.fade_anim_2
+            R.anim.animation_fade_fast
         )
 
         tvNotificationExplanationsAnimation.startOffset = 750
@@ -91,9 +96,9 @@ class NotificationSettingsFragment :
 
         with(binding) {
             tvNotificationExplanations.startAnimation(tvNotificationExplanationsAnimation)
-            notificationQuantityContainer.startAnimation(notificationQuantityContainerAnimation)
-            startTimeContainer.startAnimation(startTimeContainerAnimation)
-            endTimeContainer.startAnimation(endTimeContainerAnimation)
+            containerNotificationQuantity.startAnimation(notificationQuantityContainerAnimation)
+            containerStartTime.startAnimation(startTimeContainerAnimation)
+            containerEndTime.startAnimation(endTimeContainerAnimation)
             btnContinue.startAnimation(btnContinueAnimation)
         }
     }
@@ -102,7 +107,7 @@ class NotificationSettingsFragment :
         binding.btnMinus.setOnClickListener {
             if (notificationQuantity > 0) notificationQuantity--
             else notificationQuantity = 0
-            binding.notificationsQuantity.text = "${notificationQuantity}X"
+            binding.tvNotificationsQuantity.text = "${notificationQuantity}X"
         }
     }
 
@@ -110,7 +115,7 @@ class NotificationSettingsFragment :
         binding.btnPlus.setOnClickListener {
             if (notificationQuantity < 30) notificationQuantity++
             else notificationQuantity = 30
-            binding.notificationsQuantity.text = "${notificationQuantity}X"
+            binding.tvNotificationsQuantity.text = "${notificationQuantity}X"
         }
     }
 
@@ -120,10 +125,8 @@ class NotificationSettingsFragment :
         minute = calendar.get(Calendar.MINUTE)
     }
 
-    private var isStartTimer = true
-
     private fun pickStartTime() {
-        binding.startTime.setOnClickListener {
+        binding.btnStartTime.setOnClickListener {
             getTimeCalendar()
 
             TimePickerDialog(
@@ -135,7 +138,7 @@ class NotificationSettingsFragment :
     }
 
     private fun pickEndTime() {
-        binding.endTime.setOnClickListener {
+        binding.btnEndTime.setOnClickListener {
             getTimeCalendar()
 
             TimePickerDialog(
@@ -146,28 +149,27 @@ class NotificationSettingsFragment :
         }
     }
 
-    // TODO эту функцию нужно рефакторить
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-        var editHour = hourOfDay.toString()
-        var editMinute = minute.toString()
-        if (editHour.length == 1)
-            editHour = "0$hourOfDay"
-        if (editMinute.length == 1)
-            editMinute = "0$minute"
+        val editHour =
+            if (hourOfDay.toString().length == 1) "0$hourOfDay"
+            else "$hourOfDay"
+        val editMinute =
+            if (minute.toString().length == 1) "0$minute"
+            else "$minute"
 
         if (isStartTimer) {
-            binding.startTime.text = "$editHour : $editMinute"
+            binding.btnStartTime.text = "$editHour : $editMinute"
         } else {
-            binding.endTime.text = "$editHour : $editMinute"
+            binding.btnEndTime.text = "$editHour : $editMinute"
         }
     }
 
     private fun onClickBntContinue() {
         with(binding) {
             btnContinue.setOnClickListener {
-                val quantity = notificationsQuantity.text.toString().substringBefore("X")
-                val startTime = startTime.text.toString().substring(0, 2)
-                val endTime = endTime.text.toString().substring(0, 2)
+                val quantity = tvNotificationsQuantity.text.toString().substringBefore("X")
+                val startTime = btnStartTime.text.toString().substring(0, 2)
+                val endTime = btnEndTime.text.toString().substring(0, 2)
                 dbManager.insetToNotificationsDb(quantity, startTime, endTime)
                 findNavController().navigate(
                     NotificationSettingsFragmentDirections.actionNotificationSettingsFragmentToThemePickerFragment()

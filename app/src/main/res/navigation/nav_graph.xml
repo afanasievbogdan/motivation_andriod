@@ -9,29 +9,29 @@
         android:id="@+id/helloFragment"
         android:name="com.bogdan.motivation.ui.HelloFragment"
         android:label="fragment_hello"
-        tools:layout="@layout/fragment_hello" >
+        tools:layout="@layout/fragment_hello">
         <action
             android:id="@+id/action_helloFragment_to_notificationSettingsFragment"
             app:destination="@id/notificationSettingsFragment"
-            app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/slide_out" />
+            app:enterAnim="@anim/animation_slide_in"
+            app:exitAnim="@anim/animation_slide_out" />
     </fragment>
     <fragment
         android:id="@+id/notificationSettingsFragment"
         android:name="com.bogdan.motivation.ui.NotificationSettingsFragment"
         android:label="fragment_notification_settings"
-        tools:layout="@layout/fragment_notification_settings" >
+        tools:layout="@layout/fragment_notification_settings">
         <action
             android:id="@+id/action_notificationSettingsFragment_to_themePickerFragment"
             app:destination="@id/themePickerFragment"
-            app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/slide_out" />
+            app:enterAnim="@anim/animation_slide_in"
+            app:exitAnim="@anim/animation_slide_out" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.bogdan.motivation.ui.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_helloFragment"
             app:destination="@id/helloFragment" />
@@ -43,16 +43,19 @@
         android:id="@+id/motivationFragment"
         android:name="com.bogdan.motivation.ui.MotivationFragment"
         android:label="fragment_motivation"
-        tools:layout="@layout/fragment_motivation" >
+        tools:layout="@layout/fragment_motivation">
         <action
             android:id="@+id/action_motivationFragment_to_categoriesFragment"
             app:destination="@id/categoriesFragment" />
+        <argument
+            android:name="btn_categories_text"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/themePickerFragment"
         android:name="com.bogdan.motivation.ui.ThemePickerFragment"
         android:label="fragment_theme_picker"
-        tools:layout="@layout/fragment_theme_picker" >
+        tools:layout="@layout/fragment_theme_picker">
         <action
             android:id="@+id/action_themePickerFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
@@ -61,7 +64,7 @@
         android:id="@+id/categoriesFragment"
         android:name="com.bogdan.motivation.ui.CategoriesFragment"
         android:label="fragment_categories"
-        tools:layout="@layout/fragment_categories" >
+        tools:layout="@layout/fragment_categories">
         <action
             android:id="@+id/action_categoriesFragment_to_motivationFragment"
             app:destination="@id/motivationFragment" />

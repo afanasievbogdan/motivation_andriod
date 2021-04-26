@@ -1,6 +1,6 @@
 package com.bogdan.motivation.interfaces
 
-interface OnClickListener {
+interface OnClickListenerMotivation {
     fun onFavoriteClickListener(isFavorite: Boolean, quote: String)
     fun onShareClickListener(quote: String, author: String)
 }

@@ -20,6 +20,6 @@ class ApplicationActivity : AppCompatActivity() {
         dbManager = DBManager(applicationContext)
         dbManager.openDb()
 
-        RetrofitConfiguration.configureRetrofit()
+        RetrofitConfiguration.configureQuotesApi()
     }
 }

@@ -45,7 +45,7 @@
 
     <!-- Pop-up window Strings -->
     <string name="popup_explanation">Swipe to read quotes</string>
-    <string name="popup_btn_gotit">Got it!</string>
+    <string name="popup_btn_got_it">Got it!</string>
 
     <!-- Category selection -->
     <string name="categories_title">Categories</string>
@@ -58,7 +58,5 @@
     <!-- Widget -->
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

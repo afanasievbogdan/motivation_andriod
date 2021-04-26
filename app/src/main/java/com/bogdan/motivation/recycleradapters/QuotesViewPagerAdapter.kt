@@ -1,4 +1,4 @@
-package com.bogdan.motivation.recycleradapter
+package com.bogdan.motivation.recycleradapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,16 +6,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bogdan.motivation.R
 import com.bogdan.motivation.databinding.FragmentSingleMotivationBinding
 import com.bogdan.motivation.entities.Quote
-import com.bogdan.motivation.interfaces.OnClickListener
+import com.bogdan.motivation.interfaces.OnClickListenerMotivation
 
 class QuotesViewPagerAdapter :
-    RecyclerView.Adapter<QuotesViewPagerAdapter.ViewHolder>() {
+    RecyclerView.Adapter<QuotesViewPagerAdapter.QuotesViewHolder>() {
 
     private val quotesList = mutableListOf<Quote>()
-    lateinit var onClickListener: OnClickListener
+    lateinit var onClickListenerMotivation: OnClickListenerMotivation
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuotesViewHolder {
+        return QuotesViewHolder(
             FragmentSingleMotivationBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -26,7 +26,7 @@ class QuotesViewPagerAdapter :
 
     override fun getItemCount() = quotesList.count()
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: QuotesViewHolder, position: Int) {
         holder.bind(quotesList[position])
     }
 
@@ -36,7 +36,7 @@ class QuotesViewPagerAdapter :
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(private val binding: FragmentSingleMotivationBinding) :
+    inner class QuotesViewHolder(private val binding: FragmentSingleMotivationBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(quote: Quote) {
             with(binding) {
@@ -51,7 +51,7 @@ class QuotesViewPagerAdapter :
 
                 btnLike.setOnClickListener {
                     quote.changeFavorite()
-                    onClickListener.onFavoriteClickListener(quote.isFavorite, quote.quote)
+                    onClickListenerMotivation.onFavoriteClickListener(quote.isFavorite, quote.quote)
 
                     if (quote.isFavorite) {
                         btnLike.setImageResource(R.drawable.ic_like_pressed)
@@ -61,7 +61,7 @@ class QuotesViewPagerAdapter :
                 }
 
                 btnShare.setOnClickListener {
-                    onClickListener.onShareClickListener(quote.quote, quote.author)
+                    onClickListenerMotivation.onShareClickListener(quote.quote, quote.author)
                 }
             }
         }

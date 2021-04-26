@@ -23,7 +23,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private lateinit var dbManager: DBManager
-    // todo инициализируй бд как синглтон в мейн активити
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -58,7 +58,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             setNotificationWorker()
             Timer().schedule(2000) {
                 findNavController().navigate(
-                    MainFragmentDirections.actionMainFragmentToMotivationFragment()
+                    MainFragmentDirections.actionMainFragmentToMotivationFragment(
+                        "General"
+                    )
                 )
             }
         }
