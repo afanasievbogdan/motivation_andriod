@@ -43,6 +43,7 @@ class QuotesViewPagerAdapter :
                 tvQuote.text = quote.quote
                 tvAuthor.text = quote.author
 
+                // TODO: selector drawable
                 if (quote.isFavorite) {
                     btnLike.setImageResource(R.drawable.ic_like_pressed)
                 } else {
@@ -53,6 +54,7 @@ class QuotesViewPagerAdapter :
                     quote.changeFavorite()
                     onClickListenerMotivation.onFavoriteClickListener(quote.isFavorite, quote.quote)
 
+                    // TODO: selector drawable
                     if (quote.isFavorite) {
                         btnLike.setImageResource(R.drawable.ic_like_pressed)
                     } else {

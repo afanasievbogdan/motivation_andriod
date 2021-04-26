@@ -1,6 +1,7 @@
 package com.bogdan.motivation.api
 
 import android.util.Log
+import com.bogdan.motivation.BuildConfig
 import com.bogdan.motivation.db.DBManager
 import com.bogdan.motivation.entities.Root
 import okhttp3.OkHttpClient
@@ -19,7 +20,8 @@ object RetrofitConfiguration {
     private fun configureOkHttp(): OkHttpClient {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
+//        TODO: тут должна быть проверка на дебаг/релиз версию, чтобы не логгировались запросы в релизной версии
+//        TODO: там где добавляешь интерцептор
         return OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
             .build()
@@ -33,10 +35,16 @@ object RetrofitConfiguration {
             .build()
     }
 
+//    TODO: должно быть так
+//    fun configureQuotesApi(): QuotesApi = configureRetrofit().create(QuotesApi::class.java)
+//
+//    val retrofitData = configureQuotesApi().getQuotesList()
+
     fun configureQuotesApi() {
         retrofit = configureRetrofit().create(QuotesApi::class.java)
     }
 
+//    TODO: нужно вынести это из этого класса (в активити или читай паттерн репозиторий)
     fun getQuotesFromApi(dbManager: DBManager) {
         val retrofitData = retrofit.getQuotesList()
 

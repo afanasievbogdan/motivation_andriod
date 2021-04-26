@@ -20,10 +20,11 @@ class NotificationsWorker(appContext: Context, workerParams: WorkerParameters) :
 
     private val channelId = "channel_id_01"
     private val notificationId = 101
-    private val mContext = appContext
+    private val mContext = appContext // TODO: зачем ещё раз обьявлять переменную? добавь private val B constructor
 
     private val dbManager = DBManager(mContext)
 
+    // TODO: добаBь {} для else
     override fun doWork(): Result {
         dbManager.openDb()
         if (isCorrectTime()) {
@@ -60,12 +61,13 @@ class NotificationsWorker(appContext: Context, workerParams: WorkerParameters) :
             .setSmallIcon(R.mipmap.ic_launcher_round)
             .setAutoCancel(true)
             .priority = NotificationCompat.PRIORITY_DEFAULT
-
+// TODO: with зачем?
         with(NotificationManagerCompat.from(applicationContext)) {
             notify(notificationId, builder.build())
         }
     }
 
+    // TODO: название переменной? почему саппресс?
     @SuppressLint("SimpleDateFormat")
     private fun isCorrectTime(): Boolean {
         val sdf = SimpleDateFormat("HH")

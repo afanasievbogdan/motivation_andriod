@@ -41,8 +41,10 @@ class ThemesRecyclerViewAdapter :
                 btnTheme.text = themeName
                 var isPressed = false
                 btnTheme.setOnClickListener {
+//                    TODO: it.isSelected = !it.isSelected
                     isPressed = !isPressed
                     it.isSelected = isPressed
+//                    TODO: val ??? = if (it.isSelected) "1" else "0"
                     if (it.isSelected) {
                         onClickListenerThemes.onThemeClickListener("1")
                     } else {

@@ -61,7 +61,7 @@ class NotificationSettingsFragment :
 
         _binding = null
     }
-
+    // TODO: замени это на экстеншен для вьюхи, тут должно быть 5 строк + засэтить это для каждой вью
     private fun setUiAnimations() {
         val tvNotificationExplanationsAnimation = AnimationUtils.loadAnimation(
             context,
@@ -102,17 +102,19 @@ class NotificationSettingsFragment :
             btnContinue.startAnimation(btnContinueAnimation)
         }
     }
-
+    // TODO: Вместо сапресса вынеси в ресурсы
     private fun onClickBtnMinus() {
         binding.btnMinus.setOnClickListener {
+            // TODO: зачем тут else?
             if (notificationQuantity > 0) notificationQuantity--
             else notificationQuantity = 0
             binding.tvNotificationsQuantity.text = "${notificationQuantity}X"
         }
     }
-
+    // TODO: Вместо сапресса вынеси в ресурсы
     private fun onClickBtnPlus() {
         binding.btnPlus.setOnClickListener {
+            // TODO: зачем тут else?
             if (notificationQuantity < 30) notificationQuantity++
             else notificationQuantity = 30
             binding.tvNotificationsQuantity.text = "${notificationQuantity}X"
@@ -120,6 +122,7 @@ class NotificationSettingsFragment :
     }
 
     private fun getTimeCalendar() {
+        // TODO: apply
         val calendar = Calendar.getInstance()
         hour = calendar.get(Calendar.HOUR)
         minute = calendar.get(Calendar.MINUTE)

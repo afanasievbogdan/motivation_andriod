@@ -36,7 +36,8 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
 
         _binding = null
     }
-
+// TODO: замени это на экстеншен для вьюхи, тут должно быть 5 строк + засэтить это для каждой вью
+// TODO: для экстеншенов создай отдельный файл
     private fun setUiAnimations() {
         val ivHeaderAnimation = AnimationUtils.loadAnimation(
             context,

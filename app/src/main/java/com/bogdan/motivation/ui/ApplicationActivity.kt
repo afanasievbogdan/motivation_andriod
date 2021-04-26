@@ -23,3 +23,11 @@ class ApplicationActivity : AppCompatActivity() {
         RetrofitConfiguration.configureQuotesApi()
     }
 }
+//  TODO:
+//  binding = ActivityApplicationBinding.inflate(layoutInflater)
+//  val view = binding.root
+//  setContentView(view)
+//
+//  dbManager = DBManager(applicationContext)
+//  dbManager.openDb()
+//  RetrofitConfiguration.configureQuotesApi()

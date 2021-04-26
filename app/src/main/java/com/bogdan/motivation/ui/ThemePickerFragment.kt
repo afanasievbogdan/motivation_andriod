@@ -47,7 +47,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
 
         _binding = null
     }
-
+    // TODO: замени это на экстеншен для вьюхи
     private fun setUiAnimations() {
         val tvThemeExplanationsAnimation = AnimationUtils.loadAnimation(
             context,
@@ -72,7 +72,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
             btnContinue.startAnimation(btnContinueAnimation)
         }
     }
-
+// TODO: почему сразу не инициализировать лист при обьявлении переменной
     private fun fillThemeList() {
         themeList.addAll(
             listOf(
@@ -99,7 +99,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
     override fun onThemeClickListener(theme: String) {
         dbManager.insetToThemesDb(theme)
     }
-
+// TODO: добаBь {} для else
     private fun onBntContinueClicked() {
         binding.btnContinue.setOnClickListener {
             val isThemeChosen = dbManager.readFromThemesDb() == "1"
