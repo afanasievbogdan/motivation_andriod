@@ -39,17 +39,13 @@ class ThemesRecyclerViewAdapter :
         fun bind(themeName: String) {
             with(binding) {
                 btnTheme.text = themeName
-                var isPressed = false
                 btnTheme.setOnClickListener {
-//                    TODO: it.isSelected = !it.isSelected
-                    isPressed = !isPressed
-                    it.isSelected = isPressed
-//                    TODO: val ??? = if (it.isSelected) "1" else "0"
-                    if (it.isSelected) {
-                        onClickListenerThemes.onThemeClickListener("1")
-                    } else {
-                        onClickListenerThemes.onThemeClickListener("0")
-                    }
+                    // TODO: it.isSelected = !it.isSelected ✓ DONE
+                    // TODO: val ??? = if (it.isSelected) "1" else "0" ✓ DONE
+                    it.isSelected = !it.isSelected
+                    onClickListenerThemes.onThemeClickListener(
+                        if (it.isSelected) "1" else "0"
+                    )
                 }
             }
         }

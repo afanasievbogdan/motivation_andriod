@@ -22,6 +22,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var dbManager: DBManager
 
     override fun onCreateView(

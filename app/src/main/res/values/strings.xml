@@ -15,13 +15,15 @@
     <string name="notifications_how_many">How many</string>
     <string name="notifications_btn_plus">+</string>
     <string name="notifications_quantity_default">10X</string>
+    <string name="notifications_quantity_changed">%dX</string>
     <string name="notifications_btn_minus">-</string>
 
     <string name="notifications_start_at">Start at</string>
-    <string name="notifications_btn_min_time_default">09:00</string>
+    <string name="notifications_btn_min_time_default">09 : 00</string>
 
     <string name="notifications_end_at">End at</string>
-    <string name="notifications_btn_max_time_default">22:00</string>
+    <string name="notifications_btn_max_time_default">22 : 00</string>
+    <string name="notifications_btn_changed_time">%s : %s</string>
 
     <string name="settings_btn_continue">Continue</string>
 

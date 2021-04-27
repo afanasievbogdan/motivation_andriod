@@ -25,9 +25,11 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
 
     private var _binding: FragmentMotivationBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var dbManager: DBManager
     private val quotesList = ArrayList<Quote>()
     private val quotesViewPagerAdapter = QuotesViewPagerAdapter()
+
     private val args: MotivationFragmentArgs by navArgs()
 
     override fun onCreateView(

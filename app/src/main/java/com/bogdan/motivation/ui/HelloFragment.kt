@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
 import com.bogdan.motivation.databinding.FragmentHelloBinding
+import com.bogdan.motivation.extensions.playAnimation
 
 class HelloFragment : Fragment(R.layout.fragment_hello) {
 
@@ -36,41 +36,16 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
 
         _binding = null
     }
-// TODO: замени это на экстеншен для вьюхи, тут должно быть 5 строк + засэтить это для каждой вью
-// TODO: для экстеншенов создай отдельный файл
+
+    // TODO: замени это на экстеншен для вьюхи, тут должно быть 5 строк + засэтить это для каждой вью ✓ DONE
+    // TODO: для экстеншенов создай отдельный файл ✓ DONE
     private fun setUiAnimations() {
-        val ivHeaderAnimation = AnimationUtils.loadAnimation(
-            context,
-            R.anim.animation_fade_slow
-        )
-        val tvSelfCareAnimation = AnimationUtils.loadAnimation(
-            context,
-            R.anim.animation_fade_slow
-        )
-        val tvSelfLoveAnimation = AnimationUtils.loadAnimation(
-            context,
-            R.anim.animation_fade_slow
-        )
-        val tvSelfGrowthAnimation = AnimationUtils.loadAnimation(
-            context,
-            R.anim.animation_fade_slow
-        )
-        val btnGetStartedAnimation = AnimationUtils.loadAnimation(
-            context,
-            R.anim.animation_fade_slow
-        )
-
-        tvSelfCareAnimation.startOffset = 750
-        tvSelfLoveAnimation.startOffset = 1500
-        tvSelfGrowthAnimation.startOffset = 2250
-        btnGetStartedAnimation.startOffset = 3000
-
         with(binding) {
-            ivHeader.startAnimation(ivHeaderAnimation)
-            tvSelfCare.startAnimation(tvSelfCareAnimation)
-            tvSelfLove.startAnimation(tvSelfLoveAnimation)
-            tvSelfGrowth.startAnimation(tvSelfGrowthAnimation)
-            btnGetStarted.startAnimation(btnGetStartedAnimation)
+            ivHeader.playAnimation(animResId = R.anim.anim_fade_slow, 0)
+            tvSelfCare.playAnimation(animResId = R.anim.anim_fade_slow, 750)
+            tvSelfLove.playAnimation(animResId = R.anim.anim_fade_slow, 1500)
+            tvSelfGrowth.playAnimation(animResId = R.anim.anim_fade_slow, 2250)
+            btnGetStarted.playAnimation(animResId = R.anim.anim_fade_slow, 3000)
         }
     }
 

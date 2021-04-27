@@ -43,23 +43,17 @@ class QuotesViewPagerAdapter :
                 tvQuote.text = quote.quote
                 tvAuthor.text = quote.author
 
-                // TODO: selector drawable
-                if (quote.isFavorite) {
-                    btnLike.setImageResource(R.drawable.ic_like_pressed)
-                } else {
-                    btnLike.setImageResource(R.drawable.ic_like_unpressed)
-                }
+                // TODO: selector drawable ✓ DONE
+                btnLike.isSelected = quote.isFavorite
+                btnLike.setImageResource(R.drawable.ic_favorite_selector)
 
                 btnLike.setOnClickListener {
                     quote.changeFavorite()
                     onClickListenerMotivation.onFavoriteClickListener(quote.isFavorite, quote.quote)
 
-                    // TODO: selector drawable
-                    if (quote.isFavorite) {
-                        btnLike.setImageResource(R.drawable.ic_like_pressed)
-                    } else {
-                        btnLike.setImageResource(R.drawable.ic_like_unpressed)
-                    }
+                    // TODO: selector drawable ✓ DONE
+                    it.isSelected = !it.isSelected
+                    btnLike.setImageResource(R.drawable.ic_favorite_selector)
                 }
 
                 btnShare.setOnClickListener {

@@ -13,8 +13,8 @@
         <action
             android:id="@+id/action_helloFragment_to_notificationSettingsFragment"
             app:destination="@id/notificationSettingsFragment"
-            app:enterAnim="@anim/animation_slide_in"
-            app:exitAnim="@anim/animation_slide_out" />
+            app:enterAnim="@anim/anim_slide_in"
+            app:exitAnim="@anim/anim_slide_out" />
     </fragment>
     <fragment
         android:id="@+id/notificationSettingsFragment"
@@ -24,8 +24,8 @@
         <action
             android:id="@+id/action_notificationSettingsFragment_to_themePickerFragment"
             app:destination="@id/themePickerFragment"
-            app:enterAnim="@anim/animation_slide_in"
-            app:exitAnim="@anim/animation_slide_out" />
+            app:enterAnim="@anim/anim_slide_in"
+            app:exitAnim="@anim/anim_slide_out" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"

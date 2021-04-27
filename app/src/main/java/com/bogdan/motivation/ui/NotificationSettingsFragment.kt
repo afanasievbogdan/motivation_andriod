@@ -1,28 +1,27 @@
 package com.bogdan.motivation.ui
 
-import android.annotation.SuppressLint
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.TimePicker
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
 import com.bogdan.motivation.databinding.FragmentNotificationSettingsBinding
 import com.bogdan.motivation.db.DBManager
+import com.bogdan.motivation.extensions.playAnimation
 import java.util.Calendar
 
-@SuppressLint("SetTextI18n")
 class NotificationSettingsFragment :
     Fragment(R.layout.fragment_notification_settings),
     OnTimeSetListener {
 
     private var _binding: FragmentNotificationSettingsBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var dbManager: DBManager
 
     private var isStartTimer = true
@@ -61,71 +60,46 @@ class NotificationSettingsFragment :
 
         _binding = null
     }
-    // TODO: замени это на экстеншен для вьюхи, тут должно быть 5 строк + засэтить это для каждой вью
+
+    // TODO: замени это на экстеншен для вьюхи, тут должно быть 5 строк + засэтить это для каждой вью ✓ DONE
     private fun setUiAnimations() {
-        val tvNotificationExplanationsAnimation = AnimationUtils.loadAnimation(
-            context,
-            R.anim.animation_fade_slow
-        )
-
-        val notificationQuantityContainerAnimation = AnimationUtils.loadAnimation(
-            context,
-            R.anim.animation_fade_fast
-        )
-
-        val startTimeContainerAnimation = AnimationUtils.loadAnimation(
-            context,
-            R.anim.animation_fade_fast
-        )
-
-        val endTimeContainerAnimation = AnimationUtils.loadAnimation(
-            context,
-            R.anim.animation_fade_fast
-        )
-
-        val btnContinueAnimation = AnimationUtils.loadAnimation(
-            context,
-            R.anim.animation_fade_fast
-        )
-
-        tvNotificationExplanationsAnimation.startOffset = 750
-        notificationQuantityContainerAnimation.startOffset = 1500
-        startTimeContainerAnimation.startOffset = 1750
-        endTimeContainerAnimation.startOffset = 2000
-        btnContinueAnimation.startOffset = 2250
-
         with(binding) {
-            tvNotificationExplanations.startAnimation(tvNotificationExplanationsAnimation)
-            containerNotificationQuantity.startAnimation(notificationQuantityContainerAnimation)
-            containerStartTime.startAnimation(startTimeContainerAnimation)
-            containerEndTime.startAnimation(endTimeContainerAnimation)
-            btnContinue.startAnimation(btnContinueAnimation)
+            tvNotificationExplanations.playAnimation(animResId = R.anim.anim_fade_slow, 750)
+            containerNotificationQuantity.playAnimation(animResId = R.anim.anim_fade_fast, 1500)
+            containerStartTime.playAnimation(animResId = R.anim.anim_fade_fast, 1750)
+            containerEndTime.playAnimation(animResId = R.anim.anim_fade_fast, 2000)
+            btnContinue.playAnimation(animResId = R.anim.anim_fade_fast, 2250)
         }
     }
-    // TODO: Вместо сапресса вынеси в ресурсы
+
+    // TODO: Вместо сапресса вынеси в ресурсы ✓ DONE
     private fun onClickBtnMinus() {
         binding.btnMinus.setOnClickListener {
-            // TODO: зачем тут else?
+            // TODO: зачем тут else? ✓ DONE
             if (notificationQuantity > 0) notificationQuantity--
-            else notificationQuantity = 0
-            binding.tvNotificationsQuantity.text = "${notificationQuantity}X"
+            binding.tvNotificationsQuantity.text = resources.getString(
+                R.string.notifications_quantity_changed, notificationQuantity
+            )
         }
     }
-    // TODO: Вместо сапресса вынеси в ресурсы
+
+    // TODO: Вместо сапресса вынеси в ресурсы ✓ DONE
     private fun onClickBtnPlus() {
         binding.btnPlus.setOnClickListener {
-            // TODO: зачем тут else?
+            // TODO: зачем тут else? ✓ DONE
             if (notificationQuantity < 30) notificationQuantity++
-            else notificationQuantity = 30
-            binding.tvNotificationsQuantity.text = "${notificationQuantity}X"
+            binding.tvNotificationsQuantity.text = resources.getString(
+                R.string.notifications_quantity_changed, notificationQuantity
+            )
         }
     }
 
     private fun getTimeCalendar() {
-        // TODO: apply
-        val calendar = Calendar.getInstance()
-        hour = calendar.get(Calendar.HOUR)
-        minute = calendar.get(Calendar.MINUTE)
+        // TODO: apply ✓ DONE
+        Calendar.getInstance().apply {
+            hour = get(Calendar.HOUR)
+            minute = get(Calendar.MINUTE)
+        }
     }
 
     private fun pickStartTime() {
@@ -161,9 +135,13 @@ class NotificationSettingsFragment :
             else "$minute"
 
         if (isStartTimer) {
-            binding.btnStartTime.text = "$editHour : $editMinute"
+            binding.btnStartTime.text = resources.getString(
+                R.string.notifications_btn_changed_time, editHour, editMinute
+            )
         } else {
-            binding.btnEndTime.text = "$editHour : $editMinute"
+            binding.btnEndTime.text = resources.getString(
+                R.string.notifications_btn_changed_time, editHour, editMinute
+            )
         }
     }
 

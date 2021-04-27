@@ -13,9 +13,10 @@ import com.bogdan.motivation.db.DBManager
 import com.bogdan.motivation.entities.Quote
 
 class CategoriesFragment : Fragment(R.layout.fragment_categories) {
-    // TODO: ставь энтер после биндинга
+    // TODO: ставь энтер после биндинга ✓ DONE
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var dbManager: DBManager
     private val quotesList = ArrayList<Quote>()
 
@@ -35,14 +36,21 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         quotesList.addAll(dbManager.readFavouriteQuoteFromQuotesDb())
         onClickCategories()
     }
-// TODO: удали ненужную переменную
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    // TODO: удали ненужную переменную ✓ DONE
     private fun onClickCategories() {
         binding.btnGeneralChose.setOnClickListener {
             dbManager.insetToPermissionsDb("1", "1", "0")
-            val action = CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment(
-                "General"
+            findNavController().navigate(
+                CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment(
+                    "General"
+                )
             )
-            findNavController().navigate(action)
         }
 
         binding.btnFavoriteChose.setOnClickListener {
@@ -59,9 +67,5 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
             }
         }
     }
-// TODO: жц вверху
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+    // TODO: жц вверху ✓ DONE
 }
