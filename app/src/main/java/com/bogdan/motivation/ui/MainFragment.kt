@@ -13,6 +13,7 @@ import com.bogdan.motivation.R
 import com.bogdan.motivation.api.RetrofitConfiguration
 import com.bogdan.motivation.databinding.FragmentMainBinding
 import com.bogdan.motivation.db.DBManager
+import com.bogdan.motivation.helpers.ThemeUtils
 import com.bogdan.motivation.worker.NotificationsWorker
 import java.util.Timer
 import java.util.concurrent.TimeUnit
@@ -37,6 +38,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val style = dbManager.readStyleFromStylesDb()
+        ThemeUtils.onActivityCreateSetTheme(requireActivity(), style)
         super.onViewCreated(view, savedInstanceState)
 
         chooseActivityToOpen()
@@ -57,7 +60,16 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         } else if (isSettingsPassed == "1") {
             RetrofitConfiguration.getQuotesFromApi(dbManager)
             setNotificationWorker()
-            Timer().schedule(2000) {
+            val isPopupPassed = dbManager.readPopupFromPermissionsDb()
+            if (isPopupPassed == "0") {
+                Timer().schedule(2000) {
+                    findNavController().navigate(
+                        MainFragmentDirections.actionMainFragmentToMotivationFragment(
+                            "General"
+                        )
+                    )
+                }
+            } else {
                 findNavController().navigate(
                     MainFragmentDirections.actionMainFragmentToMotivationFragment(
                         "General"

@@ -33,6 +33,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         quotesList.addAll(dbManager.readFavouriteQuoteFromQuotesDb())
         onClickCategories()
     }

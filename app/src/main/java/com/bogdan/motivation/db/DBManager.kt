@@ -302,4 +302,34 @@ class DBManager(context: Context) {
         cursor.close()
         return lettingGo
     }
+
+    fun insertStyleToStylesDb(style: Int) {
+        val values = ContentValues().apply {
+            put(DBConstants.KEY_ID, 1)
+            put(DBConstants.KEY_STYLE, style)
+        }
+        db.insertWithOnConflict(
+            DBConstants.TABLE_STYLES,
+            null,
+            values,
+            SQLiteDatabase.CONFLICT_REPLACE
+        )
+    }
+
+    fun readStyleFromStylesDb(): Int {
+        val cursor: Cursor = db.rawQuery(
+            "SELECT ${DBConstants.KEY_STYLE} FROM " +
+                "${DBConstants.TABLE_STYLES} WHERE " +
+                "${DBConstants.KEY_ID} = 1",
+            null
+        )
+
+        var style = 0
+        if (cursor.moveToFirst()) {
+            style = cursor.getInt(0)
+        }
+
+        cursor.close()
+        return style
+    }
 }

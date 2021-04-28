@@ -4,14 +4,14 @@
     <item android:state_selected="true">
         <shape android:shape="rectangle">
             <corners android:radius="10dp" />
-            <solid android:color="@color/mine_shaft" />
+            <solid android:color="?attr/themePickerButtonSelectedColor" />
         </shape>
     </item>
 
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="10dp" />
-            <solid android:color="@color/iron" />
+            <solid android:color="?attr/themePickerButtonUnselectedColor" />
         </shape>
     </item>
 

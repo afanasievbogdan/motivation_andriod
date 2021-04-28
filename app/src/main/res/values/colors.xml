@@ -27,4 +27,10 @@
     <color name="cod_gray">#151515</color>
     <!-- Like Buttons -->
     <color name="pomegranate">#EF3A3A</color>
+    <!-- Blue Style -->
+    <color name="denim">#1972B8</color>
+    <!-- Mix Style -->
+    <color name="coral_red">#F44336</color>
+    <color name="amaranth">#E91E63</color>
+    <color name="seance">#9C27B0</color>
 </resources>

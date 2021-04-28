@@ -56,6 +56,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
         initializePopup()
         initializeViewPager()
         onClickCategoriesSelection()
+        onClickThemeEditor()
     }
 
     override fun onDestroyView() {
@@ -88,6 +89,16 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
         binding.btnCategories.setOnClickListener {
             findNavController().navigate(
                 MotivationFragmentDirections.actionMotivationFragmentToCategoriesFragment()
+            )
+        }
+    }
+
+    private fun onClickThemeEditor() {
+        binding.btnEdit.setOnClickListener {
+            findNavController().navigate(
+                MotivationFragmentDirections.actionMotivationFragmentToThemeEditorFragment(
+                    args.btnCategoriesText
+                )
             )
         }
     }

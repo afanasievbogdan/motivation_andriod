@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
 import com.bogdan.motivation.databinding.FragmentNotificationSettingsBinding
 import com.bogdan.motivation.db.DBManager
-import com.bogdan.motivation.extensions.playAnimation
+import com.bogdan.motivation.helpers.playAnimation
 import java.util.Calendar
 
 class NotificationSettingsFragment :

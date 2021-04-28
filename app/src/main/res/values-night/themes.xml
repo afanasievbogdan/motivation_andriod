@@ -1,26 +1,64 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Motivation" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.Motivation" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/mine_shaft</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="helloBackgroundColor">@color/cod_gray</item>
+        <item name="helloTextColor">@color/iron</item>
+
+        <item name="helloButtonBackgroundColor">@color/iron</item>
+        <item name="helloButtonTextColor">@color/cod_gray</item>
+
+        <item name="settingsContainerBackgroundColor">@color/mine_shaft</item>
+        <item name="settingButtonStrokeColor">@color/iron</item>
+        <item name="settingButtonBackgroundColor">@color/mine_shaft</item>
+
+        <item name="themePickerButtonSelectedColor">@color/iron</item>
+        <item name="themePickerButtonUnselectedColor">@color/mine_shaft</item>
+
+        <item name="motivationBackgroundColor">@color/cod_gray</item>
+        <item name="motivationBackgroundColorSecond">@color/cod_gray</item>
+        <item name="motivationBackgroundColorThird">@color/cod_gray</item>
+        <item name="motivationTextColor">@color/iron</item>
+        <item name="favoriteColor">@color/alabaster</item>
+
+        <item name="btnLightColor">@color/alabaster</item>
+        <item name="btnDarkColor">@color/mine_shaft</item>
+
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
 
     </style>
 
-    <style name="SettingsButtonsTheme" parent="Theme.Motivation">
-        <item name="colorPrimary">@color/alabaster</item>
-        <item name="colorOnPrimary">@color/mine_shaft</item>
+    <style name="LightMode" parent="Theme.Motivation">
+        <item name="motivationBackgroundColor">@color/alabaster</item>
+        <item name="motivationBackgroundColorSecond">@color/alabaster</item>
+        <item name="motivationBackgroundColorThird">@color/alabaster</item>
+        <item name="motivationTextColor">@color/cod_gray</item>
+        <item name="favoriteColor">@color/cod_gray</item>
     </style>
 
-    <style name="ThemeButtonsTheme" parent="Theme.Motivation">
-        <item name="colorPrimary">@color/iron</item>
-        <item name="colorOnPrimary">@color/mine_shaft</item>
+    <style name="BlueMode" parent="Theme.Motivation">
+        <item name="helloBackgroundColor">@color/denim</item>
+        <item name="motivationBackgroundColor">@color/denim</item>
+        <item name="motivationBackgroundColorSecond">@color/denim</item>
+        <item name="motivationBackgroundColorThird">@color/denim</item>
+        <item name="motivationTextColor">@color/alabaster</item>
+        <item name="favoriteColor">@color/alabaster</item>
+    </style>
+
+    <style name="MixMode" parent="Theme.Motivation">
+        <item name="helloBackgroundColor">@color/amaranth</item>
+        <item name="motivationBackgroundColor">@color/coral_red</item>
+        <item name="motivationBackgroundColorSecond">@color/amaranth</item>
+        <item name="motivationBackgroundColorThird">@color/seance</item>
+        <item name="motivationTextColor">@color/alabaster</item>
+        <item name="favoriteColor">@color/alabaster</item>
     </style>
 
     <style name="TimePickerTheme" parent="Theme.AppCompat.Dialog">

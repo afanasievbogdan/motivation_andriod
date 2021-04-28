@@ -1,4 +1,4 @@
-package com.bogdan.motivation.extensions
+package com.bogdan.motivation.helpers
 
 import android.view.View
 import android.view.animation.AnimationUtils

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/helloBackgroundColor"
     android:orientation="vertical"
     tools:context=".ui.CategoriesFragment">
 
@@ -20,14 +21,14 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/cynthonextregular"
         android:text="@string/categories_title"
-        android:textColor="@color/black"
+        android:textColor="?attr/helloTextColor"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline_tv_categories_top" />
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_general_chose"
         android:layout_width="120dp"
         android:layout_height="70dp"
@@ -35,15 +36,15 @@
         android:background="@drawable/btn_theme_selector_background"
         android:fontFamily="@font/cynthonext"
         android:gravity="start|top"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
         android:text="@string/categories_general"
         android:textAllCaps="false"
-        android:textColor="@color/tundora"
-        app:backgroundTint="@color/athens_gray"
         app:layout_constraintEnd_toStartOf="@+id/btn_favorite_chose"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_categories" />
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_favorite_chose"
         android:layout_width="120dp"
         android:layout_height="70dp"
@@ -51,10 +52,10 @@
         android:background="@drawable/btn_theme_selector_background"
         android:fontFamily="@font/cynthonext"
         android:gravity="start|top"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
         android:text="@string/categories_favourite"
         android:textAllCaps="false"
-        android:textColor="@color/tundora"
-        app:backgroundTint="@color/athens_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_general_chose"
         app:layout_constraintTop_toBottomOf="@+id/tv_categories" />

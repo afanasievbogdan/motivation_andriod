@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
 import com.bogdan.motivation.databinding.FragmentHelloBinding
-import com.bogdan.motivation.extensions.playAnimation
+import com.bogdan.motivation.helpers.playAnimation
 
 class HelloFragment : Fragment(R.layout.fragment_hello) {
 

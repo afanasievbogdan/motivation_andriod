@@ -2,5 +2,29 @@
     <declare-styleable name="AppWidgetAttrs">
         <attr name="appWidgetBackgroundColor" format="color" />
         <attr name="appWidgetTextColor" format="color" />
+
+        <attr name="helloBackgroundColor" format="color" />
+        <attr name="helloTextColor" format="color" />
+
+        <attr name="helloButtonBackgroundColor" format="color" />
+        <attr name="helloButtonTextColor" format="color" />
+
+        <attr name="settingsContainerBackgroundColor" format="color" />
+        <attr name="settingButtonStrokeColor" format="color" />
+        <attr name="settingButtonBackgroundColor" format="color" />
+
+        <attr name="themePickerButtonSelectedColor" format="color" />
+        <attr name="themePickerButtonUnselectedColor" format="color" />
+
+        <attr name="motivationBackgroundColor" format="color" />
+        <attr name="motivationBackgroundColorSecond" format="color" />
+        <attr name="motivationBackgroundColorThird" format="color" />
+        <attr name="motivationTextColor" format="color" />
+
+        <attr name="favoriteColor" format="color" />
+
+        <attr name="btnLightColor" format="color" />
+        <attr name="btnDarkColor" format="color" />
+
     </declare-styleable>
 </resources>

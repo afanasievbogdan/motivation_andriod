@@ -50,6 +50,9 @@
         <argument
             android:name="btn_categories_text"
             app:argType="string" />
+        <action
+            android:id="@+id/action_motivationFragment_to_themeEditorFragment"
+            app:destination="@id/themeEditorFragment" />
     </fragment>
     <fragment
         android:id="@+id/themePickerFragment"
@@ -68,5 +71,17 @@
         <action
             android:id="@+id/action_categoriesFragment_to_motivationFragment"
             app:destination="@id/motivationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/themeEditorFragment"
+        android:name="com.bogdan.motivation.ui.ThemeEditorFragment"
+        android:label="fragment_theme_editor"
+        tools:layout="@layout/fragment_theme_editor">
+        <action
+            android:id="@+id/action_themeEditorFragment_to_motivationFragment"
+            app:destination="@id/motivationFragment" />
+        <argument
+            android:name="btn_categories_text"
+            app:argType="string" />
     </fragment>
 </navigation>

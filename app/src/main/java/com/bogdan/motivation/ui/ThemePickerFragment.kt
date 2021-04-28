@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
 import com.bogdan.motivation.databinding.FragmentThemePickerBinding
 import com.bogdan.motivation.db.DBManager
-import com.bogdan.motivation.extensions.playAnimation
+import com.bogdan.motivation.helpers.playAnimation
 import com.bogdan.motivation.interfaces.OnClickListenerThemes
 import com.bogdan.motivation.recycleradapters.ThemesRecyclerViewAdapter
 

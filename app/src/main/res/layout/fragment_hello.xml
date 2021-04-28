@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/helloBackgroundColor"
     android:orientation="vertical"
     tools:context=".ui.HelloFragment">
 
@@ -34,7 +35,7 @@
         android:paddingBottom="4sp"
         android:text="@string/hello_self_care"
         android:textAlignment="center"
-        android:textColor="@color/mine_shaft"
+        android:textColor="?attr/helloTextColor"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@id/tv_self_love"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +51,7 @@
         android:paddingBottom="4sp"
         android:text="@string/hello_self_love"
         android:textAlignment="center"
-        android:textColor="@color/mine_shaft"
+        android:textColor="?attr/helloTextColor"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@id/tv_self_growth"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,14 +66,14 @@
         android:paddingBottom="4sp"
         android:text="@string/hello_self_growth"
         android:textAlignment="center"
-        android:textColor="@color/mine_shaft"
+        android:textColor="?attr/helloTextColor"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@id/btn_get_started"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_self_love" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_get_started"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -82,6 +83,7 @@
         android:fontFamily="@font/cynthonext"
         android:text="@string/hello_btn_get_started"
         android:textAllCaps="false"
+        android:textColor="?attr/helloButtonTextColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

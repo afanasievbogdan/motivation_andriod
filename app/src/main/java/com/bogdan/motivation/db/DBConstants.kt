@@ -67,4 +67,13 @@ object DBConstants {
         "$KEY_RELATIONSHIP text)"
 
     const val DROP_TABLE_THEMES = "DROP TABLE IF EXISTS $TABLE_THEMES"
+
+    const val TABLE_STYLES = "Styles"
+    const val KEY_STYLE = "_style"
+
+    const val CREATE_TABLE_STYLES = "CREATE TABLE $TABLE_STYLES (" +
+        "$KEY_ID integer PRIMARY KEY, " +
+        "$KEY_STYLE integer)"
+
+    const val DROP_TABLE_STYLES = "DROP TABLE IF EXISTS $TABLE_STYLES"
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cod_gray"
+    android:background="?attr/motivationBackgroundColor"
     android:orientation="vertical"
     tools:context=".ui.MotivationFragment">
 
@@ -52,6 +52,7 @@
         android:contentDescription="@string/next"
         android:padding="10dp"
         app:icon="@drawable/ic_account"
+
         app:iconGravity="textEnd"
         app:iconPadding="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
