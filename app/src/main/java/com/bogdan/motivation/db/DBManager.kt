@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import com.bogdan.motivation.entities.Quote
+import com.bogdan.motivation.helpers.ThemeUtils
 import kotlin.random.Random
 
 class DBManager(context: Context) {
@@ -303,7 +304,7 @@ class DBManager(context: Context) {
         return lettingGo
     }
 
-    fun insertStyleToStylesDb(style: Int) {
+    fun insertStyleToStylesDb(style: String) {
         val values = ContentValues().apply {
             put(DBConstants.KEY_ID, 1)
             put(DBConstants.KEY_STYLE, style)
@@ -316,7 +317,7 @@ class DBManager(context: Context) {
         )
     }
 
-    fun readStyleFromStylesDb(): Int {
+    fun readStyleFromStylesDb(): ThemeUtils.Styles {
         val cursor: Cursor = db.rawQuery(
             "SELECT ${DBConstants.KEY_STYLE} FROM " +
                 "${DBConstants.TABLE_STYLES} WHERE " +
@@ -324,12 +325,12 @@ class DBManager(context: Context) {
             null
         )
 
-        var style = 0
+        var styleName = "DARK"
         if (cursor.moveToFirst()) {
-            style = cursor.getInt(0)
+            styleName = cursor.getString(0)
         }
 
         cursor.close()
-        return style
+        return ThemeUtils.Styles.valueOf(styleName)
     }
 }

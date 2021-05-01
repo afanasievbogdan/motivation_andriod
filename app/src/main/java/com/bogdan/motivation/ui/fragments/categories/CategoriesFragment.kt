@@ -1,4 +1,4 @@
-package com.bogdan.motivation.ui
+package com.bogdan.motivation.ui.fragments.categories
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,13 +11,14 @@ import com.bogdan.motivation.R
 import com.bogdan.motivation.databinding.FragmentCategoriesBinding
 import com.bogdan.motivation.db.DBManager
 import com.bogdan.motivation.entities.Quote
+import com.bogdan.motivation.repositories.RepositoryProvider
 
 class CategoriesFragment : Fragment(R.layout.fragment_categories) {
-    // TODO: ставь энтер после биндинга ✓ DONE
+
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var dbManager: DBManager
+    private lateinit var db: DBManager
     private val quotesList = ArrayList<Quote>()
 
     override fun onCreateView(
@@ -25,8 +26,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        dbManager = DBManager(requireContext())
-        dbManager.openDb()
+        db = RepositoryProvider.dbRepository.dbManager
         _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,7 +34,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        quotesList.addAll(dbManager.readFavouriteQuoteFromQuotesDb())
+        quotesList.addAll(db.readFavouriteQuoteFromQuotesDb())
         onClickCategories()
     }
 
@@ -43,10 +43,9 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         _binding = null
     }
 
-    // TODO: удали ненужную переменную ✓ DONE
     private fun onClickCategories() {
         binding.btnGeneralChose.setOnClickListener {
-            dbManager.insetToPermissionsDb("1", "1", "0")
+            db.insetToPermissionsDb("1", "1", "0")
             findNavController().navigate(
                 CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment(
                     "General"
@@ -55,7 +54,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         }
 
         binding.btnFavoriteChose.setOnClickListener {
-            dbManager.insetToPermissionsDb("1", "1", "1")
+            db.insetToPermissionsDb("1", "1", "1")
             if (quotesList.isNotEmpty()) {
                 findNavController().navigate(
                     CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment(
@@ -68,5 +67,4 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
             }
         }
     }
-    // TODO: жц вверху ✓ DONE
 }

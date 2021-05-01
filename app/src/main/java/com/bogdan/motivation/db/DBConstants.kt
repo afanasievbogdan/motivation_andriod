@@ -73,7 +73,7 @@ object DBConstants {
 
     const val CREATE_TABLE_STYLES = "CREATE TABLE $TABLE_STYLES (" +
         "$KEY_ID integer PRIMARY KEY, " +
-        "$KEY_STYLE integer)"
+        "$KEY_STYLE text)"
 
     const val DROP_TABLE_STYLES = "DROP TABLE IF EXISTS $TABLE_STYLES"
 }

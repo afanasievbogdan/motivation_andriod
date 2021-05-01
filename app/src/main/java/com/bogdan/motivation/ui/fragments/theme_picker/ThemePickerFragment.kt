@@ -1,4 +1,4 @@
-package com.bogdan.motivation.ui
+package com.bogdan.motivation.ui.fragments.theme_picker
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,28 +10,17 @@ import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
 import com.bogdan.motivation.databinding.FragmentThemePickerBinding
 import com.bogdan.motivation.db.DBManager
-import com.bogdan.motivation.helpers.playAnimation
-import com.bogdan.motivation.interfaces.OnClickListenerThemes
-import com.bogdan.motivation.recycleradapters.ThemesRecyclerViewAdapter
+import com.bogdan.motivation.helpers.playAnimationWithOffset
+import com.bogdan.motivation.repositories.RepositoryProvider
+import com.bogdan.motivation.ui.fragments.theme_picker.adapter.OnClickListenerThemes
+import com.bogdan.motivation.ui.fragments.theme_picker.adapter.ThemesRecyclerViewAdapter
 
 class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickListenerThemes {
 
     private var _binding: FragmentThemePickerBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var dbManager: DBManager
-
-    // TODO: почему сразу не инициализировать лист при обьявлении переменной ✓ DONE
-    private val themeList = listOf(
-        "Letting go",
-        "Happiness",
-        "Physical Health",
-        "Self-esteem",
-        "Faith & Spirituality",
-        "Stress & Anxiety",
-        "Achieving goals",
-        "Relationships"
-    )
+    private lateinit var db: DBManager
 
     private val themesRecyclerViewAdapter = ThemesRecyclerViewAdapter()
 
@@ -40,8 +29,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        dbManager = DBManager(requireContext())
-        dbManager.openDb()
+        db = RepositoryProvider.dbRepository.dbManager
         _binding = FragmentThemePickerBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -50,7 +38,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
         super.onViewCreated(view, savedInstanceState)
 
         initializeRecyclerView()
-        setUiAnimations()
+        setAnimations()
         onBntContinueClicked()
     }
 
@@ -60,33 +48,33 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
         _binding = null
     }
 
-    // TODO: замени это на экстеншен для вьюхи ✓ DONE
-    private fun setUiAnimations() {
+    private fun setAnimations() {
         with(binding) {
-            tvThemeExplanations.playAnimation(animResId = R.anim.anim_fade_slow, 750)
-            recyclerViewThemes.playAnimation(animResId = R.anim.anim_fade_slow, 1250)
-            btnContinue.playAnimation(animResId = R.anim.anim_fade_slow, 1750)
+            tvThemeExplanations.playAnimationWithOffset(animResId = R.anim.anim_fade_slow, 750)
+            recyclerViewThemes.playAnimationWithOffset(animResId = R.anim.anim_fade_slow, 1250)
+            btnContinue.playAnimationWithOffset(animResId = R.anim.anim_fade_slow, 1750)
         }
     }
 
     private fun initializeRecyclerView() {
         with(binding.recyclerViewThemes) {
             adapter = themesRecyclerViewAdapter
-            themesRecyclerViewAdapter.setData(themeList)
+            themesRecyclerViewAdapter.setData(
+                RepositoryProvider.themesRepository.getThemeList()
+            )
             themesRecyclerViewAdapter.onClickListenerThemes = this@ThemePickerFragment
         }
     }
 
     override fun onThemeClickListener(theme: String) {
-        dbManager.insetToThemesDb(theme)
+        db.insetToThemesDb(theme)
     }
 
-    // TODO: добаBь {} для else ✓ DONE
     private fun onBntContinueClicked() {
         binding.btnContinue.setOnClickListener {
-            val isThemeChosen = dbManager.readFromThemesDb() == "1"
+            val isThemeChosen = db.readFromThemesDb() == "1"
             if (isThemeChosen) {
-                dbManager.insetToPermissionsDb("1", "0", "0")
+                db.insetToPermissionsDb("1", "0", "0")
                 val action = ThemePickerFragmentDirections.actionThemePickerFragmentToMainFragment()
                 findNavController().navigate(action)
             } else {

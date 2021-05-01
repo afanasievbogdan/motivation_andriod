@@ -1,10 +1,9 @@
-package com.bogdan.motivation.recycleradapters
+package com.bogdan.motivation.ui.fragments.theme_picker.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bogdan.motivation.databinding.FragmentThemeButtonBinding
-import com.bogdan.motivation.interfaces.OnClickListenerThemes
+import com.bogdan.motivation.databinding.ItemThemeButtonBinding
 
 class ThemesRecyclerViewAdapter :
     RecyclerView.Adapter<ThemesRecyclerViewAdapter.ThemeViewHolder>() {
@@ -14,7 +13,7 @@ class ThemesRecyclerViewAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ThemeViewHolder {
         return ThemeViewHolder(
-            FragmentThemeButtonBinding.inflate(
+            ItemThemeButtonBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -34,14 +33,12 @@ class ThemesRecyclerViewAdapter :
         notifyDataSetChanged()
     }
 
-    inner class ThemeViewHolder(private val binding: FragmentThemeButtonBinding) :
+    inner class ThemeViewHolder(private val binding: ItemThemeButtonBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(themeName: String) {
             with(binding) {
                 btnTheme.text = themeName
                 btnTheme.setOnClickListener {
-                    // TODO: it.isSelected = !it.isSelected ✓ DONE
-                    // TODO: val ??? = if (it.isSelected) "1" else "0" ✓ DONE
                     it.isSelected = !it.isSelected
                     onClickListenerThemes.onThemeClickListener(
                         if (it.isSelected) "1" else "0"

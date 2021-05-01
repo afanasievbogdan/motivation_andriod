@@ -9,7 +9,6 @@ import android.widget.RemoteViews
 import com.bogdan.motivation.R
 import com.bogdan.motivation.db.DBManager
 
-// TODO мы так поняли ты этот класс просто скопировал, так что вернемся к нему позже
 const val REFRESH_TEXT = "REFRESH_TEXT"
 
 class AppWidget : AppWidgetProvider() {

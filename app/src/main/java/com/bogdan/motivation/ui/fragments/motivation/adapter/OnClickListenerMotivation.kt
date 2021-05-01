@@ -1,4 +1,4 @@
-package com.bogdan.motivation.interfaces
+package com.bogdan.motivation.ui.fragments.motivation.adapter
 
 interface OnClickListenerMotivation {
     fun onFavoriteClickListener(isFavorite: Boolean, quote: String)

@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.motivation.api.RetrofitConfiguration
 import com.bogdan.motivation.databinding.ActivityApplicationBinding
 import com.bogdan.motivation.db.DBManager
+import com.bogdan.motivation.helpers.ThemeUtils
+import com.bogdan.motivation.repositories.RepositoryProvider
 
 class ApplicationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityApplicationBinding
-    private lateinit var dbManager: DBManager
+    lateinit var db: DBManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,8 +20,12 @@ class ApplicationActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        dbManager = DBManager(applicationContext)
-        dbManager.openDb()
+        RepositoryProvider.dbRepository.connectToDb(applicationContext)
+        db = RepositoryProvider.dbRepository.dbManager
+
         RetrofitConfiguration.configureQuotesApi()
+
+        val style = db.readStyleFromStylesDb()
+        ThemeUtils.onActivityCreateSetTheme(this, style)
     }
 }

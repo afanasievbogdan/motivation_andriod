@@ -26,10 +26,6 @@
         <item name="motivationTextColor">@color/alabaster</item>
         <item name="favoriteColor">@color/alabaster</item>
 
-        <item name="btnLightColor">@color/alabaster</item>
-        <item name="btnDarkColor">@color/mine_shaft</item>
-
-
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
@@ -49,8 +45,6 @@
         <item name="motivationBackgroundColor">@color/denim</item>
         <item name="motivationBackgroundColorSecond">@color/denim</item>
         <item name="motivationBackgroundColorThird">@color/denim</item>
-        <item name="motivationTextColor">@color/alabaster</item>
-        <item name="favoriteColor">@color/alabaster</item>
     </style>
 
     <style name="MixMode" parent="Theme.Motivation">
@@ -58,8 +52,6 @@
         <item name="motivationBackgroundColor">@color/coral_red</item>
         <item name="motivationBackgroundColorSecond">@color/amaranth</item>
         <item name="motivationBackgroundColorThird">@color/seance</item>
-        <item name="motivationTextColor">@color/alabaster</item>
-        <item name="favoriteColor">@color/alabaster</item>
     </style>
 
     <style name="TimePickerTheme" parent="Theme.AppCompat.Dialog">

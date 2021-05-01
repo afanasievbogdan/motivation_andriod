@@ -12,19 +12,18 @@ import androidx.work.WorkerParameters
 import com.bogdan.motivation.R
 import com.bogdan.motivation.db.DBManager
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
-class NotificationsWorker(private val appContext: Context, workerParams: WorkerParameters) :
-    Worker(appContext, workerParams) {
+class NotificationsWorker(
+    private val appContext: Context,
+    workerParams: WorkerParameters
+) : Worker(appContext, workerParams) {
 
     private val channelId = "channel_id_01"
     private val notificationId = 101
-    // TODO: зачем ещё раз обьявлять переменную? добавь private val B constructor ✓ DONE
 
     private val dbManager = DBManager(appContext)
 
-    // TODO: добаBь {} для else ✓ DONE
     override fun doWork(): Result {
         dbManager.openDb()
         if (isCorrectTime()) {
@@ -62,12 +61,10 @@ class NotificationsWorker(private val appContext: Context, workerParams: WorkerP
             .setSmallIcon(R.mipmap.ic_launcher_round)
             .setAutoCancel(true)
             .priority = NotificationCompat.PRIORITY_DEFAULT
-        // TODO: with зачем? ✓ DONE
         NotificationManagerCompat.from(applicationContext)
             .notify(notificationId, builder.build())
     }
 
-    // TODO: название переменной? почему саппресс? ✓ DONE
     private fun isCorrectTime(): Boolean {
         val simpleDateFormat = SimpleDateFormat("HH", Locale.getDefault())
 

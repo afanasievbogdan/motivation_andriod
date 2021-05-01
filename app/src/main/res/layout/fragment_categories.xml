@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/helloBackgroundColor"
+    android:background="@drawable/bg_motivation"
     android:orientation="vertical"
-    tools:context=".ui.CategoriesFragment">
+    tools:context=".ui.fragments.categories.CategoriesFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_tv_categories_top"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/cynthonextregular"
         android:text="@string/categories_title"
-        android:textColor="?attr/helloTextColor"
+        android:textColor="?attr/motivationTextColor"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.15"
@@ -40,6 +40,7 @@
         android:paddingVertical="10dp"
         android:text="@string/categories_general"
         android:textAllCaps="false"
+        android:textColor="@drawable/btn_theme_selector_text_color"
         app:layout_constraintEnd_toStartOf="@+id/btn_favorite_chose"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_categories" />

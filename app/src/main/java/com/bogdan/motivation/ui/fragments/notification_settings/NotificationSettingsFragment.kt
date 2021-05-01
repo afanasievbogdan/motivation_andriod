@@ -1,4 +1,4 @@
-package com.bogdan.motivation.ui
+package com.bogdan.motivation.ui.fragments.notification_settings
 
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
@@ -12,8 +12,9 @@ import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
 import com.bogdan.motivation.databinding.FragmentNotificationSettingsBinding
 import com.bogdan.motivation.db.DBManager
-import com.bogdan.motivation.helpers.playAnimation
-import java.util.Calendar
+import com.bogdan.motivation.helpers.playAnimationWithOffset
+import com.bogdan.motivation.repositories.RepositoryProvider
+import java.util.*
 
 class NotificationSettingsFragment :
     Fragment(R.layout.fragment_notification_settings),
@@ -22,7 +23,7 @@ class NotificationSettingsFragment :
     private var _binding: FragmentNotificationSettingsBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var dbManager: DBManager
+    private lateinit var db: DBManager
 
     private var isStartTimer = true
     private var notificationQuantity = 10
@@ -34,8 +35,7 @@ class NotificationSettingsFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        dbManager = DBManager(requireContext())
-        dbManager.openDb()
+        db = RepositoryProvider.dbRepository.dbManager
         _binding = FragmentNotificationSettingsBinding.inflate(
             inflater,
             container,
@@ -47,7 +47,7 @@ class NotificationSettingsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUiAnimations()
+        setAnimations()
         onClickBtnMinus()
         onClickBtnPlus()
         pickStartTime()
@@ -61,32 +61,33 @@ class NotificationSettingsFragment :
         _binding = null
     }
 
-    // TODO: замени это на экстеншен для вьюхи, тут должно быть 5 строк + засэтить это для каждой вью ✓ DONE
-    private fun setUiAnimations() {
+    private fun setAnimations() {
         with(binding) {
-            tvNotificationExplanations.playAnimation(animResId = R.anim.anim_fade_slow, 750)
-            containerNotificationQuantity.playAnimation(animResId = R.anim.anim_fade_fast, 1500)
-            containerStartTime.playAnimation(animResId = R.anim.anim_fade_fast, 1750)
-            containerEndTime.playAnimation(animResId = R.anim.anim_fade_fast, 2000)
-            btnContinue.playAnimation(animResId = R.anim.anim_fade_fast, 2250)
+            tvNotificationExplanations.playAnimationWithOffset(
+                animResId = R.anim.anim_fade_slow,
+                750
+            )
+            containerNotificationQuantity.playAnimationWithOffset(
+                animResId = R.anim.anim_fade_fast,
+                1500
+            )
+            containerStartTime.playAnimationWithOffset(animResId = R.anim.anim_fade_fast, 1750)
+            containerEndTime.playAnimationWithOffset(animResId = R.anim.anim_fade_fast, 2000)
+            btnContinue.playAnimationWithOffset(animResId = R.anim.anim_fade_fast, 2250)
         }
     }
 
-    // TODO: Вместо сапресса вынеси в ресурсы ✓ DONE
     private fun onClickBtnMinus() {
         binding.btnMinus.setOnClickListener {
-            // TODO: зачем тут else? ✓ DONE
-            if (notificationQuantity > 0) notificationQuantity--
+            if (notificationQuantity > 1) notificationQuantity--
             binding.tvNotificationsQuantity.text = resources.getString(
                 R.string.notifications_quantity_changed, notificationQuantity
             )
         }
     }
 
-    // TODO: Вместо сапресса вынеси в ресурсы ✓ DONE
     private fun onClickBtnPlus() {
         binding.btnPlus.setOnClickListener {
-            // TODO: зачем тут else? ✓ DONE
             if (notificationQuantity < 30) notificationQuantity++
             binding.tvNotificationsQuantity.text = resources.getString(
                 R.string.notifications_quantity_changed, notificationQuantity
@@ -95,7 +96,6 @@ class NotificationSettingsFragment :
     }
 
     private fun getTimeCalendar() {
-        // TODO: apply ✓ DONE
         Calendar.getInstance().apply {
             hour = get(Calendar.HOUR)
             minute = get(Calendar.MINUTE)
@@ -151,7 +151,7 @@ class NotificationSettingsFragment :
                 val quantity = tvNotificationsQuantity.text.toString().substringBefore("X")
                 val startTime = btnStartTime.text.toString().substring(0, 2)
                 val endTime = btnEndTime.text.toString().substring(0, 2)
-                dbManager.insetToNotificationsDb(quantity, startTime, endTime)
+                db.insetToNotificationsDb(quantity, startTime, endTime)
                 findNavController().navigate(
                     NotificationSettingsFragmentDirections.actionNotificationSettingsFragmentToThemePickerFragment()
                 )

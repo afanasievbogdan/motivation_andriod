@@ -3,17 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_motivation"
+    android:background="@drawable/bg_motivation"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".ui.ThemeEditorFragment">
+    tools:context=".ui.fragments.style_editor.StyleEditorFragment">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/btn_light"
+        android:background="@drawable/bg_alabaster"
         android:text="@string/theme_editor_light"
         android:textColor="@color/cod_gray" />
 
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/btn_dark"
+        android:background="@drawable/bg_mineshaft"
         android:text="@string/theme_editor_dark"
         android:textColor="@color/white" />
 
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/btn_blue"
+        android:background="@drawable/bg_denim"
         android:text="@string/theme_editor_blue"
         android:textColor="@color/white" />
 
@@ -39,7 +39,7 @@
         android:id="@+id/btn_mix"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_gradient"
+        android:background="@drawable/bg_gradient"
         android:text="@string/theme_editor_mix"
         android:textColor="@color/white" />
 

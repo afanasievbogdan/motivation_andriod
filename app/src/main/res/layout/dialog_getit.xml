@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@drawable/background_popup"
+    android:background="@drawable/bg_popup"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="20dp">
@@ -22,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/cynthonext"
+        android:textColor="@color/cod_gray"
         android:gravity="center"
         android:paddingBottom="20sp"
         android:text="@string/popup_explanation" />
@@ -30,7 +31,7 @@
         android:id="@+id/btn_got_it"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_submit"
+        android:background="@drawable/bg_submit"
         android:gravity="center"
         android:text="@string/popup_btn_got_it"
         android:textAllCaps="false" />

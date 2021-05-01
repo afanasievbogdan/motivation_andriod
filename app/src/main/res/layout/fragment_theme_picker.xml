@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/helloBackgroundColor"
-    tools:context=".ui.ThemePickerFragment">
+    tools:context=".ui.fragments.theme_picker.ThemePickerFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_iv_header_bottom"
@@ -58,7 +58,7 @@
         android:layout_height="45dp"
         android:layout_marginHorizontal="25dp"
         android:layout_marginVertical="25dp"
-        android:background="@drawable/btn_submit"
+        android:background="@drawable/bg_submit"
         android:fontFamily="@font/cynthonext"
         android:text="@string/settings_btn_continue"
         android:textAllCaps="false"

@@ -1,4 +1,4 @@
-package com.bogdan.motivation.ui
+package com.bogdan.motivation.ui.fragments.hello
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
 import com.bogdan.motivation.databinding.FragmentHelloBinding
-import com.bogdan.motivation.helpers.playAnimation
+import com.bogdan.motivation.helpers.playAnimationWithOffset
 
 class HelloFragment : Fragment(R.layout.fragment_hello) {
 
@@ -27,7 +27,7 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUiAnimations()
+        setAnimations()
         onClickBtnGetStarted()
     }
 
@@ -37,15 +37,13 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
         _binding = null
     }
 
-    // TODO: замени это на экстеншен для вьюхи, тут должно быть 5 строк + засэтить это для каждой вью ✓ DONE
-    // TODO: для экстеншенов создай отдельный файл ✓ DONE
-    private fun setUiAnimations() {
+    private fun setAnimations() {
         with(binding) {
-            ivHeader.playAnimation(animResId = R.anim.anim_fade_slow, 0)
-            tvSelfCare.playAnimation(animResId = R.anim.anim_fade_slow, 750)
-            tvSelfLove.playAnimation(animResId = R.anim.anim_fade_slow, 1500)
-            tvSelfGrowth.playAnimation(animResId = R.anim.anim_fade_slow, 2250)
-            btnGetStarted.playAnimation(animResId = R.anim.anim_fade_slow, 3000)
+            ivHeader.playAnimationWithOffset(animResId = R.anim.anim_fade_slow, 0)
+            tvSelfCare.playAnimationWithOffset(animResId = R.anim.anim_fade_slow, 750)
+            tvSelfLove.playAnimationWithOffset(animResId = R.anim.anim_fade_slow, 1500)
+            tvSelfGrowth.playAnimationWithOffset(animResId = R.anim.anim_fade_slow, 2250)
+            btnGetStarted.playAnimationWithOffset(animResId = R.anim.anim_fade_slow, 3000)
         }
     }
 

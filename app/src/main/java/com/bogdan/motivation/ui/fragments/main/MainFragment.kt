@@ -1,4 +1,4 @@
-package com.bogdan.motivation.ui
+package com.bogdan.motivation.ui.fragments.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,12 +10,11 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.bogdan.motivation.R
-import com.bogdan.motivation.api.RetrofitConfiguration
 import com.bogdan.motivation.databinding.FragmentMainBinding
 import com.bogdan.motivation.db.DBManager
-import com.bogdan.motivation.helpers.ThemeUtils
+import com.bogdan.motivation.repositories.RepositoryProvider
 import com.bogdan.motivation.worker.NotificationsWorker
-import java.util.Timer
+import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.schedule
 
@@ -24,22 +23,19 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var dbManager: DBManager
+    private lateinit var db: DBManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        dbManager = DBManager(requireContext())
-        dbManager.openDb()
+        db = RepositoryProvider.dbRepository.dbManager
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val style = dbManager.readStyleFromStylesDb()
-        ThemeUtils.onActivityCreateSetTheme(requireActivity(), style)
         super.onViewCreated(view, savedInstanceState)
 
         chooseActivityToOpen()
@@ -52,15 +48,15 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun chooseActivityToOpen() {
-        val isSettingsPassed = dbManager.readSettingsFromPermissionsDb()
+        val isSettingsPassed = db.readSettingsFromPermissionsDb()
         if (isSettingsPassed == "0") {
             findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToHelloFragment()
             )
         } else if (isSettingsPassed == "1") {
-            RetrofitConfiguration.getQuotesFromApi(dbManager)
+            RepositoryProvider.quotesRepository.getQuotesFromApi(db)
             setNotificationWorker()
-            val isPopupPassed = dbManager.readPopupFromPermissionsDb()
+            val isPopupPassed = db.readPopupFromPermissionsDb()
             if (isPopupPassed == "0") {
                 Timer().schedule(2000) {
                     findNavController().navigate(
@@ -82,9 +78,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private fun setNotificationWorker() {
         val workTag = "WORK_TAG"
 
-        val notifQuantity = dbManager.readQuantityFromNotificationsDb()
-        val startTime = dbManager.readStartTimeFromNotificationsDb()
-        val endTime = dbManager.readEndTimeFromNotificationsDb()
+        val notifQuantity = db.readQuantityFromNotificationsDb()
+        val startTime = db.readStartTimeFromNotificationsDb()
+        val endTime = db.readEndTimeFromNotificationsDb()
 
         var repeatInterval = (endTime.toInt() - startTime.toInt()) * 60 / notifQuantity.toInt()
         repeatInterval = repeatInterval.coerceAtLeast(16)
