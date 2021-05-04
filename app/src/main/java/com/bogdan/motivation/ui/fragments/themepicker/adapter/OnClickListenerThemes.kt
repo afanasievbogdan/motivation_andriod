@@ -1,4 +1,4 @@
-package com.bogdan.motivation.ui.fragments.theme_picker.adapter
+package com.bogdan.motivation.ui.fragments.themepicker.adapter
 
 interface OnClickListenerThemes {
     fun onThemeClickListener(theme: String)

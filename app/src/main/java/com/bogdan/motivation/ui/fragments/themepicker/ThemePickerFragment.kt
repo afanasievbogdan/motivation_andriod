@@ -1,4 +1,4 @@
-package com.bogdan.motivation.ui.fragments.theme_picker
+package com.bogdan.motivation.ui.fragments.themepicker
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,8 +12,8 @@ import com.bogdan.motivation.databinding.FragmentThemePickerBinding
 import com.bogdan.motivation.db.DBManager
 import com.bogdan.motivation.helpers.playAnimationWithOffset
 import com.bogdan.motivation.repositories.RepositoryProvider
-import com.bogdan.motivation.ui.fragments.theme_picker.adapter.OnClickListenerThemes
-import com.bogdan.motivation.ui.fragments.theme_picker.adapter.ThemesRecyclerViewAdapter
+import com.bogdan.motivation.ui.fragments.themepicker.adapter.OnClickListenerThemes
+import com.bogdan.motivation.ui.fragments.themepicker.adapter.ThemesRecyclerViewAdapter
 
 class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickListenerThemes {
 
@@ -29,7 +29,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        db = RepositoryProvider.dbRepository.dbManager
+        db = RepositoryProvider.dbRepository.getDbInstance()
         _binding = FragmentThemePickerBinding.inflate(inflater, container, false)
         return binding.root
     }

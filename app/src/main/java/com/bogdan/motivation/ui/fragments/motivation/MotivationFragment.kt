@@ -37,7 +37,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        db = RepositoryProvider.dbRepository.dbManager
+        db = RepositoryProvider.dbRepository.getDbInstance()
         _binding = FragmentMotivationBinding.inflate(inflater, container, false)
         return binding.root
     }

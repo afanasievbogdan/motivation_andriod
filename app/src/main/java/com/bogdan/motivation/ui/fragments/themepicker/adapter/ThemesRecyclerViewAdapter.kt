@@ -1,4 +1,4 @@
-package com.bogdan.motivation.ui.fragments.theme_picker.adapter
+package com.bogdan.motivation.ui.fragments.themepicker.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

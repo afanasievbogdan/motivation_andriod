@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/notificationSettingsFragment"
-        android:name="com.bogdan.motivation.ui.fragments.notification_settings.NotificationSettingsFragment"
+        android:name="com.bogdan.motivation.ui.fragments.notificationsettings.NotificationSettingsFragment"
         android:label="fragment_notification_settings"
         tools:layout="@layout/fragment_notification_settings">
         <action
@@ -56,7 +56,7 @@
     </fragment>
     <fragment
         android:id="@+id/themePickerFragment"
-        android:name="com.bogdan.motivation.ui.fragments.theme_picker.ThemePickerFragment"
+        android:name="com.bogdan.motivation.ui.fragments.themepicker.ThemePickerFragment"
         android:label="fragment_theme_picker"
         tools:layout="@layout/fragment_theme_picker">
         <action
@@ -74,7 +74,7 @@
     </fragment>
     <fragment
         android:id="@+id/themeEditorFragment"
-        android:name="com.bogdan.motivation.ui.fragments.style_editor.StyleEditorFragment"
+        android:name="com.bogdan.motivation.ui.fragments.styleeditor.StyleEditorFragment"
         android:label="fragment_theme_editor"
         tools:layout="@layout/fragment_style_editor">
         <argument

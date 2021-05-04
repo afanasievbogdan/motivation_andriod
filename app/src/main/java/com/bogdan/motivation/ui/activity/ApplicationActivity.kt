@@ -1,17 +1,16 @@
-package com.bogdan.motivation.ui
+package com.bogdan.motivation.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bogdan.motivation.api.RetrofitConfiguration
 import com.bogdan.motivation.databinding.ActivityApplicationBinding
-import com.bogdan.motivation.db.DBManager
-import com.bogdan.motivation.helpers.ThemeUtils
-import com.bogdan.motivation.repositories.RepositoryProvider
+import com.bogdan.motivation.helpers.StylesUtils
 
 class ApplicationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityApplicationBinding
-    lateinit var db: DBManager
+
+    private val applicationViewModel = ApplicationViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,12 +19,11 @@ class ApplicationActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        RepositoryProvider.dbRepository.connectToDb(applicationContext)
-        db = RepositoryProvider.dbRepository.dbManager
+        applicationViewModel.connectToDb(applicationContext)
 
         RetrofitConfiguration.configureQuotesApi()
 
-        val style = db.readStyleFromStylesDb()
-        ThemeUtils.onActivityCreateSetTheme(this, style)
+        val style = applicationViewModel.readStyleFromStylesDb()
+        StylesUtils.onActivityCreateSetStyle(this, style)
     }
 }

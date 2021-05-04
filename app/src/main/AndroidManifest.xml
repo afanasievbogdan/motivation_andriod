@@ -23,7 +23,7 @@
                 android:resource="@xml/widget_app_info" />
         </receiver>
 
-        <activity android:name=".ui.ApplicationActivity">
+        <activity android:name=".ui.activity.ApplicationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

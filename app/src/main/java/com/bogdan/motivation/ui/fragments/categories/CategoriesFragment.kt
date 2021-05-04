@@ -26,7 +26,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        db = RepositoryProvider.dbRepository.dbManager
+        db = RepositoryProvider.dbRepository.getDbInstance()
         _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
         return binding.root
     }

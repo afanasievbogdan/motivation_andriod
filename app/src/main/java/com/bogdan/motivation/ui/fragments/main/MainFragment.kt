@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
@@ -14,14 +15,17 @@ import com.bogdan.motivation.databinding.FragmentMainBinding
 import com.bogdan.motivation.db.DBManager
 import com.bogdan.motivation.repositories.RepositoryProvider
 import com.bogdan.motivation.worker.NotificationsWorker
-import java.util.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
-import kotlin.concurrent.schedule
 
 class MainFragment : Fragment(R.layout.fragment_main) {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
+    private val getQuotesScope = CoroutineScope(Dispatchers.IO)
 
     private lateinit var db: DBManager
 
@@ -30,7 +34,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        db = RepositoryProvider.dbRepository.dbManager
+        db = RepositoryProvider.dbRepository.getDbInstance()
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -54,25 +58,28 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 MainFragmentDirections.actionMainFragmentToHelloFragment()
             )
         } else if (isSettingsPassed == "1") {
-            RepositoryProvider.quotesRepository.getQuotesFromApi(db)
+            getQuotesScope.launch {
+                RepositoryProvider.quotesRepository.getQuotesFromApi(db)
+            }
             setNotificationWorker()
             val isPopupPassed = db.readPopupFromPermissionsDb()
             if (isPopupPassed == "0") {
-                Timer().schedule(2000) {
-                    findNavController().navigate(
-                        MainFragmentDirections.actionMainFragmentToMotivationFragment(
-                            "General"
-                        )
-                    )
+                lifecycleScope.launch {
+                    delay(2000L)
+                    openActivity()
                 }
             } else {
-                findNavController().navigate(
-                    MainFragmentDirections.actionMainFragmentToMotivationFragment(
-                        "General"
-                    )
-                )
+                openActivity()
             }
         }
+    }
+
+    private fun openActivity() {
+        findNavController().navigate(
+            MainFragmentDirections.actionMainFragmentToMotivationFragment(
+                "General"
+            )
+        )
     }
 
     private fun setNotificationWorker() {

@@ -6,7 +6,7 @@
     android:background="@drawable/bg_motivation"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".ui.fragments.style_editor.StyleEditorFragment">
+    tools:context=".ui.fragments.styleeditor.StyleEditorFragment">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_light"

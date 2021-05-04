@@ -1,4 +1,4 @@
-package com.bogdan.motivation.ui.fragments.notification_settings
+package com.bogdan.motivation.ui.fragments.notificationsettings
 
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
@@ -11,9 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
 import com.bogdan.motivation.databinding.FragmentNotificationSettingsBinding
-import com.bogdan.motivation.db.DBManager
 import com.bogdan.motivation.helpers.playAnimationWithOffset
-import com.bogdan.motivation.repositories.RepositoryProvider
 import java.util.*
 
 class NotificationSettingsFragment :
@@ -23,7 +21,7 @@ class NotificationSettingsFragment :
     private var _binding: FragmentNotificationSettingsBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var db: DBManager
+    private val notificationSettingsViewModel = NotificationSettingsViewModel()
 
     private var isStartTimer = true
     private var notificationQuantity = 10
@@ -35,7 +33,6 @@ class NotificationSettingsFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        db = RepositoryProvider.dbRepository.dbManager
         _binding = FragmentNotificationSettingsBinding.inflate(
             inflater,
             container,
@@ -151,7 +148,7 @@ class NotificationSettingsFragment :
                 val quantity = tvNotificationsQuantity.text.toString().substringBefore("X")
                 val startTime = btnStartTime.text.toString().substring(0, 2)
                 val endTime = btnEndTime.text.toString().substring(0, 2)
-                db.insetToNotificationsDb(quantity, startTime, endTime)
+                notificationSettingsViewModel.insetToNotificationsDb(quantity, startTime, endTime)
                 findNavController().navigate(
                     NotificationSettingsFragmentDirections.actionNotificationSettingsFragmentToThemePickerFragment()
                 )
