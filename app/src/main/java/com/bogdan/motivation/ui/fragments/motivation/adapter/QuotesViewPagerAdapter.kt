@@ -3,8 +3,8 @@ package com.bogdan.motivation.ui.fragments.motivation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bogdan.motivation.data.entities.Quote
 import com.bogdan.motivation.databinding.FragmentSingleMotivationBinding
-import com.bogdan.motivation.entities.Quote
 
 class QuotesViewPagerAdapter :
     RecyclerView.Adapter<QuotesViewPagerAdapter.QuotesViewHolder>() {

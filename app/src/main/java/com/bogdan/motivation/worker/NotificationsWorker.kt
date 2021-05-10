@@ -10,7 +10,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.bogdan.motivation.R
-import com.bogdan.motivation.db.DBManager
+import com.bogdan.motivation.data.db.DBManager
 import java.text.SimpleDateFormat
 import java.util.*
 

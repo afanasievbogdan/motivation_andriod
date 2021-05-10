@@ -1,4 +1,4 @@
-package com.bogdan.motivation.entities
+package com.bogdan.motivation.data.entities
 
 import com.squareup.moshi.JsonClass
 

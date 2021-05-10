@@ -1,9 +1,9 @@
-package com.bogdan.motivation.repositories
+package com.bogdan.motivation.data.repositories
 
 import android.util.Log
-import com.bogdan.motivation.api.RetrofitConfiguration
-import com.bogdan.motivation.db.DBManager
-import com.bogdan.motivation.entities.Root
+import com.bogdan.motivation.data.api.RetrofitConfiguration
+import com.bogdan.motivation.data.db.DBManager
+import com.bogdan.motivation.data.entities.Root
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

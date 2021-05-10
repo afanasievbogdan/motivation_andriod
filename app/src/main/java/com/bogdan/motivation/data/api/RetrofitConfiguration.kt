@@ -1,4 +1,4 @@
-package com.bogdan.motivation.api
+package com.bogdan.motivation.data.api
 
 import com.bogdan.motivation.BuildConfig
 import okhttp3.OkHttpClient

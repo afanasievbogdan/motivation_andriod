@@ -1,4 +1,4 @@
-package com.bogdan.motivation.db
+package com.bogdan.motivation.data.db
 
 object DBConstants {
     const val DATABASE_VERSION = 1

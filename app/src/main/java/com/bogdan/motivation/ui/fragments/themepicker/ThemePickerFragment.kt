@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
+import com.bogdan.motivation.data.repositories.RepositoryProvider
 import com.bogdan.motivation.databinding.FragmentThemePickerBinding
-import com.bogdan.motivation.db.DBManager
 import com.bogdan.motivation.helpers.playAnimationWithOffset
-import com.bogdan.motivation.repositories.RepositoryProvider
 import com.bogdan.motivation.ui.fragments.themepicker.adapter.OnClickListenerThemes
 import com.bogdan.motivation.ui.fragments.themepicker.adapter.ThemesRecyclerViewAdapter
 
@@ -20,8 +20,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
     private var _binding: FragmentThemePickerBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var db: DBManager
-
+    private val themePickerViewModel: ThemePickerViewModel by viewModels()
     private val themesRecyclerViewAdapter = ThemesRecyclerViewAdapter()
 
     override fun onCreateView(
@@ -29,7 +28,6 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        db = RepositoryProvider.dbRepository.getDbInstance()
         _binding = FragmentThemePickerBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -40,6 +38,25 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
         initializeRecyclerView()
         setAnimations()
         onBntContinueClicked()
+
+        themePickerViewModel.themePickerLiveData.observe(
+            viewLifecycleOwner,
+            {
+                val isThemeChosen = it == "1"
+
+                if (isThemeChosen) {
+                    themePickerViewModel.insetToPermissionsDb("1", "0", "0")
+                    val action = ThemePickerFragmentDirections.actionThemePickerFragmentToMainFragment()
+                    findNavController().navigate(action)
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Choose at least one category",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        )
     }
 
     override fun onDestroyView() {
@@ -67,23 +84,13 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
     }
 
     override fun onThemeClickListener(theme: String) {
-        db.insetToThemesDb(theme)
+        themePickerViewModel.insetToThemesDb(theme)
     }
 
     private fun onBntContinueClicked() {
         binding.btnContinue.setOnClickListener {
-            val isThemeChosen = db.readFromThemesDb() == "1"
-            if (isThemeChosen) {
-                db.insetToPermissionsDb("1", "0", "0")
-                val action = ThemePickerFragmentDirections.actionThemePickerFragmentToMainFragment()
-                findNavController().navigate(action)
-            } else {
-                Toast.makeText(
-                    context,
-                    "Choose at least one category",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+
+            themePickerViewModel.readFromThemesDb()
         }
     }
 }

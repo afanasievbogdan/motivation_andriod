@@ -1,4 +1,4 @@
-package com.bogdan.motivation.repositories
+package com.bogdan.motivation.data.repositories
 
 class ThemesRepository {
 

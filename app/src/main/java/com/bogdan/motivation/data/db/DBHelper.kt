@@ -1,4 +1,4 @@
-package com.bogdan.motivation.db
+package com.bogdan.motivation.data.db
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase

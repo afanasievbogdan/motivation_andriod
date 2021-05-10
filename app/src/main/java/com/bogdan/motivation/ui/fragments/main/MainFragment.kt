@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -12,11 +13,7 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.bogdan.motivation.R
 import com.bogdan.motivation.databinding.FragmentMainBinding
-import com.bogdan.motivation.db.DBManager
-import com.bogdan.motivation.repositories.RepositoryProvider
 import com.bogdan.motivation.worker.NotificationsWorker
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
@@ -25,16 +22,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
-    private val getQuotesScope = CoroutineScope(Dispatchers.IO)
 
-    private lateinit var db: DBManager
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        db = RepositoryProvider.dbRepository.getDbInstance()
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -52,17 +47,33 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun chooseActivityToOpen() {
-        val isSettingsPassed = db.readSettingsFromPermissionsDb()
+        var isSettingsPassed = "0"
+        mainViewModel.readSettingsFromPermissionsDb()
+        mainViewModel.mainLiveData.observe(
+            viewLifecycleOwner,
+            {
+                if (it is MainViewState.SettingsFromPermissionsDb) {
+                    isSettingsPassed = it.settings
+                }
+            }
+        )
         if (isSettingsPassed == "0") {
             findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToHelloFragment()
             )
         } else if (isSettingsPassed == "1") {
-            getQuotesScope.launch {
-                RepositoryProvider.quotesRepository.getQuotesFromApi(db)
-            }
+            mainViewModel.getQuotesFromApi()
             setNotificationWorker()
-            val isPopupPassed = db.readPopupFromPermissionsDb()
+            var isPopupPassed = "0"
+            mainViewModel.readPopupFromPermissionsDb()
+            mainViewModel.mainLiveData.observe(
+                viewLifecycleOwner,
+                {
+                    if (it is MainViewState.PopupFromPermissionsDb) {
+                        isPopupPassed = it.permissionPopup
+                    }
+                }
+            )
             if (isPopupPassed == "0") {
                 lifecycleScope.launch {
                     delay(2000L)
@@ -85,11 +96,32 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private fun setNotificationWorker() {
         val workTag = "WORK_TAG"
 
-        val notifQuantity = db.readQuantityFromNotificationsDb()
-        val startTime = db.readStartTimeFromNotificationsDb()
-        val endTime = db.readEndTimeFromNotificationsDb()
+        var notificationQuantity = ""
+        var startTime = ""
+        var endTime = ""
 
-        var repeatInterval = (endTime.toInt() - startTime.toInt()) * 60 / notifQuantity.toInt()
+        with(mainViewModel) {
+            readQuantityFromNotificationsDb()
+            readStartTimeFromNotificationsDb()
+            readEndTimeFromNotificationsDb()
+            mainLiveData.observe(
+                viewLifecycleOwner,
+                {
+                    when (it) {
+                        is MainViewState.QuantityFromNotificationsDb ->
+                            notificationQuantity = it.notificationsQuantity
+                        is MainViewState.StartTimeFromNotificationsDb ->
+                            startTime = it.notificationsStartTime
+                        is MainViewState.EndTimeFromNotificationsDb ->
+                            endTime = it.notificationsEndTime
+                        else -> {
+                        }
+                    }
+                }
+            )
+        }
+
+        var repeatInterval = (endTime.toInt() - startTime.toInt()) * 60 / notificationQuantity.toInt()
         repeatInterval = repeatInterval.coerceAtLeast(16)
 
         val workRequest = PeriodicWorkRequest.Builder(

@@ -14,7 +14,9 @@
             android:id="@+id/action_helloFragment_to_notificationSettingsFragment"
             app:destination="@id/notificationSettingsFragment"
             app:enterAnim="@anim/anim_slide_in"
-            app:exitAnim="@anim/anim_slide_out" />
+            app:exitAnim="@anim/anim_slide_out"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/notificationSettingsFragment"
@@ -25,7 +27,9 @@
             android:id="@+id/action_notificationSettingsFragment_to_themePickerFragment"
             app:destination="@id/themePickerFragment"
             app:enterAnim="@anim/anim_slide_in"
-            app:exitAnim="@anim/anim_slide_out" />
+            app:exitAnim="@anim/anim_slide_out"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
@@ -34,7 +38,9 @@
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_helloFragment"
-            app:destination="@id/helloFragment" />
+            app:destination="@id/helloFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_mainFragment_to_motivationFragment"
             app:destination="@id/motivationFragment" />
@@ -70,7 +76,9 @@
         tools:layout="@layout/fragment_categories">
         <action
             android:id="@+id/action_categoriesFragment_to_motivationFragment"
-            app:destination="@id/motivationFragment" />
+            app:destination="@id/motivationFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/themeEditorFragment"

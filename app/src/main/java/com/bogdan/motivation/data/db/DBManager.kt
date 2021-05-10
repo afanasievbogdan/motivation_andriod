@@ -1,17 +1,17 @@
-package com.bogdan.motivation.db
+package com.bogdan.motivation.data.db
 
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import com.bogdan.motivation.entities.Quote
+import com.bogdan.motivation.data.entities.Quote
 import com.bogdan.motivation.helpers.StylesUtils
 import kotlin.random.Random
 
 class DBManager(context: Context) {
 
     private val mDBHelper = DBHelper(context)
-    lateinit var db: SQLiteDatabase
+    private lateinit var db: SQLiteDatabase
 
     fun openDb() {
         db = mDBHelper.writableDatabase

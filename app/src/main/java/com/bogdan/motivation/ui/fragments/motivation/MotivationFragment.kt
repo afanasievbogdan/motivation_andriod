@@ -10,15 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.bogdan.motivation.R
+import com.bogdan.motivation.data.entities.Quote
 import com.bogdan.motivation.databinding.DialogGetitBinding
 import com.bogdan.motivation.databinding.FragmentMotivationBinding
-import com.bogdan.motivation.db.DBManager
-import com.bogdan.motivation.entities.Quote
-import com.bogdan.motivation.repositories.RepositoryProvider
 import com.bogdan.motivation.ui.fragments.motivation.adapter.OnClickListenerMotivation
 import com.bogdan.motivation.ui.fragments.motivation.adapter.QuotesViewPagerAdapter
 
@@ -27,17 +26,16 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
     private var _binding: FragmentMotivationBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var db: DBManager
     private val quotesList = ArrayList<Quote>()
     private val quotesViewPagerAdapter = QuotesViewPagerAdapter()
     private val args: MotivationFragmentArgs by navArgs()
+    private val motivationViewModel: MotivationViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        db = RepositoryProvider.dbRepository.getDbInstance()
         _binding = FragmentMotivationBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -45,10 +43,35 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (db.readFavoriteOpenFromPermissionDb() == "0") {
-            quotesList.addAll(db.readAllQuotesFromQuotesDb())
+        var isFavoriteOpen = "0"
+
+        motivationViewModel.readFavoriteOpenFromPermissionDb()
+        motivationViewModel.motivationLiveData.observe(
+            viewLifecycleOwner,
+            {
+                if (it is MotivationViewState.FavoriteOpenFromPermissionDb)
+                    isFavoriteOpen = it.permissionFavoriteOpen
+            }
+        )
+
+        if (isFavoriteOpen == "0") {
+            motivationViewModel.readAllQuotesFromQuotesDb()
+            motivationViewModel.motivationLiveData.observe(
+                viewLifecycleOwner,
+                {
+                    if (it is MotivationViewState.AllQuotesFromQuotesDb)
+                        quotesList.addAll(it.allQuotes)
+                }
+            )
         } else {
-            quotesList.addAll(db.readFavouriteQuoteFromQuotesDb())
+            motivationViewModel.readFavouriteQuoteFromQuotesDb()
+            motivationViewModel.motivationLiveData.observe(
+                viewLifecycleOwner,
+                {
+                    if (it is MotivationViewState.FavouriteQuoteFromQuotesDb)
+                        quotesList.addAll(it.favouriteQuote)
+                }
+            )
         }
 
         binding.btnCategories.text = args.btnCategoriesText
@@ -65,7 +88,16 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
     }
 
     private fun initializePopup() {
-        val isPopupPassed = db.readPopupFromPermissionsDb()
+        var isPopupPassed = "0"
+
+        motivationViewModel.readPopupFromPermissionsDb()
+        motivationViewModel.motivationLiveData.observe(
+            viewLifecycleOwner,
+            {
+                if (it is MotivationViewState.PopupFromPermissionsDb)
+                    isPopupPassed = it.permissionPopup
+            }
+        )
 
         if (isPopupPassed == "0") {
             val dialogBinding = DialogGetitBinding.inflate(layoutInflater)
@@ -78,7 +110,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
             }
 
             dialogBinding.btnGotIt.setOnClickListener {
-                db.insetToPermissionsDb("1", "1", "0")
+                motivationViewModel.insetToPermissionsDb("1", "1", "0")
                 dialog.dismiss()
             }
         }
@@ -113,7 +145,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
 
     override fun onFavoriteClickListener(isFavorite: Boolean, quote: String) {
         val favorite = if (isFavorite) "1" else "0"
-        db.insertFavoriteKeyToQuotesDb(favorite, quote)
+        motivationViewModel.insertFavoriteKeyToQuotesDb(favorite, quote)
     }
 
     override fun onShareClickListener(quote: String, author: String) {

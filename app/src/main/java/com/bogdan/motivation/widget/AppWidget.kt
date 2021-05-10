@@ -7,7 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import com.bogdan.motivation.R
-import com.bogdan.motivation.db.DBManager
+import com.bogdan.motivation.data.db.DBManager
 
 const val REFRESH_TEXT = "REFRESH_TEXT"
 

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TimePicker
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
 import com.bogdan.motivation.databinding.FragmentNotificationSettingsBinding
@@ -21,7 +22,7 @@ class NotificationSettingsFragment :
     private var _binding: FragmentNotificationSettingsBinding? = null
     private val binding get() = _binding!!
 
-    private val notificationSettingsViewModel = NotificationSettingsViewModel()
+    private val notificationSettingsViewModel: NotificationSettingsViewModel by viewModels()
 
     private var isStartTimer = true
     private var notificationQuantity = 10

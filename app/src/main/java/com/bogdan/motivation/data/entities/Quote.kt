@@ -1,4 +1,4 @@
-package com.bogdan.motivation.entities
+package com.bogdan.motivation.data.entities
 
 data class Quote(
     val quote: String,

@@ -1,6 +1,6 @@
-package com.bogdan.motivation.api
+package com.bogdan.motivation.data.api
 
-import com.bogdan.motivation.entities.Root
+import com.bogdan.motivation.data.entities.Root
 import retrofit2.Call
 import retrofit2.http.GET
 

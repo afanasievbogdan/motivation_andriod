@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.bogdan.motivation.databinding.FragmentStyleEditorBinding
 import com.bogdan.motivation.helpers.StylesUtils
 import com.bogdan.motivation.helpers.StylesUtils.Styles
 
 class StyleEditorFragment : Fragment() {
-    // TODO add coroutines and view model
     private var _binding: FragmentStyleEditorBinding? = null
     private val binding get() = _binding!!
 
-    private val styleEditorViewModel = StyleEditorViewModel()
+    private val styleEditorViewModel: StyleEditorViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

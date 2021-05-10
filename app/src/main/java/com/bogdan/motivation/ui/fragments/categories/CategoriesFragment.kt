@@ -6,19 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
+import com.bogdan.motivation.data.entities.Quote
 import com.bogdan.motivation.databinding.FragmentCategoriesBinding
-import com.bogdan.motivation.db.DBManager
-import com.bogdan.motivation.entities.Quote
-import com.bogdan.motivation.repositories.RepositoryProvider
 
 class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var db: DBManager
+    private val categoriesViewModel: CategoriesViewModel by viewModels()
+
     private val quotesList = ArrayList<Quote>()
 
     override fun onCreateView(
@@ -26,7 +26,6 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        db = RepositoryProvider.dbRepository.getDbInstance()
         _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,7 +33,14 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        quotesList.addAll(db.readFavouriteQuoteFromQuotesDb())
+        categoriesViewModel.readFavouriteQuoteFromQuotesDb()
+        categoriesViewModel.categoriesLiveData.observe(
+            viewLifecycleOwner,
+            {
+                quotesList.addAll(it)
+            }
+        )
+
         onClickCategories()
     }
 
@@ -45,7 +51,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
     private fun onClickCategories() {
         binding.btnGeneralChose.setOnClickListener {
-            db.insetToPermissionsDb("1", "1", "0")
+            categoriesViewModel.insetToPermissionsDb("1", "1", "0")
             findNavController().navigate(
                 CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment(
                     "General"
@@ -54,7 +60,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         }
 
         binding.btnFavoriteChose.setOnClickListener {
-            db.insetToPermissionsDb("1", "1", "1")
+            categoriesViewModel.insetToPermissionsDb("1", "1", "1")
             if (quotesList.isNotEmpty()) {
                 findNavController().navigate(
                     CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment(

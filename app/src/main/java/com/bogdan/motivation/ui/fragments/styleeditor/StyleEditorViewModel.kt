@@ -2,16 +2,15 @@ package com.bogdan.motivation.ui.fragments.styleeditor
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bogdan.motivation.repositories.RepositoryProvider
+import com.bogdan.motivation.data.repositories.RepositoryProvider
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class StyleEditorViewModel : ViewModel() {
 
-    private val db = RepositoryProvider.dbRepository.getDbInstance()
+    private val db = RepositoryProvider.dbRepository
 
-    fun insertStyleToStylesDb(style: String) {
-        viewModelScope.launch {
-            db.insertStyleToStylesDb(style)
-        }
+    fun insertStyleToStylesDb(style: String) = viewModelScope.launch(IO) {
+        db.insertStyleToStylesDb(style)
     }
 }
