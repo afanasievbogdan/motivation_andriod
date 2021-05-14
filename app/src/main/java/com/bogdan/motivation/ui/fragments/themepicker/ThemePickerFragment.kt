@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
+import com.bogdan.motivation.data.entities.Permissions
 import com.bogdan.motivation.data.repositories.RepositoryProvider
 import com.bogdan.motivation.databinding.FragmentThemePickerBinding
 import com.bogdan.motivation.helpers.playAnimationWithOffset
@@ -22,6 +23,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
 
     private val themePickerViewModel: ThemePickerViewModel by viewModels()
     private val themesRecyclerViewAdapter = ThemesRecyclerViewAdapter()
+    private val pickedThemes = ArrayList<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,25 +40,6 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
         initializeRecyclerView()
         setAnimations()
         onBntContinueClicked()
-
-        themePickerViewModel.themePickerLiveData.observe(
-            viewLifecycleOwner,
-            {
-                val isThemeChosen = it == "1"
-
-                if (isThemeChosen) {
-                    themePickerViewModel.insetToPermissionsDb("1", "0", "0")
-                    val action = ThemePickerFragmentDirections.actionThemePickerFragmentToMainFragment()
-                    findNavController().navigate(action)
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Choose at least one category",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        )
     }
 
     override fun onDestroyView() {
@@ -83,14 +66,30 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
         }
     }
 
-    override fun onThemeClickListener(theme: String) {
-        themePickerViewModel.insetToThemesDb(theme)
+    override fun onThemeClickListener(theme: String, picked: Boolean) {
+        if (picked) pickedThemes.add(theme)
+        else pickedThemes.remove(theme)
     }
 
     private fun onBntContinueClicked() {
         binding.btnContinue.setOnClickListener {
-
-            themePickerViewModel.readFromThemesDb()
+            if (pickedThemes.isNotEmpty()) {
+                themePickerViewModel.updatePermissions(
+                    Permissions(
+                        1,
+                        isSettingsPassed = true,
+                        isPopupPassed = false,
+                        isFavoriteTabOpen = false
+                    )
+                )
+                findNavController().navigate(ThemePickerFragmentDirections.actionThemePickerFragmentToMainFragment())
+            } else {
+                Toast.makeText(
+                    context,
+                    "Choose at least one category",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 }

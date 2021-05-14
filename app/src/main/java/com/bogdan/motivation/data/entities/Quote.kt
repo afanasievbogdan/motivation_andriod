@@ -1,15 +1,19 @@
 package com.bogdan.motivation.data.entities
 
-data class Quote(
-    val quote: String,
-    val author: String,
-    var favorite: String
-) {
-    var isFavorite = favorite == "1"
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-    fun changeFavorite(): String {
-        favorite = if (favorite == "1") "0" else "1"
-        isFavorite = favorite == "1"
-        return favorite
-    }
-}
+@Entity(tableName = "Quotes")
+data class Quote(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
+    @ColumnInfo(name = "_quote")
+    val quote: String,
+    @ColumnInfo(name = "_author")
+    val author: String,
+    @ColumnInfo(name = "_favorite")
+    var isFavorite: Boolean,
+    @ColumnInfo(name = "_theme")
+    var theme: Themes
+)

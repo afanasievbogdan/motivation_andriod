@@ -1,79 +1,57 @@
 package com.bogdan.motivation.ui.fragments.motivation
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bogdan.motivation.data.entities.Permissions
+import com.bogdan.motivation.data.entities.Quote
 import com.bogdan.motivation.data.repositories.RepositoryProvider
+import com.bogdan.motivation.ui.BaseViewModel
+import com.bogdan.motivation.ui.State
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MotivationViewModel : ViewModel() {
-
-    private val _motivationLiveData: MutableLiveData<MotivationViewState> = MutableLiveData()
-    val motivationLiveData: LiveData<MotivationViewState> get() = _motivationLiveData
+class MotivationViewModel : BaseViewModel() {
 
     private val db = RepositoryProvider.dbRepository
+    val allQuotesLiveData: MutableLiveData<List<Quote>> = MutableLiveData()
+    val favouriteQuotesLiveData: MutableLiveData<List<Quote>> = MutableLiveData()
 
-    fun readFavoriteOpenFromPermissionDb() = viewModelScope.launch(IO) {
-        val permissionFavoriteOpen = MotivationViewState.FavoriteOpenFromPermissionDb(
-            db.readFavoriteOpenFromPermissionDb()
-        )
+    init {
+        readPermissions()
+        readAllQuotesFromQuotesDb()
+        readFavouriteQuotesFromQuotesDb()
+    }
+
+    private fun readPermissions() = viewModelScope.launch(IO) {
+        val permission = db.readPermissions()
         withContext(Main) {
-            _motivationLiveData.postValue(
-                permissionFavoriteOpen
-            )
+            state.value = State.SuccessState(permission)
         }
     }
 
-    fun readAllQuotesFromQuotesDb() = viewModelScope.launch(IO) {
-        val allQuotes = MotivationViewState.AllQuotesFromQuotesDb(
-            db.readAllQuotesFromQuotesDb()
-        )
+    private fun readAllQuotesFromQuotesDb() = viewModelScope.launch(IO) {
+        val allQuotes = db.readAllQuotes()
         withContext(Main) {
-            _motivationLiveData.postValue(
-                allQuotes
-            )
+            allQuotesLiveData.value = allQuotes
         }
     }
 
-    fun readFavouriteQuoteFromQuotesDb() = viewModelScope.launch(IO) {
-        val favouriteQuote = MotivationViewState.FavouriteQuoteFromQuotesDb(
-            db.readFavouriteQuoteFromQuotesDb()
-        )
+    private fun readFavouriteQuotesFromQuotesDb() = viewModelScope.launch(IO) {
+        val favoriteQuotes = db.readFavoriteQuotes()
         withContext(Main) {
-            _motivationLiveData.postValue(
-                favouriteQuote
-            )
+            favouriteQuotesLiveData.value = favoriteQuotes
         }
     }
 
-    fun readPopupFromPermissionsDb() = viewModelScope.launch(IO) {
-        val permissionPopup = MotivationViewState.PopupFromPermissionsDb(
-            db.readPopupFromPermissionsDb()
-        )
-        withContext(Main) {
-            _motivationLiveData.postValue(
-                permissionPopup
-            )
-        }
-    }
-
-    fun insetToPermissionsDb(
-        isSettingsPassed: String,
-        isPopupPassed: String,
-        isFavoriteOpen: String
-    ) = viewModelScope.launch(IO) {
-        db.insetToPermissionsDb(
-            isSettingsPassed,
-            isPopupPassed,
-            isFavoriteOpen
+    fun updatePermissions(permissions: Permissions) = viewModelScope.launch(IO) {
+        db.updatePermissions(
+            permissions
         )
     }
 
-    fun insertFavoriteKeyToQuotesDb(favorite: String, quote: String) = viewModelScope.launch(IO) {
-        db.insertFavoriteKeyToQuotesDb(favorite, quote)
+    fun updateQuote(quote: String, favorite: Boolean) = viewModelScope.launch(IO) {
+        db.updateQuote(quote, favorite)
     }
 }

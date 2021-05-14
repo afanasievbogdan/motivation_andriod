@@ -12,7 +12,10 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.bogdan.motivation.R
+import com.bogdan.motivation.data.entities.Notification
+import com.bogdan.motivation.data.entities.Permissions
 import com.bogdan.motivation.databinding.FragmentMainBinding
+import com.bogdan.motivation.ui.State
 import com.bogdan.motivation.worker.NotificationsWorker
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -37,7 +40,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        chooseActivityToOpen()
+        initializeAllObserver()
     }
 
     override fun onDestroyView() {
@@ -46,40 +49,37 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         _binding = null
     }
 
-    private fun chooseActivityToOpen() {
-        var isSettingsPassed = "0"
-        mainViewModel.readSettingsFromPermissionsDb()
-        mainViewModel.mainLiveData.observe(
+    private fun initializeAllObserver() {
+        mainViewModel.state.observe(
             viewLifecycleOwner,
             {
-                if (it is MainViewState.SettingsFromPermissionsDb) {
-                    isSettingsPassed = it.settings
+                if (it != null && it is State.SuccessState<*>) {
+                    when (it.data) {
+                        is Permissions -> chooseActivityToOpen(it.data)
+                        is Notification -> setNotificationWorker(it.data)
+                    }
                 }
             }
         )
-        if (isSettingsPassed == "0") {
+    }
+
+    private fun chooseActivityToOpen(permissions: Permissions) {
+        if (permissions.isSettingsPassed) {
+            mainViewModel.getQuotesFromApi()
+            showDelay(permissions.isPopupPassed)
+        } else {
             findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToHelloFragment()
             )
-        } else if (isSettingsPassed == "1") {
-            mainViewModel.getQuotesFromApi()
-            setNotificationWorker()
-            var isPopupPassed = "0"
-            mainViewModel.readPopupFromPermissionsDb()
-            mainViewModel.mainLiveData.observe(
-                viewLifecycleOwner,
-                {
-                    if (it is MainViewState.PopupFromPermissionsDb) {
-                        isPopupPassed = it.permissionPopup
-                    }
-                }
-            )
-            if (isPopupPassed == "0") {
-                lifecycleScope.launch {
-                    delay(2000L)
-                    openActivity()
-                }
-            } else {
+        }
+    }
+
+    private fun showDelay(isPopupPassed: Boolean) {
+        if (isPopupPassed) {
+            openActivity()
+        } else {
+            lifecycleScope.launch {
+                delay(2000L)
                 openActivity()
             }
         }
@@ -93,35 +93,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         )
     }
 
-    private fun setNotificationWorker() {
+    private fun setNotificationWorker(notification: Notification) {
         val workTag = "WORK_TAG"
 
-        var notificationQuantity = ""
-        var startTime = ""
-        var endTime = ""
+        val quantity = notification.quantity
+        val start = notification.startTime
+        val end = notification.endTime
 
-        with(mainViewModel) {
-            readQuantityFromNotificationsDb()
-            readStartTimeFromNotificationsDb()
-            readEndTimeFromNotificationsDb()
-            mainLiveData.observe(
-                viewLifecycleOwner,
-                {
-                    when (it) {
-                        is MainViewState.QuantityFromNotificationsDb ->
-                            notificationQuantity = it.notificationsQuantity
-                        is MainViewState.StartTimeFromNotificationsDb ->
-                            startTime = it.notificationsStartTime
-                        is MainViewState.EndTimeFromNotificationsDb ->
-                            endTime = it.notificationsEndTime
-                        else -> {
-                        }
-                    }
-                }
-            )
-        }
-
-        var repeatInterval = (endTime.toInt() - startTime.toInt()) * 60 / notificationQuantity.toInt()
+        var repeatInterval = (end.toInt() - start.toInt()) * 60 / quantity.toInt()
         repeatInterval = repeatInterval.coerceAtLeast(16)
 
         val workRequest = PeriodicWorkRequest.Builder(

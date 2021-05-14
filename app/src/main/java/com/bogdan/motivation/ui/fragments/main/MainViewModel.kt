@@ -1,82 +1,39 @@
 package com.bogdan.motivation.ui.fragments.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogdan.motivation.data.repositories.RepositoryProvider
+import com.bogdan.motivation.ui.BaseViewModel
+import com.bogdan.motivation.ui.State
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainViewModel : ViewModel() {
-
-    private val _mainLiveData: MutableLiveData<MainViewState> = MutableLiveData<MainViewState>()
-    val mainLiveData: LiveData<MainViewState> get() = _mainLiveData
+class MainViewModel : BaseViewModel() {
 
     private val db = RepositoryProvider.dbRepository
+    private val api = RepositoryProvider.quotesRepository
 
-    fun readSettingsFromPermissionsDb() = viewModelScope.launch(IO) {
-        val permissionSettings = MainViewState.SettingsFromPermissionsDb(
-            db.readSettingsFromPermissionsDb()
-        )
+    init {
+        readPermissions()
+        readNotification()
+    }
+
+    private fun readPermissions() = viewModelScope.launch(IO) {
+        val permission = db.readPermissions()
         withContext(Main) {
-            _mainLiveData.postValue(
-                permissionSettings
-            )
+            state.value = State.SuccessState(permission)
         }
     }
 
-    fun readPopupFromPermissionsDb() = viewModelScope.launch(IO) {
-        val permissionPopup = MainViewState.PopupFromPermissionsDb(
-            db.readPopupFromPermissionsDb()
-        )
+    private fun readNotification() = viewModelScope.launch(IO) {
+        val notification = db.readNotification()
         withContext(Main) {
-            _mainLiveData.postValue(
-                permissionPopup
-            )
+            state.value = State.SuccessState(notification)
         }
     }
 
-    fun readQuantityFromNotificationsDb() = viewModelScope.launch(IO) {
-        val notificationsQuantity = MainViewState.QuantityFromNotificationsDb(
-            db.readQuantityFromNotificationsDb()
-        )
-        withContext(Main) {
-            _mainLiveData.postValue(
-                notificationsQuantity
-            )
-        }
-    }
-
-    fun readStartTimeFromNotificationsDb() = viewModelScope.launch(IO) {
-        val startTime = MainViewState.StartTimeFromNotificationsDb(
-            db.readStartTimeFromNotificationsDb()
-        )
-        withContext(Main) {
-            _mainLiveData.postValue(
-                startTime
-            )
-        }
-    }
-
-    fun readEndTimeFromNotificationsDb() = viewModelScope.launch(IO) {
-        val endTime = MainViewState.EndTimeFromNotificationsDb(
-            db.readEndTimeFromNotificationsDb()
-        )
-        withContext(Main) {
-            _mainLiveData.postValue(
-                endTime
-            )
-        }
-    }
-
-    fun getQuotesFromApi() {
-        viewModelScope.launch(IO) {
-            RepositoryProvider.quotesRepository.getQuotesFromApi(
-                db.getDbInstance()
-            )
-        }
+    fun getQuotesFromApi() = viewModelScope.launch(IO) {
+        api.getQuotesFromApi()
     }
 }

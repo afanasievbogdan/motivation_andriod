@@ -1,82 +1,57 @@
 package com.bogdan.motivation.data.repositories
 
 import android.content.Context
-import com.bogdan.motivation.data.db.DBManager
-import com.bogdan.motivation.data.entities.Quote
-import com.bogdan.motivation.helpers.StylesUtils
+import com.bogdan.motivation.data.db.ApplicationDatabase
+import com.bogdan.motivation.data.entities.*
 
 class DBRepository {
 
-    private lateinit var dbManager: DBManager
+    private lateinit var db: ApplicationDatabase
 
-    fun connectToDb(context: Context) {
-        dbManager = DBManager(context)
-        dbManager.openDb()
+    fun connectToDb(applicationContext: Context) {
+        RepositoryProvider.dbRepository.db = ApplicationDatabase.getDB(applicationContext)
     }
 
-    fun getDbInstance(): DBManager = dbManager
-
-    fun insertStyleToStylesDb(style: String) {
-        dbManager.insertStyleToStylesDb(style)
+    fun addAllQuotes(quotes: List<Quote>) {
+        db.quoteDao().addAllQuotes(quotes)
     }
 
-    fun insetToPermissionsDb(
-        isSettingsPassed: String,
-        isPopupPassed: String,
-        isFavoriteOpen: String
-    ) {
-        dbManager.insetToPermissionsDb(isSettingsPassed, isPopupPassed, isFavoriteOpen)
-    }
+    suspend fun readAllQuotes(): List<Quote> =
+        db.quoteDao().readAllQuotes()
 
-    fun insertFavoriteKeyToQuotesDb(favorite: String, quote: String) {
-        dbManager.insertFavoriteKeyToQuotesDb(favorite, quote)
-    }
+    suspend fun readFavoriteQuotes(): List<Quote> =
+        db.quoteDao().readFavoriteQuotes()
 
-    fun insetToNotificationsDb(quantity: String, startTime: String, endTime: String) {
-        dbManager.insetToNotificationsDb(quantity, startTime, endTime)
-    }
+    fun readRandomQuote(): Quote =
+        db.quoteDao().readRandomQuote()
 
-    fun insetToThemesDb(theme: String) {
-        dbManager.insetToThemesDb(theme)
-    }
+    suspend fun updateQuote(quote: String, favorite: Boolean) =
+        db.quoteDao().updateQuote(quote, favorite)
 
-    fun readStyleFromStylesDb(): StylesUtils.Styles {
-        return dbManager.readStyleFromStylesDb()
-    }
+    suspend fun saveNotification(notification: Notification) =
+        db.notificationDao().saveNotification(notification)
 
-    suspend fun readFromThemesDb(): String {
-        return dbManager.readFromThemesDb()
-    }
+    suspend fun readNotification(): Notification =
+        db.notificationDao().readNotification()
 
-    fun readFavouriteQuoteFromQuotesDb(): ArrayList<Quote> {
-        return dbManager.readFavouriteQuoteFromQuotesDb()
-    }
+    fun readStartTime(): String =
+        db.notificationDao().readStartTime()
 
-    fun readSettingsFromPermissionsDb(): String {
-        return dbManager.readSettingsFromPermissionsDb()
-    }
+    fun readEndTime(): String =
+        db.notificationDao().readEndTime()
 
-    fun readPopupFromPermissionsDb(): String {
-        return dbManager.readPopupFromPermissionsDb()
-    }
+    suspend fun savePermissions(permission: Permissions) =
+        db.permissionsDao().savePermissions(permission)
 
-    fun readQuantityFromNotificationsDb(): String {
-        return dbManager.readQuantityFromNotificationsDb()
-    }
+    suspend fun updatePermissions(permission: Permissions) =
+        db.permissionsDao().updatePermissions(permission)
 
-    fun readStartTimeFromNotificationsDb(): String {
-        return dbManager.readStartTimeFromNotificationsDb()
-    }
+    suspend fun readPermissions(): Permissions =
+        db.permissionsDao().readPermissions()
 
-    fun readEndTimeFromNotificationsDb(): String {
-        return dbManager.readEndTimeFromNotificationsDb()
-    }
+    suspend fun saveCurrentStyle(currentStyle: CurrentStyle) =
+        db.currentStyleDao().saveCurrentStyle(currentStyle)
 
-    fun readFavoriteOpenFromPermissionDb(): String {
-        return dbManager.readFavoriteOpenFromPermissionDb()
-    }
-
-    fun readAllQuotesFromQuotesDb(): ArrayList<Quote> {
-        return dbManager.readAllQuotesFromQuotesDb()
-    }
+    suspend fun readCurrentStyle(): Styles =
+        db.currentStyleDao().readCurrentStyle()
 }

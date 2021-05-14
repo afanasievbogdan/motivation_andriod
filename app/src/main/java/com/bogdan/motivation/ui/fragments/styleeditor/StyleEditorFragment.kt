@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.bogdan.motivation.data.entities.CurrentStyle
+import com.bogdan.motivation.data.entities.Styles
 import com.bogdan.motivation.databinding.FragmentStyleEditorBinding
 import com.bogdan.motivation.helpers.StylesUtils
-import com.bogdan.motivation.helpers.StylesUtils.Styles
 
 class StyleEditorFragment : Fragment() {
     private var _binding: FragmentStyleEditorBinding? = null
@@ -42,32 +43,32 @@ class StyleEditorFragment : Fragment() {
 
     private fun onBtnLightClicked() {
         binding.btnLight.setOnClickListener {
-            styleEditorViewModel.insertStyleToStylesDb(
-                StylesUtils.changeToStyle(requireActivity(), Styles.LIGHT)
+            styleEditorViewModel.saveCurrentStyle(
+                CurrentStyle(1, StylesUtils.changeToStyle(requireActivity(), Styles.LIGHT))
             )
         }
     }
 
     private fun onBtnDarkClicked() {
         binding.btnDark.setOnClickListener {
-            styleEditorViewModel.insertStyleToStylesDb(
-                StylesUtils.changeToStyle(requireActivity(), Styles.DARK)
+            styleEditorViewModel.saveCurrentStyle(
+                CurrentStyle(1, StylesUtils.changeToStyle(requireActivity(), Styles.DARK))
             )
         }
     }
 
     private fun onBtnBlueClicked() {
         binding.btnBlue.setOnClickListener {
-            styleEditorViewModel.insertStyleToStylesDb(
-                StylesUtils.changeToStyle(requireActivity(), Styles.BLUE)
+            styleEditorViewModel.saveCurrentStyle(
+                CurrentStyle(1, StylesUtils.changeToStyle(requireActivity(), Styles.BLUE))
             )
         }
     }
 
     private fun onBtnMixClicked() {
         binding.btnMix.setOnClickListener {
-            styleEditorViewModel.insertStyleToStylesDb(
-                StylesUtils.changeToStyle(requireActivity(), Styles.MIX)
+            styleEditorViewModel.saveCurrentStyle(
+                CurrentStyle(1, StylesUtils.changeToStyle(requireActivity(), Styles.MIX))
             )
         }
     }

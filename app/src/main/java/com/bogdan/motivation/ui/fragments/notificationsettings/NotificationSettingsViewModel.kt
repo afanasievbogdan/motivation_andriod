@@ -1,17 +1,17 @@
 package com.bogdan.motivation.ui.fragments.notificationsettings
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bogdan.motivation.data.entities.Notification
 import com.bogdan.motivation.data.repositories.RepositoryProvider
+import com.bogdan.motivation.ui.BaseViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
-class NotificationSettingsViewModel : ViewModel() {
+class NotificationSettingsViewModel : BaseViewModel() {
 
-    private val db = RepositoryProvider.dbRepository
+    val db = RepositoryProvider.dbRepository
 
-    fun insetToNotificationsDb(quantity: String, startTime: String, endTime: String) =
-        viewModelScope.launch(IO) {
-            db.insetToNotificationsDb(quantity, startTime, endTime)
-        }
+    fun saveNotification(notification: Notification) = viewModelScope.launch(IO) {
+        db.saveNotification(notification)
+    }
 }

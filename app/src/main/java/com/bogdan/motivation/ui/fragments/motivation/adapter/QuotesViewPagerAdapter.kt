@@ -44,14 +44,13 @@ class QuotesViewPagerAdapter :
                 btnLike.isSelected = quote.isFavorite
 
                 btnLike.setOnClickListener {
-                    quote.changeFavorite()
-                    onClickListenerMotivation.onFavoriteClickListener(quote.isFavorite, quote.quote)
-
+                    quote.isFavorite = !quote.isFavorite
+                    onClickListenerMotivation.onFavoriteClickListener(quote)
                     it.isSelected = !it.isSelected
                 }
 
                 btnShare.setOnClickListener {
-                    onClickListenerMotivation.onShareClickListener(quote.quote, quote.author)
+                    onClickListenerMotivation.onShareClickListener(quote)
                 }
             }
         }

@@ -1,39 +1,35 @@
 package com.bogdan.motivation.ui.fragments.categories
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bogdan.motivation.data.entities.Quote
+import com.bogdan.motivation.data.entities.Permissions
 import com.bogdan.motivation.data.repositories.RepositoryProvider
+import com.bogdan.motivation.ui.BaseViewModel
+import com.bogdan.motivation.ui.State
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CategoriesViewModel : ViewModel() {
-
-    private val _categoriesLiveData: MutableLiveData<ArrayList<Quote>> = MutableLiveData()
-    val categoriesLiveData: LiveData<ArrayList<Quote>> get() = _categoriesLiveData
+class CategoriesViewModel : BaseViewModel() {
 
     private val db = RepositoryProvider.dbRepository
 
-    fun insetToPermissionsDb(
-        isSettingsPassed: String,
-        isPopupPassed: String,
-        isFavoriteOpen: String
-    ) = viewModelScope.launch(IO) {
-        db.insetToPermissionsDb(
-            isSettingsPassed,
-            isPopupPassed,
-            isFavoriteOpen
-        )
+    init {
+        readFavoriteQuotes()
     }
 
-    fun readFavouriteQuoteFromQuotesDb() = viewModelScope.launch(IO) {
-        val favouriteQuote = db.readFavouriteQuoteFromQuotesDb()
+    private fun readFavoriteQuotes() = viewModelScope.launch(IO) {
+        val favouriteQuotes = db.readFavoriteQuotes()
         withContext(Main) {
-            _categoriesLiveData.postValue(favouriteQuote)
+            state.value = State.SuccessState(favouriteQuotes)
         }
+    }
+
+    fun updatePermissions(
+        permissions: Permissions
+    ) = viewModelScope.launch(IO) {
+        db.updatePermissions(
+            permissions
+        )
     }
 }

@@ -10,7 +10,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.bogdan.motivation.R
-import com.bogdan.motivation.data.db.DBManager
+import com.bogdan.motivation.data.repositories.RepositoryProvider
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -22,10 +22,10 @@ class NotificationsWorker(
     private val channelId = "channel_id_01"
     private val notificationId = 101
 
-    private val dbManager = DBManager(appContext)
+    private val db = RepositoryProvider.dbRepository
 
     override fun doWork(): Result {
-        dbManager.openDb()
+        RepositoryProvider.dbRepository.connectToDb(applicationContext)
         if (isCorrectTime()) {
             createNotificationChannel()
             sendNotification()
@@ -52,11 +52,11 @@ class NotificationsWorker(
     }
 
     private fun sendNotification() {
-        val notificationsText = dbManager.readRandomQuoteFromQuotesDb()
+        val notificationsText = db.readRandomQuote()
         val builder = NotificationCompat.Builder(applicationContext, channelId)
         builder
             .setContentTitle("Daily Motivation")
-            .setContentText(notificationsText)
+            .setContentText(notificationsText.quote)
             .setStyle(NotificationCompat.BigTextStyle())
             .setSmallIcon(R.mipmap.ic_launcher_round)
             .setAutoCancel(true)
@@ -70,8 +70,8 @@ class NotificationsWorker(
 
         val currentHour = simpleDateFormat.format(Date())
 
-        val start = dbManager.readStartTimeFromNotificationsDb()
-        val end = dbManager.readEndTimeFromNotificationsDb()
+        val start = db.readStartTime()
+        val end = db.readEndTime()
 
         return currentHour.toInt() >= start.toInt() && currentHour.toInt() < end.toInt()
     }

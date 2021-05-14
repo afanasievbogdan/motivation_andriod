@@ -7,7 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import com.bogdan.motivation.R
-import com.bogdan.motivation.data.db.DBManager
+import com.bogdan.motivation.data.repositories.RepositoryProvider
 
 const val REFRESH_TEXT = "REFRESH_TEXT"
 
@@ -45,9 +45,7 @@ internal fun updateAppWidget(
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
 ) {
-
-    val dbManager = DBManager(context)
-    dbManager.openDb()
+    RepositoryProvider.dbRepository.connectToDb(context)
     val intent = Intent(context, AppWidget::class.java)
     intent.action = REFRESH_TEXT
     intent.putExtra("appWidgetId", appWidgetId)
@@ -56,7 +54,7 @@ internal fun updateAppWidget(
         context.packageName,
         R.layout.widget_app
     )
-    views.setTextViewText(R.id.tv_appwidget, dbManager.readRandomQuoteFromQuotesDb())
+    views.setTextViewText(R.id.tv_appwidget, RepositoryProvider.dbRepository.readRandomQuote().quote)
     views.setOnClickPendingIntent(R.id.tv_appwidget, pendingIntent)
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }

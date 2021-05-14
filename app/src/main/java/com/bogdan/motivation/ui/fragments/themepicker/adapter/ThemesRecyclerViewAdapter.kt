@@ -41,7 +41,7 @@ class ThemesRecyclerViewAdapter :
                 btnTheme.setOnClickListener {
                     it.isSelected = !it.isSelected
                     onClickListenerThemes.onThemeClickListener(
-                        if (it.isSelected) "1" else "0"
+                        themeName, it.isSelected
                     )
                 }
             }

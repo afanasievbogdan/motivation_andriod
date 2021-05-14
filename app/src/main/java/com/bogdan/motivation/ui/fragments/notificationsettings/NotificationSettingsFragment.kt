@@ -11,13 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
+import com.bogdan.motivation.data.entities.Notification
 import com.bogdan.motivation.databinding.FragmentNotificationSettingsBinding
 import com.bogdan.motivation.helpers.playAnimationWithOffset
 import java.util.*
 
 class NotificationSettingsFragment :
-    Fragment(R.layout.fragment_notification_settings),
-    OnTimeSetListener {
+    Fragment(R.layout.fragment_notification_settings), OnTimeSetListener {
 
     private var _binding: FragmentNotificationSettingsBinding? = null
     private val binding get() = _binding!!
@@ -149,7 +149,9 @@ class NotificationSettingsFragment :
                 val quantity = tvNotificationsQuantity.text.toString().substringBefore("X")
                 val startTime = btnStartTime.text.toString().substring(0, 2)
                 val endTime = btnEndTime.text.toString().substring(0, 2)
-                notificationSettingsViewModel.insetToNotificationsDb(quantity, startTime, endTime)
+                notificationSettingsViewModel.saveNotification(
+                    Notification(1, quantity, startTime, endTime)
+                )
                 findNavController().navigate(
                     NotificationSettingsFragmentDirections.actionNotificationSettingsFragmentToThemePickerFragment()
                 )

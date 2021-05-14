@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
+import com.bogdan.motivation.data.entities.Permissions
 import com.bogdan.motivation.data.entities.Quote
 import com.bogdan.motivation.databinding.FragmentCategoriesBinding
+import com.bogdan.motivation.ui.State
 
 class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
@@ -33,14 +35,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        categoriesViewModel.readFavouriteQuoteFromQuotesDb()
-        categoriesViewModel.categoriesLiveData.observe(
-            viewLifecycleOwner,
-            {
-                quotesList.addAll(it)
-            }
-        )
-
+        initializeObserver()
         onClickCategories()
     }
 
@@ -49,9 +44,29 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         _binding = null
     }
 
+    private fun initializeObserver() {
+        categoriesViewModel.state.observe(
+            viewLifecycleOwner,
+            {
+                if (it != null && it is State.SuccessState<*>) {
+                    when (it.data) {
+                        is List<*> -> quotesList.addAll(it.data as List<Quote>)
+                    }
+                }
+            }
+        )
+    }
+
     private fun onClickCategories() {
         binding.btnGeneralChose.setOnClickListener {
-            categoriesViewModel.insetToPermissionsDb("1", "1", "0")
+            categoriesViewModel.updatePermissions(
+                Permissions(
+                    1,
+                    isSettingsPassed = true,
+                    isPopupPassed = true,
+                    isFavoriteTabOpen = false
+                )
+            )
             findNavController().navigate(
                 CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment(
                     "General"
@@ -60,7 +75,14 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         }
 
         binding.btnFavoriteChose.setOnClickListener {
-            categoriesViewModel.insetToPermissionsDb("1", "1", "1")
+            categoriesViewModel.updatePermissions(
+                Permissions(
+                    1,
+                    isSettingsPassed = true,
+                    isPopupPassed = true,
+                    isFavoriteTabOpen = true
+                )
+            )
             if (quotesList.isNotEmpty()) {
                 findNavController().navigate(
                     CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment(
