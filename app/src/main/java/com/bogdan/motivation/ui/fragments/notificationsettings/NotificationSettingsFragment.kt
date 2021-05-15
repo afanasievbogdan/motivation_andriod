@@ -124,6 +124,7 @@ class NotificationSettingsFragment :
         }
     }
 
+    // TODO: 15.05.2021 if в 1 строку
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         val editHour =
             if (hourOfDay.toString().length == 1) "0$hourOfDay"

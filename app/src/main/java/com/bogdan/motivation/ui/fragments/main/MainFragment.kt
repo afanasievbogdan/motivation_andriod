@@ -49,6 +49,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         _binding = null
     }
 
+    // TODO: 15.05.2021 переделай обсервер, почему функция называется All?)
     private fun initializeAllObserver() {
         mainViewModel.state.observe(
             viewLifecycleOwner,
@@ -74,6 +75,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
     }
 
+    // TODO: 15.05.2021 переименуй на openMotivationFragment например, а нижнюю удали
     private fun showDelay(isPopupPassed: Boolean) {
         if (isPopupPassed) {
             openActivity()
@@ -93,6 +95,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         )
     }
 
+    // TODO: 15.05.2021 tag в константы
     private fun setNotificationWorker(notification: Notification) {
         val workTag = "WORK_TAG"
 

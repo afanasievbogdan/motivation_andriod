@@ -5,13 +5,15 @@ import com.bogdan.motivation.data.db.ApplicationDatabase
 import com.bogdan.motivation.data.entities.*
 
 class DBRepository {
-
+    // TODO: 15.05.2021 раздели на 3 репозитория: quotes, notif, permissions
     private lateinit var db: ApplicationDatabase
 
+    // TODO: 15.05.2021 1 раз инициализируй бд, поменяй название функции
     fun connectToDb(applicationContext: Context) {
         RepositoryProvider.dbRepository.db = ApplicationDatabase.getDB(applicationContext)
     }
 
+    // TODO: 15.05.2021 сделай все через = в 1 строку или все в {}
     fun addAllQuotes(quotes: List<Quote>) {
         db.quoteDao().addAllQuotes(quotes)
     }

@@ -11,6 +11,7 @@ import com.bogdan.motivation.data.entities.Styles
 import com.bogdan.motivation.databinding.FragmentStyleEditorBinding
 import com.bogdan.motivation.helpers.StylesUtils
 
+// TODO: 15.05.2021 добавь строку после конструктора
 class StyleEditorFragment : Fragment() {
     private var _binding: FragmentStyleEditorBinding? = null
     private val binding get() = _binding!!
@@ -41,6 +42,7 @@ class StyleEditorFragment : Fragment() {
         _binding = null
     }
 
+    // TODO: 15.05.2021 если ты всегда сохраняешь в 1 ид, убери автогенерейт в модели и сделай дефолтное значение
     private fun onBtnLightClicked() {
         binding.btnLight.setOnClickListener {
             styleEditorViewModel.saveCurrentStyle(

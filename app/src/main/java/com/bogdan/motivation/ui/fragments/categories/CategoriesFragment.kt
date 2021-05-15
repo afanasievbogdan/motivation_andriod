@@ -44,6 +44,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         _binding = null
     }
 
+    // TODO: 15.05.2021 сделай как в активити
     private fun initializeObserver() {
         categoriesViewModel.state.observe(
             viewLifecycleOwner,

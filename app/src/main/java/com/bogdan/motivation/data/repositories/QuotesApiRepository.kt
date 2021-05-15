@@ -6,7 +6,7 @@ import com.bogdan.motivation.data.entities.Quote
 import com.bogdan.motivation.data.entities.Themes
 
 class QuotesApiRepository {
-
+// TODO: 15.05.2021 remove comments
 //    fun getQuotesFromApi() {
 //        val retrofitData = RetrofitConfiguration.configureQuotesApi().getQuotesList()
 //
@@ -25,7 +25,8 @@ class QuotesApiRepository {
 //            }
 //        })
 //    }
-
+    // TODO: 15.05.2021 вынеси маппинг в отдельную функцию
+    // TODO: 15.05.2021 сделай обработку ошибок try catch
     suspend fun getQuotesFromApi() {
         val response = RetrofitConfiguration.configureQuotesApi().getQuotesList()
         if (response.isSuccessful) {

@@ -18,7 +18,7 @@ class NotificationsWorker(
     private val appContext: Context,
     workerParams: WorkerParameters
 ) : Worker(appContext, workerParams) {
-
+    // TODO: 15.05.2021 В константы
     private val channelId = "channel_id_01"
     private val notificationId = 101
 
@@ -39,6 +39,7 @@ class NotificationsWorker(
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // TODO: 15.05.2021 В константы
             val name = "Notification Title"
             val descriptionText = "Notification Description"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
@@ -51,6 +52,7 @@ class NotificationsWorker(
         }
     }
 
+    // TODO: 15.05.2021 apply для билдера
     private fun sendNotification() {
         val notificationsText = db.readRandomQuote()
         val builder = NotificationCompat.Builder(applicationContext, channelId)
@@ -65,6 +67,7 @@ class NotificationsWorker(
             .notify(notificationId, builder.build())
     }
 
+    // TODO: 15.05.2021 дырявая функция
     private fun isCorrectTime(): Boolean {
         val simpleDateFormat = SimpleDateFormat("HH", Locale.getDefault())
 

@@ -57,6 +57,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
         _binding = null
     }
 
+    // TODO: 15.05.2021 обсервер в обсервере в обсервере..
     private fun initializeObserver() {
         motivationViewModel.state.observe(
             viewLifecycleOwner,

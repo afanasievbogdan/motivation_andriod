@@ -8,8 +8,10 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RetrofitConfiguration {
 
+    // TODO: 15.05.2021 вынести в отдельный file object Constants
     private const val BASE_URL = "http://10.0.2.2:3000/"
 
+    // TODO: 15.05.2021 configure замени на create
     private fun configureOkHttp(): OkHttpClient {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY

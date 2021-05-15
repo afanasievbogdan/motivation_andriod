@@ -56,6 +56,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
         }
     }
 
+    // TODO: 15.05.2021 не вызывай функции репо из фрагмента
     private fun initializeRecyclerView() {
         with(binding.recyclerViewThemes) {
             adapter = themesRecyclerViewAdapter

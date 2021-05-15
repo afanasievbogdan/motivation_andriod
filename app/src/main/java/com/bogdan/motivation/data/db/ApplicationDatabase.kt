@@ -22,9 +22,11 @@ abstract class ApplicationDatabase : RoomDatabase() {
     abstract fun currentStyleDao(): CurrentStyleDao
 
     companion object {
+        // TODO: 15.05.2021 почему вар капсом? 
         @Volatile
         private var INSTANCE: ApplicationDatabase? = null
 
+        // TODO: 15.05.2021 вынеси название дб в константы
         fun getDB(context: Context): ApplicationDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {

@@ -12,13 +12,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ApplicationViewModel : BaseViewModel() {
-
+    // TODO: 15.05.2021 почему не private
     val db = RepositoryProvider.dbRepository
 
     fun connectToDb(applicationContext: Context) {
         db.connectToDb(applicationContext)
     }
 
+    // TODO: 15.05.2021 убери ёлку
     fun savePermissions(
         permissions: Permissions
     ) = viewModelScope.launch(IO) {
@@ -27,6 +28,7 @@ class ApplicationViewModel : BaseViewModel() {
         )
     }
 
+    // TODO: 15.05.2021 в таких случаях лучше {}, а не =
     fun readCurrentStyle() = viewModelScope.launch(IO) {
         val currentStyle = db.readCurrentStyle()
         withContext(Main) {

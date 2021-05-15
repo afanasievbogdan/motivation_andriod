@@ -10,6 +10,7 @@ import com.bogdan.motivation.databinding.ActivityApplicationBinding
 import com.bogdan.motivation.helpers.StylesUtils
 import com.bogdan.motivation.ui.State
 
+// TODO: 15.05.2021 переименуй активити, например: MainActivity
 class ApplicationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityApplicationBinding
@@ -22,12 +23,13 @@ class ApplicationActivity : AppCompatActivity() {
         binding = ActivityApplicationBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
+        // TODO: 15.05.2021 почему тут создаешь сервис? 
         RetrofitConfiguration.configureQuotesApi()
-
+        // TODO: 15.05.2021 вынеси инит базы хотя бы во вм 
         applicationViewModel.connectToDb(applicationContext)
-
+        // TODO: 15.05.2021 вызывай из вм 
         applicationViewModel.readCurrentStyle()
+        // TODO: 15.05.2021 должно выглядеть как в конце файла коммент
         applicationViewModel.state.observe(
             this,
             {
@@ -41,6 +43,8 @@ class ApplicationActivity : AppCompatActivity() {
                 }
             }
         )
+        // TODO: 15.05.2021 вызови из вм 
+        // TODO: 15.05.2021 переименуй все permissions
         applicationViewModel.savePermissions(
             Permissions(
                 1,
@@ -51,3 +55,10 @@ class ApplicationActivity : AppCompatActivity() {
         )
     }
 }
+//applicationViewModel.state.observe(this) {
+//    when(it) {
+//        is State.SuccessState<*> -> when(it.data) {
+//            is Styles -> StylesUtils.onActivityCreateSetStyle(this, it.data)
+//        }
+//    }
+//}
