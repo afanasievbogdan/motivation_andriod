@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.bogdan.motivation.data.entities.CurrentStyle
-import com.bogdan.motivation.data.entities.Styles
+import com.bogdan.motivation.data.entities.local.Style
 import com.bogdan.motivation.databinding.FragmentStyleEditorBinding
+import com.bogdan.motivation.helpers.Styles
 import com.bogdan.motivation.helpers.StylesUtils
 
 // TODO: 15.05.2021 добавь строку после конструктора
 class StyleEditorFragment : Fragment() {
+
     private var _binding: FragmentStyleEditorBinding? = null
     private val binding get() = _binding!!
 
@@ -46,7 +47,7 @@ class StyleEditorFragment : Fragment() {
     private fun onBtnLightClicked() {
         binding.btnLight.setOnClickListener {
             styleEditorViewModel.saveCurrentStyle(
-                CurrentStyle(1, StylesUtils.changeToStyle(requireActivity(), Styles.LIGHT))
+                Style(style = StylesUtils.changeToStyle(requireActivity(), Styles.LIGHT))
             )
         }
     }
@@ -54,7 +55,7 @@ class StyleEditorFragment : Fragment() {
     private fun onBtnDarkClicked() {
         binding.btnDark.setOnClickListener {
             styleEditorViewModel.saveCurrentStyle(
-                CurrentStyle(1, StylesUtils.changeToStyle(requireActivity(), Styles.DARK))
+                Style(style = StylesUtils.changeToStyle(requireActivity(), Styles.DARK))
             )
         }
     }
@@ -62,7 +63,7 @@ class StyleEditorFragment : Fragment() {
     private fun onBtnBlueClicked() {
         binding.btnBlue.setOnClickListener {
             styleEditorViewModel.saveCurrentStyle(
-                CurrentStyle(1, StylesUtils.changeToStyle(requireActivity(), Styles.BLUE))
+                Style(style = StylesUtils.changeToStyle(requireActivity(), Styles.BLUE))
             )
         }
     }
@@ -70,7 +71,7 @@ class StyleEditorFragment : Fragment() {
     private fun onBtnMixClicked() {
         binding.btnMix.setOnClickListener {
             styleEditorViewModel.saveCurrentStyle(
-                CurrentStyle(1, StylesUtils.changeToStyle(requireActivity(), Styles.MIX))
+                Style(style = StylesUtils.changeToStyle(requireActivity(), Styles.MIX))
             )
         }
     }

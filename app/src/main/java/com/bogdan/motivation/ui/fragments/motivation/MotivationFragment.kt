@@ -15,11 +15,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.bogdan.motivation.R
-import com.bogdan.motivation.data.entities.Permissions
-import com.bogdan.motivation.data.entities.Quote
+import com.bogdan.motivation.data.entities.local.Quote
+import com.bogdan.motivation.data.entities.local.Utils
 import com.bogdan.motivation.databinding.DialogGetitBinding
 import com.bogdan.motivation.databinding.FragmentMotivationBinding
-import com.bogdan.motivation.ui.State
+import com.bogdan.motivation.helpers.State
 import com.bogdan.motivation.ui.fragments.motivation.adapter.OnClickListenerMotivation
 import com.bogdan.motivation.ui.fragments.motivation.adapter.QuotesViewPagerAdapter
 
@@ -47,6 +47,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
 
         binding.btnCategories.text = args.btnCategoriesText
         initializeObserver()
+        initializeViewPager()
         onClickCategoriesSelection()
         onClickThemeEditor()
     }
@@ -59,40 +60,34 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
 
     // TODO: 15.05.2021 обсервер в обсервере в обсервере..
     private fun initializeObserver() {
-        motivationViewModel.state.observe(
-            viewLifecycleOwner,
-            {
-                if (it != null && it is State.SuccessState<*>) {
+        motivationViewModel.state.observe(viewLifecycleOwner) {
+            when (it) {
+                is State.SuccessState<*> ->
                     when (it.data) {
-                        is Permissions -> {
+                        is Utils -> {
                             initializePopup(it.data)
-                            if (it.data.isFavoriteTabOpen) {
-                                motivationViewModel.favouriteQuotesLiveData.observe(
-                                    viewLifecycleOwner,
-                                    { favouriteQuotesList ->
-                                        quotesList.addAll(favouriteQuotesList)
-                                        initializeViewPager()
-                                    }
-                                )
-                            } else {
-                                motivationViewModel.allQuotesLiveData.observe(
-                                    viewLifecycleOwner,
-                                    { allQuotesList ->
-                                        quotesList.addAll(allQuotesList)
-                                        initializeViewPager()
-                                    }
-                                )
-                            }
+                            getQuotes(it.data.isFavoriteTabOpen)
                         }
+                        // TODO: model list<quote>
+                        is List<*> -> quotesViewPagerAdapter.setData(it.data as List<Quote>)
                     }
+                else -> {
                 }
             }
-        )
+        }
     }
 
-    private fun initializePopup(permissions: Permissions) {
+    private fun getQuotes(isFavoriteTabOpen: Boolean) {
+        if (isFavoriteTabOpen) {
+            motivationViewModel.readFavouriteQuotesFromQuotesDb()
+        } else {
+            motivationViewModel.readAllQuotesFromQuotesDb()
+        }
+    }
 
-        if (!permissions.isPopupPassed) {
+    private fun initializePopup(utils: Utils) {
+
+        if (!utils.isPopupPassed) {
             val dialogBinding = DialogGetitBinding.inflate(layoutInflater)
             val dialog = Dialog(requireContext()).apply {
                 requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -104,7 +99,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
 
             dialogBinding.btnGotIt.setOnClickListener {
                 motivationViewModel.updatePermissions(
-                    Permissions(1, isSettingsPassed = true, isPopupPassed = true, isFavoriteTabOpen = false)
+                    Utils(isSettingsPassed = true, isPopupPassed = true, isFavoriteTabOpen = false)
                 )
                 dialog.dismiss()
             }
@@ -133,7 +128,6 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
         with(binding.viewPagerMotivation) {
             orientation = ViewPager2.ORIENTATION_VERTICAL
             adapter = quotesViewPagerAdapter
-            quotesViewPagerAdapter.setData(quotesList)
             quotesViewPagerAdapter.onClickListenerMotivation = this@MotivationFragment
         }
     }

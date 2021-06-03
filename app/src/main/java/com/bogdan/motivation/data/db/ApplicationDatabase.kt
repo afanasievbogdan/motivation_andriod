@@ -4,31 +4,35 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.bogdan.motivation.data.dao.*
-import com.bogdan.motivation.data.entities.CurrentStyle
-import com.bogdan.motivation.data.entities.Notification
-import com.bogdan.motivation.data.entities.Permissions
-import com.bogdan.motivation.data.entities.Quote
+import com.bogdan.motivation.data.dao.NotificationDao
+import com.bogdan.motivation.data.dao.QuoteDao
+import com.bogdan.motivation.data.dao.StyleDao
+import com.bogdan.motivation.data.dao.UtilsDao
+import com.bogdan.motivation.data.entities.local.Notification
+import com.bogdan.motivation.data.entities.local.Quote
+import com.bogdan.motivation.data.entities.local.Style
+import com.bogdan.motivation.data.entities.local.Utils
+import com.bogdan.motivation.helpers.Constants
 
 @Database(
-    entities = [Quote::class, Notification::class, Permissions::class, CurrentStyle::class],
+    entities = [Quote::class, Notification::class, Utils::class, Style::class],
     version = 1,
     exportSchema = false
 )
 abstract class ApplicationDatabase : RoomDatabase() {
     abstract fun quoteDao(): QuoteDao
     abstract fun notificationDao(): NotificationDao
-    abstract fun permissionsDao(): PermissionsDao
-    abstract fun currentStyleDao(): CurrentStyleDao
+    abstract fun utilsDao(): UtilsDao
+    abstract fun currentStyleDao(): StyleDao
 
     companion object {
         // TODO: 15.05.2021 почему вар капсом? 
         @Volatile
-        private var INSTANCE: ApplicationDatabase? = null
+        private var instance: ApplicationDatabase? = null
 
         // TODO: 15.05.2021 вынеси название дб в константы
         fun getDB(context: Context): ApplicationDatabase {
-            val tempInstance = INSTANCE
+            val tempInstance = instance
             if (tempInstance != null) {
                 return tempInstance
             }
@@ -36,9 +40,9 @@ abstract class ApplicationDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     ApplicationDatabase::class.java,
-                    "MotivationDB"
+                    Constants.DATABASE_NAME
                 ).build()
-                INSTANCE = instance
+                this.instance = instance
                 return instance
             }
         }

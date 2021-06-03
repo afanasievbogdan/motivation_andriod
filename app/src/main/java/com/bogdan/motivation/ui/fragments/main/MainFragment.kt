@@ -1,6 +1,7 @@
 package com.bogdan.motivation.ui.fragments.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +13,10 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.bogdan.motivation.R
-import com.bogdan.motivation.data.entities.Notification
-import com.bogdan.motivation.data.entities.Permissions
+import com.bogdan.motivation.data.entities.local.Notification
+import com.bogdan.motivation.data.entities.local.Utils
 import com.bogdan.motivation.databinding.FragmentMainBinding
-import com.bogdan.motivation.ui.State
+import com.bogdan.motivation.helpers.State
 import com.bogdan.motivation.worker.NotificationsWorker
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -40,7 +41,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initializeAllObserver()
+        initializeObserver()
     }
 
     override fun onDestroyView() {
@@ -50,24 +51,26 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     // TODO: 15.05.2021 переделай обсервер, почему функция называется All?)
-    private fun initializeAllObserver() {
-        mainViewModel.state.observe(
-            viewLifecycleOwner,
-            {
-                if (it != null && it is State.SuccessState<*>) {
-                    when (it.data) {
-                        is Permissions -> chooseActivityToOpen(it.data)
-                        is Notification -> setNotificationWorker(it.data)
+    private fun initializeObserver() {
+        mainViewModel.state.observe(viewLifecycleOwner) {
+            when (it) {
+                is State.SuccessState<*> -> when (it.data) {
+                    is Utils -> {
+                        Log.i("Check", it.data.toString())
+                        chooseActivityToOpen(it.data)
                     }
+                    is Notification -> setNotificationWorker(it.data)
+                }
+                is State.ErrorState -> {
                 }
             }
-        )
+        }
     }
 
-    private fun chooseActivityToOpen(permissions: Permissions) {
-        if (permissions.isSettingsPassed) {
+    private fun chooseActivityToOpen(utils: Utils) {
+        if (utils.isSettingsPassed) {
             mainViewModel.getQuotesFromApi()
-            showDelay(permissions.isPopupPassed)
+            openMotivationFragment(utils.isPopupPassed)
         } else {
             findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToHelloFragment()
@@ -76,23 +79,23 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     // TODO: 15.05.2021 переименуй на openMotivationFragment например, а нижнюю удали
-    private fun showDelay(isPopupPassed: Boolean) {
+    private fun openMotivationFragment(isPopupPassed: Boolean) {
         if (isPopupPassed) {
-            openActivity()
+            findNavController().navigate(
+                MainFragmentDirections.actionMainFragmentToMotivationFragment(
+                    "General"
+                )
+            )
         } else {
             lifecycleScope.launch {
                 delay(2000L)
-                openActivity()
+                findNavController().navigate(
+                    MainFragmentDirections.actionMainFragmentToMotivationFragment(
+                        "General"
+                    )
+                )
             }
         }
-    }
-
-    private fun openActivity() {
-        findNavController().navigate(
-            MainFragmentDirections.actionMainFragmentToMotivationFragment(
-                "General"
-            )
-        )
     }
 
     // TODO: 15.05.2021 tag в константы

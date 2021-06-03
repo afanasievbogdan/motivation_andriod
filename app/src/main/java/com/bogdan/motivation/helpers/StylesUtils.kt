@@ -3,7 +3,6 @@ package com.bogdan.motivation.helpers
 import android.app.Activity
 import android.content.Intent
 import com.bogdan.motivation.R
-import com.bogdan.motivation.data.entities.Styles
 
 object StylesUtils {
 

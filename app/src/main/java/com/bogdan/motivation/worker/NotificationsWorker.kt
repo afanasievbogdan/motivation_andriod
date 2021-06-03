@@ -11,6 +11,7 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.bogdan.motivation.R
 import com.bogdan.motivation.data.repositories.RepositoryProvider
+import com.bogdan.motivation.helpers.Constants
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,13 +20,8 @@ class NotificationsWorker(
     workerParams: WorkerParameters
 ) : Worker(appContext, workerParams) {
     // TODO: 15.05.2021 В константы
-    private val channelId = "channel_id_01"
-    private val notificationId = 101
-
-    private val db = RepositoryProvider.dbRepository
 
     override fun doWork(): Result {
-        RepositoryProvider.dbRepository.connectToDb(applicationContext)
         if (isCorrectTime()) {
             createNotificationChannel()
             sendNotification()
@@ -40,11 +36,9 @@ class NotificationsWorker(
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // TODO: 15.05.2021 В константы
-            val name = "Notification Title"
-            val descriptionText = "Notification Description"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(channelId, name, importance).apply {
-                description = descriptionText
+            val channel = NotificationChannel(Constants.channelId, Constants.name, importance).apply {
+                description = Constants.descriptionText
             }
             val notificationManager: NotificationManager =
                 appContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -54,28 +48,27 @@ class NotificationsWorker(
 
     // TODO: 15.05.2021 apply для билдера
     private fun sendNotification() {
-        val notificationsText = db.readRandomQuote()
-        val builder = NotificationCompat.Builder(applicationContext, channelId)
-        builder
-            .setContentTitle("Daily Motivation")
-            .setContentText(notificationsText.quote)
-            .setStyle(NotificationCompat.BigTextStyle())
-            .setSmallIcon(R.mipmap.ic_launcher_round)
-            .setAutoCancel(true)
-            .priority = NotificationCompat.PRIORITY_DEFAULT
-        NotificationManagerCompat.from(applicationContext)
-            .notify(notificationId, builder.build())
+        val notificationsText = RepositoryProvider.quotesRepository.getRandomQuote()
+        val builder = NotificationCompat.Builder(applicationContext, Constants.channelId)
+        builder.apply {
+            setContentTitle("Daily Motivation")
+            setContentText(notificationsText.quote)
+            setStyle(NotificationCompat.BigTextStyle())
+            setSmallIcon(R.mipmap.ic_launcher_round)
+            setAutoCancel(true)
+            priority = NotificationCompat.PRIORITY_DEFAULT
+        }
+        NotificationManagerCompat
+            .from(applicationContext)
+            .notify(Constants.notificationId, builder.build())
     }
 
     // TODO: 15.05.2021 дырявая функция
     private fun isCorrectTime(): Boolean {
         val simpleDateFormat = SimpleDateFormat("HH", Locale.getDefault())
-
         val currentHour = simpleDateFormat.format(Date())
-
-        val start = db.readStartTime()
-        val end = db.readEndTime()
-
+        val start = RepositoryProvider.notificationsRepository.getStartTime()
+        val end = RepositoryProvider.notificationsRepository.getEndTime()
         return currentHour.toInt() >= start.toInt() && currentHour.toInt() < end.toInt()
     }
 }

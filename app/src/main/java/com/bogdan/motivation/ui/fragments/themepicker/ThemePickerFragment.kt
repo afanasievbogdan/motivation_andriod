@@ -9,12 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
-import com.bogdan.motivation.data.entities.Permissions
-import com.bogdan.motivation.data.repositories.RepositoryProvider
+import com.bogdan.motivation.data.entities.local.Utils
 import com.bogdan.motivation.databinding.FragmentThemePickerBinding
+import com.bogdan.motivation.helpers.State
+import com.bogdan.motivation.helpers.Themes
 import com.bogdan.motivation.helpers.playAnimationWithOffset
 import com.bogdan.motivation.ui.fragments.themepicker.adapter.OnClickListenerThemes
 import com.bogdan.motivation.ui.fragments.themepicker.adapter.ThemesRecyclerViewAdapter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickListenerThemes {
 
@@ -23,7 +26,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
 
     private val themePickerViewModel: ThemePickerViewModel by viewModels()
     private val themesRecyclerViewAdapter = ThemesRecyclerViewAdapter()
-    private val pickedThemes = ArrayList<String>()
+    private val pickedThemes = ArrayList<Themes>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +41,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
         super.onViewCreated(view, savedInstanceState)
 
         initializeRecyclerView()
+        initializeObserver()
         setAnimations()
         onBntContinueClicked()
     }
@@ -56,28 +60,45 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
         }
     }
 
+    private fun initializeObserver() {
+        themePickerViewModel.state.observe(viewLifecycleOwner) {
+            when (it) {
+                is State.SuccessState<*> -> when (it.data) {
+                    is List<*> -> themesRecyclerViewAdapter.setData(it.data as List<String>)
+                }
+                is State.ErrorState -> {
+                }
+            }
+        }
+    }
+
     // TODO: 15.05.2021 не вызывай функции репо из фрагмента
     private fun initializeRecyclerView() {
         with(binding.recyclerViewThemes) {
             adapter = themesRecyclerViewAdapter
-            themesRecyclerViewAdapter.setData(
-                RepositoryProvider.themesRepository.getThemeList()
-            )
             themesRecyclerViewAdapter.onClickListenerThemes = this@ThemePickerFragment
         }
     }
 
+    // TODO: Dirty
     override fun onThemeClickListener(theme: String, picked: Boolean) {
-        if (picked) pickedThemes.add(theme)
-        else pickedThemes.remove(theme)
+        val themeInEnumStyle = theme
+            .replaceFirst(" ", "_")
+            .replace(" ", "")
+            .replace("&", "")
+            .replace("-", "_")
+            .uppercase()
+        val themeEnum = Themes.valueOf(themeInEnumStyle)
+
+        if (picked) pickedThemes.add(themeEnum)
+        else pickedThemes.remove(themeEnum)
     }
 
     private fun onBntContinueClicked() {
         binding.btnContinue.setOnClickListener {
             if (pickedThemes.isNotEmpty()) {
                 themePickerViewModel.updatePermissions(
-                    Permissions(
-                        1,
+                    Utils(
                         isSettingsPassed = true,
                         isPopupPassed = false,
                         isFavoriteTabOpen = false

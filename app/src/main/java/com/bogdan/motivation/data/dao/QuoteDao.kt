@@ -1,25 +1,24 @@
 package com.bogdan.motivation.data.dao
 
 import androidx.room.*
-import com.bogdan.motivation.data.entities.Quote
-import retrofit2.http.Query
+import com.bogdan.motivation.data.entities.local.Quote
 
 @Dao
 interface QuoteDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun addAllQuotes(quotes: List<Quote>)
+    suspend fun insertAllQuotes(quotes: List<Quote>)
 
     @Query("SELECT * FROM Quotes")
-    suspend fun readAllQuotes(): List<Quote>
+    suspend fun getAllQuotes(): List<Quote>
 
-    @Query("SELECT * FROM Quotes WHERE _favorite = 1")
-    suspend fun readFavoriteQuotes(): List<Quote>
+    @Query("SELECT * FROM Quotes WHERE favorite = 1")
+    suspend fun getFavoriteQuotes(): List<Quote>
 
     // TODO: 15.05.2021 почему не suspend?
     @Query("SELECT * FROM Quotes ORDER BY RANDOM() LIMIT 1")
-    fun readRandomQuote(): Quote
+    fun getRandomQuote(): Quote
 
-    @Query("UPDATE Quotes SET _favorite = :favorite WHERE _quote = :quote")
+    @Query("UPDATE Quotes SET favorite = :favorite WHERE quote = :quote")
     suspend fun updateQuote(quote: String, favorite: Boolean)
 }

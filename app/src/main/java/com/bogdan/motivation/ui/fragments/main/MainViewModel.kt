@@ -2,34 +2,31 @@ package com.bogdan.motivation.ui.fragments.main
 
 import androidx.lifecycle.viewModelScope
 import com.bogdan.motivation.data.repositories.RepositoryProvider
+import com.bogdan.motivation.helpers.State
 import com.bogdan.motivation.ui.BaseViewModel
-import com.bogdan.motivation.ui.State
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MainViewModel : BaseViewModel() {
 
-    private val db = RepositoryProvider.dbRepository
-    private val api = RepositoryProvider.quotesRepository
+    private val api = RepositoryProvider.quotesApiRepository
+    private val utilsDb = RepositoryProvider.utilsRepository
+    private val notificationsDb = RepositoryProvider.notificationsRepository
 
     init {
         readPermissions()
         readNotification()
     }
 
-    private fun readPermissions() = viewModelScope.launch(IO) {
-        val permission = db.readPermissions()
-        withContext(Main) {
-            state.value = State.SuccessState(permission)
+    private fun readPermissions() {
+        viewModelScope.launch(IO) {
+            state.postValue(State.SuccessState(utilsDb.getPermissions()))
         }
     }
 
-    private fun readNotification() = viewModelScope.launch(IO) {
-        val notification = db.readNotification()
-        withContext(Main) {
-            state.value = State.SuccessState(notification)
+    private fun readNotification() {
+        viewModelScope.launch(IO) {
+            state.postValue(State.SuccessState(notificationsDb.getNotification()))
         }
     }
 

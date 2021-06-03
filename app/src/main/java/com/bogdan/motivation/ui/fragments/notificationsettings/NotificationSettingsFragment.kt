@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
-import com.bogdan.motivation.data.entities.Notification
+import com.bogdan.motivation.data.entities.local.Notification
 import com.bogdan.motivation.databinding.FragmentNotificationSettingsBinding
 import com.bogdan.motivation.helpers.playAnimationWithOffset
 import java.util.*
@@ -151,7 +151,7 @@ class NotificationSettingsFragment :
                 val startTime = btnStartTime.text.toString().substring(0, 2)
                 val endTime = btnEndTime.text.toString().substring(0, 2)
                 notificationSettingsViewModel.saveNotification(
-                    Notification(1, quantity, startTime, endTime)
+                    Notification(quantity = quantity, startTime = startTime, endTime = endTime)
                 )
                 findNavController().navigate(
                     NotificationSettingsFragmentDirections.actionNotificationSettingsFragmentToThemePickerFragment()

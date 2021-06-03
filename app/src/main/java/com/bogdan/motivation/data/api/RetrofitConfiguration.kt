@@ -1,18 +1,16 @@
 package com.bogdan.motivation.data.api
 
 import com.bogdan.motivation.BuildConfig
+import com.bogdan.motivation.helpers.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RetrofitConfiguration {
-
     // TODO: 15.05.2021 вынести в отдельный file object Constants
-    private const val BASE_URL = "http://10.0.2.2:3000/"
-
     // TODO: 15.05.2021 configure замени на create
-    private fun configureOkHttp(): OkHttpClient {
+    private fun createOkHttp(): OkHttpClient {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
@@ -23,13 +21,13 @@ object RetrofitConfiguration {
         return okHttpBuilder.build()
     }
 
-    private fun configureRetrofit(): Retrofit {
+    private fun createRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(configureOkHttp())
+            .baseUrl(Constants.BASE_URL)
+            .client(createOkHttp())
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }
 
-    fun configureQuotesApi(): QuotesApi = configureRetrofit().create(QuotesApi::class.java)
+    fun createQuotesApiInstance(): QuotesApi = createRetrofit().create(QuotesApi::class.java)
 }

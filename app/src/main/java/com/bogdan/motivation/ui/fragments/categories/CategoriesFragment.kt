@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
-import com.bogdan.motivation.data.entities.Permissions
-import com.bogdan.motivation.data.entities.Quote
+import com.bogdan.motivation.data.entities.local.Quote
+import com.bogdan.motivation.data.entities.local.Utils
 import com.bogdan.motivation.databinding.FragmentCategoriesBinding
-import com.bogdan.motivation.ui.State
+import com.bogdan.motivation.helpers.State
 
 class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
@@ -46,23 +46,21 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
     // TODO: 15.05.2021 сделай как в активити
     private fun initializeObserver() {
-        categoriesViewModel.state.observe(
-            viewLifecycleOwner,
-            {
-                if (it != null && it is State.SuccessState<*>) {
-                    when (it.data) {
-                        is List<*> -> quotesList.addAll(it.data as List<Quote>)
-                    }
+        categoriesViewModel.state.observe(viewLifecycleOwner) {
+            when (it) {
+                is State.SuccessState<*> -> when (it.data) {
+                    is List<*> -> quotesList.addAll(it.data as List<Quote>)
+                }
+                is State.ErrorState -> {
                 }
             }
-        )
+        }
     }
 
     private fun onClickCategories() {
         binding.btnGeneralChose.setOnClickListener {
             categoriesViewModel.updatePermissions(
-                Permissions(
-                    1,
+                Utils(
                     isSettingsPassed = true,
                     isPopupPassed = true,
                     isFavoriteTabOpen = false
@@ -77,8 +75,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
         binding.btnFavoriteChose.setOnClickListener {
             categoriesViewModel.updatePermissions(
-                Permissions(
-                    1,
+                Utils(
                     isSettingsPassed = true,
                     isPopupPassed = true,
                     isFavoriteTabOpen = true

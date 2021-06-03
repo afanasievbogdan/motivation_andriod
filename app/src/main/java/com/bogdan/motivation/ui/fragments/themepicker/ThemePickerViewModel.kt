@@ -1,21 +1,28 @@
 package com.bogdan.motivation.ui.fragments.themepicker
 
 import androidx.lifecycle.viewModelScope
-import com.bogdan.motivation.data.entities.Permissions
+import com.bogdan.motivation.data.entities.local.Utils
 import com.bogdan.motivation.data.repositories.RepositoryProvider
+import com.bogdan.motivation.helpers.State
 import com.bogdan.motivation.ui.BaseViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class ThemePickerViewModel : BaseViewModel() {
 
-    val db = RepositoryProvider.dbRepository
+    private val utilsDb = RepositoryProvider.utilsRepository
 
-    fun updatePermissions(
-        permissions: Permissions
-    ) = viewModelScope.launch(IO) {
-        db.updatePermissions(
-            permissions
-        )
+    init {
+        getThemeList()
+    }
+
+    private fun getThemeList() {
+        state.value = State.SuccessState(RepositoryProvider.themesRepository.getThemeList())
+    }
+
+    fun updatePermissions(utils: Utils) {
+        viewModelScope.launch(IO) {
+            utilsDb.updatePermissions(utils)
+        }
     }
 }
