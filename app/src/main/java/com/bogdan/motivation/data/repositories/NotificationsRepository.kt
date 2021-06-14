@@ -11,7 +11,7 @@ class NotificationsRepository {
 
     suspend fun getNotification(): Notification = db.notificationDao().getNotification()
 
-    fun getStartTime(): String = db.notificationDao().getStartTime()
+    suspend fun getStartTime(): String = db.notificationDao().getStartTime()
 
-    fun getEndTime(): String = db.notificationDao().getEndTime()
+    suspend fun getEndTime(): String = db.notificationDao().getEndTime()
 }

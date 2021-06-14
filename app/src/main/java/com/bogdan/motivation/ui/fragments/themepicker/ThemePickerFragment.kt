@@ -82,14 +82,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
 
     // TODO: Dirty
     override fun onThemeClickListener(theme: String, picked: Boolean) {
-        val themeInEnumStyle = theme
-            .replaceFirst(" ", "_")
-            .replace(" ", "")
-            .replace("&", "")
-            .replace("-", "_")
-            .uppercase()
-        val themeEnum = Themes.valueOf(themeInEnumStyle)
-
+        val themeEnum = Themes.valueOfThemeName(theme)
         if (picked) pickedThemes.add(themeEnum)
         else pickedThemes.remove(themeEnum)
     }

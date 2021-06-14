@@ -4,15 +4,14 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.bogdan.motivation.data.api.RetrofitConfiguration
+import com.bogdan.motivation.data.api.QuotesApi
 import com.bogdan.motivation.data.db.ApplicationDatabase
 import com.bogdan.motivation.data.entities.local.Utils
 import com.bogdan.motivation.data.repositories.*
 import com.bogdan.motivation.helpers.State
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
-class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
+class MainActivityViewModel(application: Application, private val quotesApi: QuotesApi) : AndroidViewModel(application) {
     // TODO: 15.05.2021 почему не private
 
     private val utilsDb: UtilsRepository
@@ -21,11 +20,12 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     val state: MutableLiveData<State> = MutableLiveData<State>()
 
     init {
-        RetrofitConfiguration.createQuotesApiInstance()
-        RepositoryProvider.quotesRepository.db = ApplicationDatabase.getDB(application)
-        RepositoryProvider.notificationsRepository.db = ApplicationDatabase.getDB(application)
-        RepositoryProvider.utilsRepository.db = ApplicationDatabase.getDB(application)
-        RepositoryProvider.stylesRepository.db = ApplicationDatabase.getDB(application)
+        with(RepositoryProvider) {
+            quotesRepository.db = ApplicationDatabase.getDB(application)
+            notificationsRepository.db = ApplicationDatabase.getDB(application)
+            utilsRepository.db = ApplicationDatabase.getDB(application)
+            stylesRepository.db = ApplicationDatabase.getDB(application)
+        }
 
         utilsDb = RepositoryProvider.utilsRepository
         stylesDb = RepositoryProvider.stylesRepository
@@ -43,15 +43,15 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     // TODO: 15.05.2021 убери ёлку
     private fun saveUtils(utils: Utils) {
-        viewModelScope.launch(IO) {
-            utilsDb.insertPermissions(utils)
+        viewModelScope.launch {
+            utilsDb.insertUtils(utils)
         }
     }
 
     // TODO: 15.05.2021 в таких случаях лучше {}, а не =
     private fun readCurrentStyle() {
-        viewModelScope.launch(IO) {
-            state.postValue(State.SuccessState(stylesDb.getStyle()))
+        viewModelScope.launch {
+            state.value = State.SuccessState(stylesDb.getStyle())
         }
     }
 }

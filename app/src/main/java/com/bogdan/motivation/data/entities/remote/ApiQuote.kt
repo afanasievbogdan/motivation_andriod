@@ -14,5 +14,9 @@ data class ApiQuote(
     @Json(name = "author")
     val author: String,
     @Json(name = "theme")
-    val theme: String
+    val theme: String,
+    @Json(name = "created_at")
+    val created_at: String,
+    @Json(name = "updated_at")
+    val updated_at: String
 )

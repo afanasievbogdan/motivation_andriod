@@ -7,9 +7,9 @@ class UtilsRepository {
 
     lateinit var db: ApplicationDatabase
 
-    suspend fun insertPermissions(permission: Utils) = db.utilsDao().insertUtils(permission)
+    suspend fun insertUtils(utils: Utils) = db.utilsDao().insertUtils(utils)
 
-    suspend fun updatePermissions(permission: Utils) = db.utilsDao().updateUtils(permission)
+    suspend fun updateUtils(utils: Utils) = db.utilsDao().updateUtils(utils)
 
-    suspend fun getPermissions(): Utils = db.utilsDao().getUtils()
+    suspend fun getUtils(): Utils = db.utilsDao().getUtils()
 }

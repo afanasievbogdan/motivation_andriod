@@ -1,17 +1,22 @@
-package com.bogdan.motivation.data.api
+package com.bogdan.motivation.di.modules
 
 import com.bogdan.motivation.BuildConfig
+import com.bogdan.motivation.data.api.QuotesApi
 import com.bogdan.motivation.helpers.Constants
+import dagger.Module
+import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Singleton
 
-@Deprecated("Migrate to DI")
-object RetrofitConfiguration {
-    // TODO: 15.05.2021 вынести в отдельный file object Constants
-    // TODO: 15.05.2021 configure замени на create
-    private fun createOkHttp(): OkHttpClient {
+@Module
+open class ApiModule {
+
+    @Provides
+    @Singleton
+    open fun provideOkHttp(): OkHttpClient {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
@@ -22,13 +27,17 @@ object RetrofitConfiguration {
         return okHttpBuilder.build()
     }
 
-    private fun createRetrofit(): Retrofit {
+    @Provides
+    @Singleton
+    open fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
-            .client(createOkHttp())
+            .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }
 
-    fun createQuotesApiInstance(): QuotesApi = createRetrofit().create(QuotesApi::class.java)
+    @Provides
+    @Singleton
+    open fun provideQuotesApiInstance(retrofit: Retrofit): QuotesApi = retrofit.create(QuotesApi::class.java)
 }

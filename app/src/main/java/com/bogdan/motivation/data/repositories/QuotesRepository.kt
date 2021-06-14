@@ -13,7 +13,7 @@ class QuotesRepository {
 
     suspend fun getFavoriteQuotes(): List<Quote> = db.quoteDao().getFavoriteQuotes()
 
-    fun getRandomQuote(): Quote = db.quoteDao().getRandomQuote()
+    suspend fun getRandomQuote(): Quote = db.quoteDao().getRandomQuote()
 
     suspend fun updateQuote(quote: String, favorite: Boolean) = db.quoteDao().updateQuote(quote, favorite)
 }

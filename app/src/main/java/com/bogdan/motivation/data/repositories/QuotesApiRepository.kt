@@ -1,27 +1,28 @@
 package com.bogdan.motivation.data.repositories
 
 import android.util.Log
-import com.bogdan.motivation.data.api.RetrofitConfiguration
+import com.bogdan.motivation.data.api.QuotesApi
 import com.bogdan.motivation.data.entities.local.Quote
 import com.bogdan.motivation.data.entities.remote.ApiQuote
 import com.bogdan.motivation.helpers.Themes
-import java.lang.Exception
+import javax.inject.Inject
 
-class QuotesApiRepository {
+class QuotesApiRepository @Inject constructor(private val quotesApi: QuotesApi) {
     // TODO: 15.05.2021 вынеси маппинг в отдельную функцию
     // TODO: 15.05.2021 сделай обработку ошибок try catch
     suspend fun getQuotesFromApi() {
-        val response = RetrofitConfiguration.createQuotesApiInstance().getQuotesList()
-        if (response.isSuccessful) {
-            val apiList = response.body()
-            try {
+        try {
+            val response = quotesApi.getQuotesList()
+            if (response.isSuccessful) {
+                val apiList = response.body()
+
                 val quotesList = fillQuotesList(apiList)
                 RepositoryProvider.quotesRepository.insertAllQuotes(quotesList)
-            } catch (e: Exception) {
-                Log.w("Get Quotes Method", "Wrong Response")
+            } else {
+                Log.w("DEBUG", "getQuotesFromApi() Method Wrong Response" + response.errorBody().toString())
             }
-        } else {
-            Log.w("Get Quotes Method", response.errorBody().toString())
+        } catch (e: Exception) {
+            Log.w("DEBUG", "getQuotesFromApi() Method Wrong Mapping $e")
         }
     }
 

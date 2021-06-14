@@ -16,7 +16,7 @@ import com.bogdan.motivation.helpers.Constants
 
 @Database(
     entities = [Quote::class, Notification::class, Utils::class, Style::class],
-    version = 1,
+    version = Constants.DATABASE_VERSION,
     exportSchema = false
 )
 abstract class ApplicationDatabase : RoomDatabase() {

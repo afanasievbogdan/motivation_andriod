@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.bogdan.motivation.data.repositories.RepositoryProvider
 import com.bogdan.motivation.helpers.State
 import com.bogdan.motivation.ui.BaseViewModel
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class MainViewModel : BaseViewModel() {
@@ -14,23 +13,24 @@ class MainViewModel : BaseViewModel() {
     private val notificationsDb = RepositoryProvider.notificationsRepository
 
     init {
-        readPermissions()
+        readUtils()
         readNotification()
     }
 
-    private fun readPermissions() {
-        viewModelScope.launch(IO) {
-            state.postValue(State.SuccessState(utilsDb.getPermissions()))
+    private fun readUtils() {
+        viewModelScope.launch {
+            val utils = utilsDb.getUtils()
+            state.value = State.SuccessState(utils)
         }
     }
 
     private fun readNotification() {
-        viewModelScope.launch(IO) {
-            state.postValue(State.SuccessState(notificationsDb.getNotification()))
+        viewModelScope.launch {
+            state.value = State.SuccessState(notificationsDb.getNotification())
         }
     }
 
-    fun getQuotesFromApi() = viewModelScope.launch(IO) {
+    fun getQuotesFromApi() = viewModelScope.launch {
         api.getQuotesFromApi()
     }
 }

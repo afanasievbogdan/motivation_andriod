@@ -16,6 +16,7 @@ import com.bogdan.motivation.R
 import com.bogdan.motivation.data.entities.local.Notification
 import com.bogdan.motivation.data.entities.local.Utils
 import com.bogdan.motivation.databinding.FragmentMainBinding
+import com.bogdan.motivation.helpers.Constants
 import com.bogdan.motivation.helpers.State
 import com.bogdan.motivation.worker.NotificationsWorker
 import kotlinx.coroutines.delay
@@ -100,8 +101,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     // TODO: 15.05.2021 tag в константы
     private fun setNotificationWorker(notification: Notification) {
-        val workTag = "WORK_TAG"
-
         val quantity = notification.quantity
         val start = notification.startTime
         val end = notification.endTime
@@ -116,7 +115,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         ).build()
 
         WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(
-            workTag,
+            Constants.workTag,
             ExistingPeriodicWorkPolicy.REPLACE,
             workRequest
         )

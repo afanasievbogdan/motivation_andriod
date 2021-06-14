@@ -5,7 +5,6 @@ import com.bogdan.motivation.data.entities.local.Utils
 import com.bogdan.motivation.data.repositories.RepositoryProvider
 import com.bogdan.motivation.helpers.State
 import com.bogdan.motivation.ui.BaseViewModel
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class ThemePickerViewModel : BaseViewModel() {
@@ -21,8 +20,8 @@ class ThemePickerViewModel : BaseViewModel() {
     }
 
     fun updatePermissions(utils: Utils) {
-        viewModelScope.launch(IO) {
-            utilsDb.updatePermissions(utils)
+        viewModelScope.launch {
+            utilsDb.updateUtils(utils)
         }
     }
 }

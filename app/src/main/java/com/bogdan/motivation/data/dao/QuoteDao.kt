@@ -17,7 +17,7 @@ interface QuoteDao {
 
     // TODO: 15.05.2021 почему не suspend?
     @Query("SELECT * FROM Quotes ORDER BY RANDOM() LIMIT 1")
-    fun getRandomQuote(): Quote
+    suspend fun getRandomQuote(): Quote
 
     @Query("UPDATE Quotes SET favorite = :favorite WHERE quote = :quote")
     suspend fun updateQuote(quote: String, favorite: Boolean)

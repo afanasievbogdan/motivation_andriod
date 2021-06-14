@@ -7,6 +7,7 @@ object Constants {
 
     // DB CONSTANTS
     const val DATABASE_NAME = "MotivationDB"
+    const val DATABASE_VERSION = 1
     const val TABLE_QUOTES = "Quotes"
     const val TABLE_UTILS = "Utils"
     const val TABLE_NOTIFICATIONS = "Notifications"
@@ -20,4 +21,5 @@ object Constants {
     const val notificationId = 101
     const val name = "Notification Title"
     const val descriptionText = "Notification Description"
+    const val workTag = "WORK_TAG"
 }
