@@ -12,11 +12,11 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
-open class ApiModule {
+class ApiModule {
 
     @Provides
     @Singleton
-    open fun provideOkHttp(): OkHttpClient {
+    fun provideOkHttp(): OkHttpClient {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
@@ -29,7 +29,7 @@ open class ApiModule {
 
     @Provides
     @Singleton
-    open fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .client(okHttpClient)
@@ -39,5 +39,5 @@ open class ApiModule {
 
     @Provides
     @Singleton
-    open fun provideQuotesApiInstance(retrofit: Retrofit): QuotesApi = retrofit.create(QuotesApi::class.java)
+    fun provideQuotesApiInstance(retrofit: Retrofit): QuotesApi = retrofit.create(QuotesApi::class.java)
 }

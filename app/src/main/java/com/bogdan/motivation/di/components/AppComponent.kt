@@ -1,5 +1,6 @@
 package com.bogdan.motivation.di.components
 
+import com.bogdan.motivation.di.modules.AdapterModule
 import com.bogdan.motivation.di.modules.ApiModule
 import com.bogdan.motivation.di.modules.AppModule
 import com.bogdan.motivation.di.modules.DBModule
@@ -16,7 +17,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class, ApiModule::class, DBModule::class, ViewModelModule::class])
+@Component(modules = [AppModule::class, ApiModule::class, DBModule::class, ViewModelModule::class, AdapterModule::class])
 interface AppComponent {
 
     fun inject(mainActivity: MainActivity)

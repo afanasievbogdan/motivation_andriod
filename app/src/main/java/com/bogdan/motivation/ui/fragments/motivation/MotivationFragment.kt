@@ -30,11 +30,11 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    lateinit var motivationViewModel: MotivationViewModel
+    private lateinit var motivationViewModel: MotivationViewModel
     private var _binding: FragmentMotivationBinding? = null
     private val binding get() = _binding!!
-
-    private val quotesViewPagerAdapter = QuotesViewPagerAdapter()
+    @Inject
+    lateinit var quotesViewPagerAdapter: QuotesViewPagerAdapter
     private val args: MotivationFragmentArgs by navArgs()
 
     override fun onCreateView(

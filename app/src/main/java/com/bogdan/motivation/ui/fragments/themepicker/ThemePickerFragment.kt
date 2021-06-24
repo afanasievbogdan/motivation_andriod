@@ -29,8 +29,8 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
     private lateinit var themePickerViewModel: ThemePickerViewModel
     private var _binding: FragmentThemePickerBinding? = null
     private val binding get() = _binding!!
-
-    private val themesRecyclerViewAdapter = ThemesRecyclerViewAdapter()
+    @Inject
+    lateinit var themesRecyclerViewAdapter: ThemesRecyclerViewAdapter
     private val pickedThemes = ArrayList<Themes>()
 
     override fun onCreateView(

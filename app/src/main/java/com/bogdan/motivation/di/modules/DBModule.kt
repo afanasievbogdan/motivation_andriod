@@ -11,27 +11,27 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Module
-open class DBModule @Inject constructor(private val application: Application) {
+class DBModule @Inject constructor(private val application: Application) {
 
     @Provides
     @Singleton
-    open fun providesApplicationDatabase(): ApplicationDatabase {
+    fun providesApplicationDatabase(): ApplicationDatabase {
         return Room.databaseBuilder(application, ApplicationDatabase::class.java, Constants.DATABASE_NAME).build()
     }
 
     @Provides
     @Singleton
-    open fun providesQuoteDao(applicationDatabase: ApplicationDatabase): QuoteDao = applicationDatabase.quoteDao()
+    fun providesQuoteDao(applicationDatabase: ApplicationDatabase): QuoteDao = applicationDatabase.quoteDao()
 
     @Provides
     @Singleton
-    open fun providesNotificationDao(applicationDatabase: ApplicationDatabase) = applicationDatabase.notificationDao()
+    fun providesNotificationDao(applicationDatabase: ApplicationDatabase) = applicationDatabase.notificationDao()
 
     @Provides
     @Singleton
-    open fun providesUtilsDao(applicationDatabase: ApplicationDatabase) = applicationDatabase.utilsDao()
+    fun providesUtilsDao(applicationDatabase: ApplicationDatabase) = applicationDatabase.utilsDao()
 
     @Provides
     @Singleton
-    open fun providesStyleDao(applicationDatabase: ApplicationDatabase) = applicationDatabase.styleDao()
+    fun providesStyleDao(applicationDatabase: ApplicationDatabase) = applicationDatabase.styleDao()
 }
