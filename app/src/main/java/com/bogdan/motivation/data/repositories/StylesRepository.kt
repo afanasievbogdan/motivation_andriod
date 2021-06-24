@@ -1,14 +1,13 @@
 package com.bogdan.motivation.data.repositories
 
-import com.bogdan.motivation.data.db.ApplicationDatabase
+import com.bogdan.motivation.data.dao.StyleDao
 import com.bogdan.motivation.data.entities.local.Style
 import com.bogdan.motivation.helpers.Styles
+import javax.inject.Inject
 
-class StylesRepository {
+class StylesRepository @Inject constructor(private val styleDao: StyleDao) {
 
-    lateinit var db: ApplicationDatabase
+    suspend fun insertStyle(style: Style) = styleDao.insertStyle(style)
 
-    suspend fun insertStyle(style: Style) = db.currentStyleDao().insertStyle(style)
-
-    suspend fun getStyle(): Styles = db.currentStyleDao().getStyle()
+    suspend fun getStyle(): Styles = styleDao.getStyle()
 }

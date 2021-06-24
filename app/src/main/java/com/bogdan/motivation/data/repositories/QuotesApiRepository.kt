@@ -7,9 +7,11 @@ import com.bogdan.motivation.data.entities.remote.ApiQuote
 import com.bogdan.motivation.helpers.Themes
 import javax.inject.Inject
 
-class QuotesApiRepository @Inject constructor(private val quotesApi: QuotesApi) {
-    // TODO: 15.05.2021 вынеси маппинг в отдельную функцию
-    // TODO: 15.05.2021 сделай обработку ошибок try catch
+class QuotesApiRepository @Inject constructor(
+    private val quotesApi: QuotesApi,
+    private val quotesRepository: QuotesRepository
+) {
+
     suspend fun getQuotesFromApi() {
         try {
             val response = quotesApi.getQuotesList()
@@ -17,7 +19,7 @@ class QuotesApiRepository @Inject constructor(private val quotesApi: QuotesApi) 
                 val apiList = response.body()
 
                 val quotesList = fillQuotesList(apiList)
-                RepositoryProvider.quotesRepository.insertAllQuotes(quotesList)
+                quotesRepository.insertAllQuotes(quotesList)
             } else {
                 Log.w("DEBUG", "getQuotesFromApi() Method Wrong Response" + response.errorBody().toString())
             }

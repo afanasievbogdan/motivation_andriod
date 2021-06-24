@@ -10,19 +10,27 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.bogdan.motivation.R
-import com.bogdan.motivation.data.repositories.RepositoryProvider
+import com.bogdan.motivation.data.repositories.NotificationsRepository
+import com.bogdan.motivation.data.repositories.QuotesRepository
 import com.bogdan.motivation.helpers.Constants
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
-class NotificationsWorker(
+class NotificationsWorker @Inject constructor(
     private val appContext: Context,
+    private val notificationsRepository: NotificationsRepository,
+    private val quotesRepository: QuotesRepository,
     workerParams: WorkerParameters
 ) : Worker(appContext, workerParams) {
-    // TODO: 15.05.2021 В константы
+
+    private var isCorrectTime = false
 
     override fun doWork(): Result {
-        if (isCorrectTime()) {
+        isCorrectTime()
+        if (isCorrectTime) {
             createNotificationChannel()
             sendNotification()
             Log.i("MyINFO", "Im logging with notify!!!")
@@ -35,7 +43,6 @@ class NotificationsWorker(
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // TODO: 15.05.2021 В константы
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(Constants.channelId, Constants.name, importance).apply {
                 description = Constants.descriptionText
@@ -46,29 +53,31 @@ class NotificationsWorker(
         }
     }
 
-    // TODO: 15.05.2021 apply для билдера
     private fun sendNotification() {
-        val notificationsText = RepositoryProvider.quotesRepository.getRandomQuote()
-        val builder = NotificationCompat.Builder(applicationContext, Constants.channelId)
-        builder.apply {
-            setContentTitle("Daily Motivation")
-            setContentText(notificationsText.quote)
-            setStyle(NotificationCompat.BigTextStyle())
-            setSmallIcon(R.mipmap.ic_launcher_round)
-            setAutoCancel(true)
-            priority = NotificationCompat.PRIORITY_DEFAULT
+        GlobalScope.launch {
+            val notificationsText = quotesRepository.getRandomQuote()
+            val builder = NotificationCompat.Builder(applicationContext, Constants.channelId)
+            builder.apply {
+                setContentTitle("Daily Motivation")
+                setContentText(notificationsText.quote)
+                setStyle(NotificationCompat.BigTextStyle())
+                setSmallIcon(R.mipmap.ic_launcher_round)
+                setAutoCancel(true)
+                priority = NotificationCompat.PRIORITY_DEFAULT
+            }
+            NotificationManagerCompat
+                .from(applicationContext)
+                .notify(Constants.notificationId, builder.build())
         }
-        NotificationManagerCompat
-            .from(applicationContext)
-            .notify(Constants.notificationId, builder.build())
     }
 
-    // TODO: 15.05.2021 дырявая функция
-    private fun isCorrectTime(): Boolean {
-        val simpleDateFormat = SimpleDateFormat("HH", Locale.getDefault())
-        val currentHour = simpleDateFormat.format(Date())
-        val start = RepositoryProvider.notificationsRepository.getStartTime()
-        val end = RepositoryProvider.notificationsRepository.getEndTime()
-        return currentHour.toInt() >= start.toInt() && currentHour.toInt() < end.toInt()
+    private fun isCorrectTime() {
+        GlobalScope.launch {
+            val simpleDateFormat = SimpleDateFormat("HH", Locale.getDefault())
+            val currentHour = simpleDateFormat.format(Date())
+            val start = notificationsRepository.getStartTime()
+            val end = notificationsRepository.getEndTime()
+            isCorrectTime = currentHour.toInt() >= start.toInt() && currentHour.toInt() < end.toInt()
+        }
     }
 }

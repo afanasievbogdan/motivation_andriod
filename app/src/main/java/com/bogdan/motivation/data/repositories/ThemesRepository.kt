@@ -1,6 +1,8 @@
 package com.bogdan.motivation.data.repositories
 
-class ThemesRepository {
+import javax.inject.Inject
+
+class ThemesRepository @Inject constructor() {
 
     fun getThemeList() = listOf(
         "Letting go",

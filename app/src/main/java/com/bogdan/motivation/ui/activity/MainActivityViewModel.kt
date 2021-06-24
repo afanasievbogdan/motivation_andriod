@@ -1,35 +1,20 @@
 package com.bogdan.motivation.ui.activity
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.bogdan.motivation.data.api.QuotesApi
-import com.bogdan.motivation.data.db.ApplicationDatabase
 import com.bogdan.motivation.data.entities.local.Utils
-import com.bogdan.motivation.data.repositories.*
+import com.bogdan.motivation.data.repositories.StylesRepository
+import com.bogdan.motivation.data.repositories.UtilsRepository
 import com.bogdan.motivation.helpers.State
+import com.bogdan.motivation.ui.BaseViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainActivityViewModel(application: Application, private val quotesApi: QuotesApi) : AndroidViewModel(application) {
-    // TODO: 15.05.2021 почему не private
-
-    private val utilsDb: UtilsRepository
-    private val stylesDb: StylesRepository
-
-    val state: MutableLiveData<State> = MutableLiveData<State>()
+class MainActivityViewModel @Inject constructor(
+    private val utilsRepository: UtilsRepository,
+    private val stylesRepository: StylesRepository
+) : BaseViewModel() {
 
     init {
-        with(RepositoryProvider) {
-            quotesRepository.db = ApplicationDatabase.getDB(application)
-            notificationsRepository.db = ApplicationDatabase.getDB(application)
-            utilsRepository.db = ApplicationDatabase.getDB(application)
-            stylesRepository.db = ApplicationDatabase.getDB(application)
-        }
-
-        utilsDb = RepositoryProvider.utilsRepository
-        stylesDb = RepositoryProvider.stylesRepository
-
         readCurrentStyle()
 
         saveUtils(
@@ -41,17 +26,15 @@ class MainActivityViewModel(application: Application, private val quotesApi: Quo
         )
     }
 
-    // TODO: 15.05.2021 убери ёлку
     private fun saveUtils(utils: Utils) {
         viewModelScope.launch {
-            utilsDb.insertUtils(utils)
+            utilsRepository.insertUtils(utils)
         }
     }
 
-    // TODO: 15.05.2021 в таких случаях лучше {}, а не =
     private fun readCurrentStyle() {
         viewModelScope.launch {
-            state.value = State.SuccessState(stylesDb.getStyle())
+            state.value = State.SuccessState(stylesRepository.getStyle())
         }
     }
 }

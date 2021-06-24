@@ -8,21 +8,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TimePicker
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
 import com.bogdan.motivation.data.entities.local.Notification
 import com.bogdan.motivation.databinding.FragmentNotificationSettingsBinding
+import com.bogdan.motivation.di.Application
+import com.bogdan.motivation.di.modules.viewModule.ViewModelFactory
 import com.bogdan.motivation.helpers.playAnimationWithOffset
 import java.util.*
+import javax.inject.Inject
 
-class NotificationSettingsFragment :
-    Fragment(R.layout.fragment_notification_settings), OnTimeSetListener {
+class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_settings), OnTimeSetListener {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    lateinit var notificationSettingsViewModel: NotificationSettingsViewModel
     private var _binding: FragmentNotificationSettingsBinding? = null
     private val binding get() = _binding!!
-
-    private val notificationSettingsViewModel: NotificationSettingsViewModel by viewModels()
 
     private var isStartTimer = true
     private var notificationQuantity = 10
@@ -34,6 +37,9 @@ class NotificationSettingsFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Application.appComponent.inject(this)
+        notificationSettingsViewModel =
+            ViewModelProvider(this, viewModelFactory).get(NotificationSettingsViewModel::class.java)
         _binding = FragmentNotificationSettingsBinding.inflate(
             inflater,
             container,
@@ -124,7 +130,6 @@ class NotificationSettingsFragment :
         }
     }
 
-    // TODO: 15.05.2021 if в 1 строку
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         val editHour =
             if (hourOfDay.toString().length == 1) "0$hourOfDay"

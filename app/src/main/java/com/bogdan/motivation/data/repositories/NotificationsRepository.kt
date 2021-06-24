@@ -1,17 +1,16 @@
 package com.bogdan.motivation.data.repositories
 
-import com.bogdan.motivation.data.db.ApplicationDatabase
+import com.bogdan.motivation.data.dao.NotificationDao
 import com.bogdan.motivation.data.entities.local.Notification
+import javax.inject.Inject
 
-class NotificationsRepository {
+class NotificationsRepository @Inject constructor(private val notificationDao: NotificationDao) {
 
-    lateinit var db: ApplicationDatabase
+    suspend fun insertNotification(notification: Notification) = notificationDao.insertNotification(notification)
 
-    suspend fun insertNotification(notification: Notification) = db.notificationDao().insertNotification(notification)
+    suspend fun getNotification(): Notification = notificationDao.getNotification()
 
-    suspend fun getNotification(): Notification = db.notificationDao().getNotification()
+    suspend fun getStartTime(): String = notificationDao.getStartTime()
 
-    suspend fun getStartTime(): String = db.notificationDao().getStartTime()
-
-    suspend fun getEndTime(): String = db.notificationDao().getEndTime()
+    suspend fun getEndTime(): String = notificationDao.getEndTime()
 }

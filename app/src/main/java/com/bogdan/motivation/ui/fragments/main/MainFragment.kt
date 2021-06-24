@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -16,25 +16,31 @@ import com.bogdan.motivation.R
 import com.bogdan.motivation.data.entities.local.Notification
 import com.bogdan.motivation.data.entities.local.Utils
 import com.bogdan.motivation.databinding.FragmentMainBinding
+import com.bogdan.motivation.di.Application
+import com.bogdan.motivation.di.modules.viewModule.ViewModelFactory
 import com.bogdan.motivation.helpers.Constants
 import com.bogdan.motivation.helpers.State
 import com.bogdan.motivation.worker.NotificationsWorker
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class MainFragment : Fragment(R.layout.fragment_main) {
+class MainFragment() : Fragment(R.layout.fragment_main) {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var mainViewModel: MainViewModel
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
-
-    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Application.appComponent.inject(this)
+        mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -51,7 +57,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         _binding = null
     }
 
-    // TODO: 15.05.2021 переделай обсервер, почему функция называется All?)
     private fun initializeObserver() {
         mainViewModel.state.observe(viewLifecycleOwner) {
             when (it) {
@@ -79,7 +84,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
     }
 
-    // TODO: 15.05.2021 переименуй на openMotivationFragment например, а нижнюю удали
     private fun openMotivationFragment(isPopupPassed: Boolean) {
         if (isPopupPassed) {
             findNavController().navigate(
@@ -99,7 +103,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
     }
 
-    // TODO: 15.05.2021 tag в константы
     private fun setNotificationWorker(notification: Notification) {
         val quantity = notification.quantity
         val start = notification.startTime

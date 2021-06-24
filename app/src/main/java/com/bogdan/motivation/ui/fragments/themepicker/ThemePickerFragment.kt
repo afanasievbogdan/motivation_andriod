@@ -6,25 +6,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
 import com.bogdan.motivation.data.entities.local.Utils
 import com.bogdan.motivation.databinding.FragmentThemePickerBinding
+import com.bogdan.motivation.di.Application
+import com.bogdan.motivation.di.modules.viewModule.ViewModelFactory
 import com.bogdan.motivation.helpers.State
 import com.bogdan.motivation.helpers.Themes
 import com.bogdan.motivation.helpers.playAnimationWithOffset
 import com.bogdan.motivation.ui.fragments.themepicker.adapter.OnClickListenerThemes
 import com.bogdan.motivation.ui.fragments.themepicker.adapter.ThemesRecyclerViewAdapter
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickListenerThemes {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var themePickerViewModel: ThemePickerViewModel
     private var _binding: FragmentThemePickerBinding? = null
     private val binding get() = _binding!!
 
-    private val themePickerViewModel: ThemePickerViewModel by viewModels()
     private val themesRecyclerViewAdapter = ThemesRecyclerViewAdapter()
     private val pickedThemes = ArrayList<Themes>()
 
@@ -33,6 +38,8 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Application.appComponent.inject(this)
+        themePickerViewModel = ViewModelProvider(this, viewModelFactory).get(ThemePickerViewModel::class.java)
         _binding = FragmentThemePickerBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -60,6 +67,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun initializeObserver() {
         themePickerViewModel.state.observe(viewLifecycleOwner) {
             when (it) {
@@ -72,7 +80,6 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
         }
     }
 
-    // TODO: 15.05.2021 не вызывай функции репо из фрагмента
     private fun initializeRecyclerView() {
         with(binding.recyclerViewThemes) {
             adapter = themesRecyclerViewAdapter

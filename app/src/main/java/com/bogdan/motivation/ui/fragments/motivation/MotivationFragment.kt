@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
@@ -19,25 +19,31 @@ import com.bogdan.motivation.data.entities.local.Quote
 import com.bogdan.motivation.data.entities.local.Utils
 import com.bogdan.motivation.databinding.DialogGetitBinding
 import com.bogdan.motivation.databinding.FragmentMotivationBinding
+import com.bogdan.motivation.di.Application
+import com.bogdan.motivation.di.modules.viewModule.ViewModelFactory
 import com.bogdan.motivation.helpers.State
 import com.bogdan.motivation.ui.fragments.motivation.adapter.OnClickListenerMotivation
 import com.bogdan.motivation.ui.fragments.motivation.adapter.QuotesViewPagerAdapter
+import javax.inject.Inject
 
 class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListenerMotivation {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    lateinit var motivationViewModel: MotivationViewModel
     private var _binding: FragmentMotivationBinding? = null
     private val binding get() = _binding!!
 
-    private val quotesList = ArrayList<Quote>()
     private val quotesViewPagerAdapter = QuotesViewPagerAdapter()
     private val args: MotivationFragmentArgs by navArgs()
-    private val motivationViewModel: MotivationViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Application.appComponent.inject(this)
+        motivationViewModel = ViewModelProvider(this, viewModelFactory).get(MotivationViewModel::class.java)
         _binding = FragmentMotivationBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -58,7 +64,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
         _binding = null
     }
 
-    // TODO: 15.05.2021 обсервер в обсервере в обсервере..
+    @Suppress("UNCHECKED_CAST")
     private fun initializeObserver() {
         motivationViewModel.state.observe(viewLifecycleOwner) {
             when (it) {

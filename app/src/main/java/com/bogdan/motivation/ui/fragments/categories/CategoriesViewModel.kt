@@ -2,31 +2,31 @@ package com.bogdan.motivation.ui.fragments.categories
 
 import androidx.lifecycle.viewModelScope
 import com.bogdan.motivation.data.entities.local.Utils
-import com.bogdan.motivation.data.repositories.RepositoryProvider
+import com.bogdan.motivation.data.repositories.QuotesRepository
+import com.bogdan.motivation.data.repositories.UtilsRepository
 import com.bogdan.motivation.helpers.State
 import com.bogdan.motivation.ui.BaseViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CategoriesViewModel : BaseViewModel() {
-    // TODO: 15.05.2021 Вынеси в бейз, зачем в каждом инициализировать переменную
-
-    private val quotesDb = RepositoryProvider.quotesRepository
-    private val utilsDb = RepositoryProvider.utilsRepository
+class CategoriesViewModel @Inject constructor(
+    private val quotesRepository: QuotesRepository,
+    private val utilsRepository: UtilsRepository
+) : BaseViewModel() {
 
     init {
         readFavoriteQuotes()
     }
 
-    // TODO: 15.05.2021 postvalue без withcontext(main) не работает?
     private fun readFavoriteQuotes() {
         viewModelScope.launch {
-            state.value = State.SuccessState(quotesDb.getFavoriteQuotes())
+            state.value = State.SuccessState(quotesRepository.getFavoriteQuotes())
         }
     }
 
     fun updatePermissions(utils: Utils) {
         viewModelScope.launch {
-            utilsDb.updateUtils(utils)
+            utilsRepository.updateUtils(utils)
         }
     }
 }

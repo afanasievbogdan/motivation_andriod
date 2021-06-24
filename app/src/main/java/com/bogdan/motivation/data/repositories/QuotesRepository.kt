@@ -1,19 +1,18 @@
 package com.bogdan.motivation.data.repositories
 
-import com.bogdan.motivation.data.db.ApplicationDatabase
+import com.bogdan.motivation.data.dao.QuoteDao
 import com.bogdan.motivation.data.entities.local.Quote
+import javax.inject.Inject
 
-class QuotesRepository {
+class QuotesRepository @Inject constructor(private val quoteDao: QuoteDao) {
 
-    lateinit var db: ApplicationDatabase
+    suspend fun insertAllQuotes(quotes: List<Quote>) = quoteDao.insertAllQuotes(quotes)
 
-    suspend fun insertAllQuotes(quotes: List<Quote>) = db.quoteDao().insertAllQuotes(quotes)
+    suspend fun getAllQuotes(): List<Quote> = quoteDao.getAllQuotes()
 
-    suspend fun getAllQuotes(): List<Quote> = db.quoteDao().getAllQuotes()
+    suspend fun getFavoriteQuotes(): List<Quote> = quoteDao.getFavoriteQuotes()
 
-    suspend fun getFavoriteQuotes(): List<Quote> = db.quoteDao().getFavoriteQuotes()
+    suspend fun getRandomQuote(): Quote = quoteDao.getRandomQuote()
 
-    suspend fun getRandomQuote(): Quote = db.quoteDao().getRandomQuote()
-
-    suspend fun updateQuote(quote: String, favorite: Boolean) = db.quoteDao().updateQuote(quote, favorite)
+    suspend fun updateQuote(quote: String, favorite: Boolean) = quoteDao.updateQuote(quote, favorite)
 }

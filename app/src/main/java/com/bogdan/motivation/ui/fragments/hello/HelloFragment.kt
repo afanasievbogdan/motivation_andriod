@@ -10,7 +10,6 @@ import com.bogdan.motivation.R
 import com.bogdan.motivation.databinding.FragmentHelloBinding
 import com.bogdan.motivation.helpers.playAnimationWithOffset
 
-// TODO: 15.05.2021 убери пустую строку в конце файла
 class HelloFragment : Fragment(R.layout.fragment_hello) {
 
     private var _binding: FragmentHelloBinding? = null

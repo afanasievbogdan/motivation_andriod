@@ -2,15 +2,16 @@ package com.bogdan.motivation.ui.fragments.motivation
 
 import androidx.lifecycle.viewModelScope
 import com.bogdan.motivation.data.entities.local.Utils
-import com.bogdan.motivation.data.repositories.RepositoryProvider
+import com.bogdan.motivation.data.repositories.*
 import com.bogdan.motivation.helpers.State
 import com.bogdan.motivation.ui.BaseViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MotivationViewModel : BaseViewModel() {
-
-    private val utilsDb = RepositoryProvider.utilsRepository
-    private val quotesDb = RepositoryProvider.quotesRepository
+class MotivationViewModel @Inject constructor(
+    private val utilsRepository: UtilsRepository,
+    private val quotesRepository: QuotesRepository
+) : BaseViewModel() {
 
     init {
         readPermissions()
@@ -18,31 +19,31 @@ class MotivationViewModel : BaseViewModel() {
 
     private fun readPermissions() {
         viewModelScope.launch {
-            state.value = State.SuccessState(utilsDb.getUtils())
+            state.value = State.SuccessState(utilsRepository.getUtils())
         }
     }
 
     fun readAllQuotesFromQuotesDb() {
         viewModelScope.launch {
-            state.value = State.SuccessState(quotesDb.getAllQuotes())
+            state.value = State.SuccessState(quotesRepository.getAllQuotes())
         }
     }
 
     fun readFavouriteQuotesFromQuotesDb() {
         viewModelScope.launch {
-            state.value = State.SuccessState(quotesDb.getFavoriteQuotes())
+            state.value = State.SuccessState(quotesRepository.getFavoriteQuotes())
         }
     }
 
     fun updatePermissions(utils: Utils) {
         viewModelScope.launch {
-            utilsDb.updateUtils(utils)
+            utilsRepository.updateUtils(utils)
         }
     }
 
     fun updateQuote(quote: String, favorite: Boolean) {
         viewModelScope.launch {
-            quotesDb.updateQuote(quote, favorite)
+            quotesRepository.updateQuote(quote, favorite)
         }
     }
 }
