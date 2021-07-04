@@ -12,6 +12,7 @@ object Constants {
     const val TABLE_UTILS = "Utils"
     const val TABLE_NOTIFICATIONS = "Notifications"
     const val TABLE_STYLE = "Styles"
+    const val TABLE_THEMES = "Themes"
 
     // Widget Constants
     const val REFRESH_TEXT = "REFRESH_TEXT"

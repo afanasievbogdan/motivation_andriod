@@ -75,7 +75,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
                             getQuotes(it.data.isFavoriteTabOpen)
                         }
                         // TODO: model list<quote>
-                        is List<*> -> quotesViewPagerAdapter.setData(it.data as List<Quote>)
+                        is List<*> -> quotesViewPagerAdapter.setData(it.data.shuffled() as List<Quote>)
                     }
                 else -> {
                 }

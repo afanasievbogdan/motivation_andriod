@@ -8,12 +8,31 @@ import android.content.Intent
 import android.widget.RemoteViews
 import com.bogdan.motivation.R
 import com.bogdan.motivation.data.repositories.QuotesRepository
+import com.bogdan.motivation.di.Application
 import com.bogdan.motivation.helpers.Constants
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class AppWidget @Inject constructor(private val quotesRepository: QuotesRepository) : AppWidgetProvider() {
+class AppWidget : AppWidgetProvider() {
+
+    @Inject
+    lateinit var quotesRepository: QuotesRepository
+
+    override fun onReceive(context: Context, intent: Intent?) {
+        Application.appComponent.inject(this)
+        if (Constants.REFRESH_TEXT == intent?.action) {
+            val appWidgetId = intent.getIntExtra("appWidgetId", 0)
+            updateAppWidget(
+                context,
+                AppWidgetManager.getInstance(context),
+                appWidgetId
+            )
+        }
+        super.onReceive(context, intent)
+    }
 
     override fun onUpdate(
         context: Context,
@@ -29,18 +48,6 @@ class AppWidget @Inject constructor(private val quotesRepository: QuotesReposito
         }
     }
 
-    override fun onReceive(context: Context, intent: Intent?) {
-        if (Constants.REFRESH_TEXT == intent?.action) {
-            val appWidgetId = intent.getIntExtra("appWidgetId", 0)
-            updateAppWidget(
-                context,
-                AppWidgetManager.getInstance(context),
-                appWidgetId
-            )
-        }
-        super.onReceive(context, intent)
-    }
-
     private fun updateAppWidget(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -54,13 +61,15 @@ class AppWidget @Inject constructor(private val quotesRepository: QuotesReposito
             context.packageName,
             R.layout.widget_app
         )
-        GlobalScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             views.setTextViewText(
                 R.id.tv_appwidget,
                 quotesRepository.getRandomQuote().quote
             )
+            withContext(Dispatchers.Main) {
+                views.setOnClickPendingIntent(R.id.tv_appwidget, pendingIntent)
+                appWidgetManager.updateAppWidget(appWidgetId, views)
+            }
         }
-        views.setOnClickPendingIntent(R.id.tv_appwidget, pendingIntent)
-        appWidgetManager.updateAppWidget(appWidgetId, views)
     }
 }

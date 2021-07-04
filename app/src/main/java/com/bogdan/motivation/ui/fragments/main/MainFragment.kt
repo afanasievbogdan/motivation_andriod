@@ -26,11 +26,11 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class MainFragment() : Fragment(R.layout.fragment_main) {
+class MainFragment : Fragment(R.layout.fragment_main) {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var mainViewModel: MainViewModel
+    lateinit var mainViewModel: MainViewModel
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 

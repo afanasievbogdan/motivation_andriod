@@ -4,12 +4,13 @@ import android.util.Log
 import com.bogdan.motivation.data.api.QuotesApi
 import com.bogdan.motivation.data.entities.local.Quote
 import com.bogdan.motivation.data.entities.remote.ApiQuote
-import com.bogdan.motivation.helpers.Themes
 import javax.inject.Inject
+import com.bogdan.motivation.helpers.Themes as ThemesEnum
 
 class QuotesApiRepository @Inject constructor(
     private val quotesApi: QuotesApi,
-    private val quotesRepository: QuotesRepository
+    private val quotesRepository: QuotesRepository,
+    private val themesRepository: ThemesRepository
 ) {
 
     suspend fun getQuotesFromApi() {
@@ -21,19 +22,26 @@ class QuotesApiRepository @Inject constructor(
                 val quotesList = fillQuotesList(apiList)
                 quotesRepository.insertAllQuotes(quotesList)
             } else {
-                Log.w("DEBUG", "getQuotesFromApi() Method Wrong Response" + response.errorBody().toString())
+                Log.w("DEBUG", "getQuotesFromApi() Wrong Response" + response.errorBody().toString())
             }
         } catch (e: Exception) {
-            Log.w("DEBUG", "getQuotesFromApi() Method Wrong Mapping $e")
+            Log.w("DEBUG", "getQuotesFromApi() Wrong Mapping $e")
         }
     }
 
-    private fun fillQuotesList(apiList: List<ApiQuote>?): List<Quote> {
+    private suspend fun fillQuotesList(apiList: List<ApiQuote>?): List<Quote> {
         val quotesList = ArrayList<Quote>()
+        val pickedThemes = themesRepository.getTheme()
         apiList?.forEach {
-            quotesList.add(
-                Quote(it.id, it.quote, it.quote, false, Themes.valueOf(it.theme))
-            )
+            try {
+                if (pickedThemes.contains(ThemesEnum.valueOf(it.theme))) {
+                    quotesList.add(
+                        Quote(it.id, it.quote, it.quote, false, ThemesEnum.valueOf(it.theme))
+                    )
+                }
+            } catch (e: Exception) {
+                Log.i("fillQuotesList", "No such theme $e")
+            }
         }
         return quotesList
     }

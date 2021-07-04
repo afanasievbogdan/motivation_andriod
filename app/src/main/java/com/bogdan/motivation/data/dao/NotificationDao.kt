@@ -15,7 +15,6 @@ interface NotificationDao {
     @Query("SELECT * FROM Notifications WHERE id = 1")
     suspend fun getNotification(): Notification
 
-    // TODO: 15.05.2021 почему не suspend?
     @Query("SELECT startTime FROM Notifications WHERE id = 1")
     suspend fun getStartTime(): String
 

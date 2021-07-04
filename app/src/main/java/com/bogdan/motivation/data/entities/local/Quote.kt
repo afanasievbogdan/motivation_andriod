@@ -9,7 +9,7 @@ import com.bogdan.motivation.helpers.Themes
 @Entity(tableName = Constants.TABLE_QUOTES)
 data class Quote(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Long,
     @ColumnInfo(name = "quote")
     val quote: String,
     @ColumnInfo(name = "author")

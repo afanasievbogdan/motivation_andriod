@@ -2,8 +2,11 @@ package com.bogdan.motivation.di.modules
 
 import android.app.Application
 import androidx.room.Room
+import com.bogdan.motivation.data.dao.NotificationDao
 import com.bogdan.motivation.data.dao.QuoteDao
 import com.bogdan.motivation.data.db.ApplicationDatabase
+import com.bogdan.motivation.data.repositories.NotificationsRepository
+import com.bogdan.motivation.data.repositories.QuotesRepository
 import com.bogdan.motivation.helpers.Constants
 import dagger.Module
 import dagger.Provides
@@ -34,4 +37,16 @@ class DBModule @Inject constructor(private val application: Application) {
     @Provides
     @Singleton
     fun providesStyleDao(applicationDatabase: ApplicationDatabase) = applicationDatabase.styleDao()
+
+    @Provides
+    @Singleton
+    fun providesThemesDao(applicationDatabase: ApplicationDatabase) = applicationDatabase.themesDao()
+
+    @Provides
+    @Singleton
+    fun providesQuotesRepository(quoteDao: QuoteDao) = QuotesRepository(quoteDao)
+
+    @Provides
+    @Singleton
+    fun providesNotificationRepository(notificationDao: NotificationDao) = NotificationsRepository(notificationDao)
 }

@@ -7,24 +7,37 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.work.ListenableWorker
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.bogdan.motivation.R
 import com.bogdan.motivation.data.repositories.NotificationsRepository
 import com.bogdan.motivation.data.repositories.QuotesRepository
 import com.bogdan.motivation.helpers.Constants
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import javax.inject.Provider
 
-class NotificationsWorker @Inject constructor(
+class NotificationsWorker(
     private val appContext: Context,
+    workerParams: WorkerParameters,
     private val notificationsRepository: NotificationsRepository,
     private val quotesRepository: QuotesRepository,
-    workerParams: WorkerParameters
 ) : Worker(appContext, workerParams) {
+
+    class Factory @Inject constructor(
+        private val notificationsRepository: Provider<NotificationsRepository>,
+        private val quotesRepository: Provider<QuotesRepository>
+    ) : ChildWorkerFactory {
+        override fun create(appContext: Context, workerParams: WorkerParameters): ListenableWorker {
+            return NotificationsWorker(appContext, workerParams, notificationsRepository.get(), quotesRepository.get())
+        }
+    }
 
     private var isCorrectTime = false
 
@@ -72,7 +85,7 @@ class NotificationsWorker @Inject constructor(
     }
 
     private fun isCorrectTime() {
-        GlobalScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             val simpleDateFormat = SimpleDateFormat("HH", Locale.getDefault())
             val currentHour = simpleDateFormat.format(Date())
             val start = notificationsRepository.getStartTime()

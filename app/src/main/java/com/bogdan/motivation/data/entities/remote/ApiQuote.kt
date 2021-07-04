@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class ApiQuote(
     @Json(name = "id")
-    val id: Int,
+    val id: Long,
     @Json(name = "quote")
     val quote: String,
     @Json(name = "author")

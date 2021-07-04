@@ -23,11 +23,9 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_app_info" />
         </receiver>
-
         <activity android:name=".ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
