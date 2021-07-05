@@ -67,7 +67,7 @@ class NotificationsWorker(
     }
 
     private fun sendNotification() {
-        GlobalScope.launch {
+        GlobalScope.launch { // TODO Почему глобал а не корутин?
             val notificationsText = quotesRepository.getRandomQuote()
             val builder = NotificationCompat.Builder(applicationContext, Constants.channelId)
             builder.apply {

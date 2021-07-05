@@ -55,7 +55,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         categoriesViewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is State.SuccessState<*> -> when (it.data) {
-                    is List<*> -> quotesList.addAll(it.data as List<Quote>)
+                    is List<*> -> quotesList.addAll(it.data as List<Quote>) // TODO сделать дата класс с листом внутри вместо каста к Листу Квот
                 }
                 is State.ErrorState -> {
                 }

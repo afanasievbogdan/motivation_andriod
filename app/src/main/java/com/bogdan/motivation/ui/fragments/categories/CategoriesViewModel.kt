@@ -23,7 +23,7 @@ class CategoriesViewModel @Inject constructor(
             state.value = State.SuccessState(quotesRepository.getFavoriteQuotes())
         }
     }
-
+// TODO убери пермишны
     fun updatePermissions(utils: Utils) {
         viewModelScope.launch {
             utilsRepository.updateUtils(utils)

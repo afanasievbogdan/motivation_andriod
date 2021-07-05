@@ -13,7 +13,7 @@ import com.bogdan.motivation.ui.fragments.themepicker.ThemePickerViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-
+// todo: это точно нужно для инжекта вм?
 @Module
 abstract class ViewModelModule {
 

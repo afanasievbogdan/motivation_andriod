@@ -32,7 +32,7 @@ class ThemesRecyclerViewAdapter :
         themeList.addAll(newList)
         notifyDataSetChanged()
     }
-
+// TODO по нажатию на кнопку некст сделай сохранение всех выбранных итемов, а не по клику на каждый добавляй отнимай
     inner class ThemeViewHolder(private val binding: ItemThemeButtonBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(themeName: String) {

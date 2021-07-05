@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var mainActivityViewModel: MainActivityViewModel
+    private lateinit var mainActivityViewModel: MainActivityViewModel // TODO лучше просто назвать viewModel, у тебя же только 1 она во фрагменте
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             when (it) {
                 is State.SuccessState<*> -> when (it.data) {
                     is Styles -> StylesUtils.onActivityCreateSetStyle(this, it.data)
-                    else -> StylesUtils.onActivityCreateSetStyle(this, Styles.DARK)
+                    else -> StylesUtils.onActivityCreateSetStyle(this, Styles.DARK) // TODO: зачем елсе?
                 }
                 is State.ErrorState -> Log.e("mainViewModel.state", it.errorMessage)
             }
