@@ -10,8 +10,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CategoriesViewModel @Inject constructor(
-    private val quotesRepository: QuotesRepository,
-    private val utilsRepository: UtilsRepository
+    private val utilsRepository: UtilsRepository,
+    private val quotesRepository: QuotesRepository
 ) : BaseViewModel() {
 
     init {
@@ -23,8 +23,8 @@ class CategoriesViewModel @Inject constructor(
             state.value = State.SuccessState(quotesRepository.getFavoriteQuotes())
         }
     }
-// TODO убери пермишны
-    fun updatePermissions(utils: Utils) {
+
+    fun updateUtils(utils: Utils) {
         viewModelScope.launch {
             utilsRepository.updateUtils(utils)
         }

@@ -8,13 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TimePicker
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
 import com.bogdan.motivation.data.entities.local.Notification
 import com.bogdan.motivation.databinding.FragmentNotificationSettingsBinding
 import com.bogdan.motivation.di.Application
-import com.bogdan.motivation.di.modules.viewModule.ViewModelFactory
 import com.bogdan.motivation.helpers.playAnimationWithOffset
 import java.util.*
 import javax.inject.Inject
@@ -22,8 +20,7 @@ import javax.inject.Inject
 class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_settings), OnTimeSetListener {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    lateinit var notificationSettingsViewModel: NotificationSettingsViewModel
+    lateinit var viewModel: NotificationSettingsViewModel
     private var _binding: FragmentNotificationSettingsBinding? = null
     private val binding get() = _binding!!
 
@@ -38,8 +35,6 @@ class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_set
         savedInstanceState: Bundle?
     ): View {
         Application.appComponent.inject(this)
-        notificationSettingsViewModel =
-            ViewModelProvider(this, viewModelFactory).get(NotificationSettingsViewModel::class.java)
         _binding = FragmentNotificationSettingsBinding.inflate(
             inflater,
             container,
@@ -155,7 +150,7 @@ class NotificationSettingsFragment : Fragment(R.layout.fragment_notification_set
                 val quantity = tvNotificationsQuantity.text.toString().substringBefore("X")
                 val startTime = btnStartTime.text.toString().substring(0, 2)
                 val endTime = btnEndTime.text.toString().substring(0, 2)
-                notificationSettingsViewModel.saveNotification(
+                viewModel.saveNotification(
                     Notification(quantity = quantity, startTime = startTime, endTime = endTime)
                 )
                 findNavController().navigate(

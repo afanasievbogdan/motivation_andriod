@@ -25,15 +25,11 @@ class ThemePickerViewModel @Inject constructor(
         state.value = State.SuccessState(themesListRepository.getThemeList())
     }
 
-    fun updatePermissions(utils: Utils) {
+    fun updateUtils(utils: Utils) {
         viewModelScope.launch { utilsRepository.updateUtils(utils) }
     }
 
     fun insertTheme(themes: Themes) {
         viewModelScope.launch { themesRepository.insertTheme(themes) }
     }
-
-//    fun deleteTheme(themes: Themes) {
-//        viewModelScope.launch { themesRepository.deleteTheme(themes) }
-//    }
 }

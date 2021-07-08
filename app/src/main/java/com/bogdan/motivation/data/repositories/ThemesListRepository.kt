@@ -1,7 +1,8 @@
 package com.bogdan.motivation.data.repositories
 
 import javax.inject.Inject
-// TODO Что за пустой инжект
+
+// TODO Что за пустой инжект // Без него не работает
 class ThemesListRepository @Inject constructor() {
 
     fun getThemeList() = listOf(

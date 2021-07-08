@@ -40,7 +40,7 @@ class QuotesApiRepository @Inject constructor(
                     )
                 }
             } catch (e: Exception) {
-                Log.i("fillQuotesList", "No such theme $e")
+                Log.i("DEBUG", "fillQuotesList() No such theme $e")
             }
         }
         return quotesList

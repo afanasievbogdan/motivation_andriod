@@ -11,7 +11,8 @@ interface NotificationDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNotification(notification: Notification)
-    // TODO Почему не юзаешь название табл. как константу
+
+    // TODO Почему не юзаешь название табл. как константу // Это ссылка на константу
     @Query("SELECT * FROM Notifications WHERE id = 1")
     suspend fun getNotification(): Notification
 

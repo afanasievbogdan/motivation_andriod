@@ -14,10 +14,10 @@ class MotivationViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     init {
-        readPermissions()
+        readUtils()
     }
 
-    private fun readPermissions() {
+    private fun readUtils() {
         viewModelScope.launch {
             state.value = State.SuccessState(utilsRepository.getUtils())
         }
@@ -35,7 +35,7 @@ class MotivationViewModel @Inject constructor(
         }
     }
 
-    fun updatePermissions(utils: Utils) {
+    fun updateUtils(utils: Utils) {
         viewModelScope.launch {
             utilsRepository.updateUtils(utils)
         }

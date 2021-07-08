@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
@@ -20,7 +19,6 @@ import com.bogdan.motivation.data.entities.local.Utils
 import com.bogdan.motivation.databinding.DialogGetitBinding
 import com.bogdan.motivation.databinding.FragmentMotivationBinding
 import com.bogdan.motivation.di.Application
-import com.bogdan.motivation.di.modules.viewModule.ViewModelFactory
 import com.bogdan.motivation.helpers.State
 import com.bogdan.motivation.ui.fragments.motivation.adapter.OnClickListenerMotivation
 import com.bogdan.motivation.ui.fragments.motivation.adapter.QuotesViewPagerAdapter
@@ -29,10 +27,10 @@ import javax.inject.Inject
 class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListenerMotivation {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var motivationViewModel: MotivationViewModel
+    lateinit var viewModel: MotivationViewModel
     private var _binding: FragmentMotivationBinding? = null
     private val binding get() = _binding!!
+
     @Inject
     lateinit var quotesViewPagerAdapter: QuotesViewPagerAdapter
     private val args: MotivationFragmentArgs by navArgs()
@@ -43,7 +41,6 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
         savedInstanceState: Bundle?
     ): View {
         Application.appComponent.inject(this)
-        motivationViewModel = ViewModelProvider(this, viewModelFactory).get(MotivationViewModel::class.java)
         _binding = FragmentMotivationBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -66,7 +63,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
 
     @Suppress("UNCHECKED_CAST")
     private fun initializeObserver() {
-        motivationViewModel.state.observe(viewLifecycleOwner) {
+        viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is State.SuccessState<*> ->
                     when (it.data) {
@@ -85,9 +82,9 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
 
     private fun getQuotes(isFavoriteTabOpen: Boolean) {
         if (isFavoriteTabOpen) {
-            motivationViewModel.readFavouriteQuotesFromQuotesDb()
+            viewModel.readFavouriteQuotesFromQuotesDb()
         } else {
-            motivationViewModel.readAllQuotesFromQuotesDb()
+            viewModel.readAllQuotesFromQuotesDb()
         }
     }
 
@@ -104,7 +101,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
             }
 
             dialogBinding.btnGotIt.setOnClickListener {
-                motivationViewModel.updatePermissions(
+                viewModel.updateUtils(
                     Utils(isSettingsPassed = true, isPopupPassed = true, isFavoriteTabOpen = false)
                 )
                 dialog.dismiss()
@@ -139,7 +136,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
     }
 
     override fun onFavoriteClickListener(quote: Quote) {
-        motivationViewModel.updateQuote(quote.quote, quote.isFavorite)
+        viewModel.updateQuote(quote.quote, quote.isFavorite)
     }
 
     override fun onShareClickListener(quote: Quote) {

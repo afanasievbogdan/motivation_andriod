@@ -6,14 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
 import com.bogdan.motivation.data.entities.local.Themes
 import com.bogdan.motivation.data.entities.local.Utils
 import com.bogdan.motivation.databinding.FragmentThemePickerBinding
 import com.bogdan.motivation.di.Application
-import com.bogdan.motivation.di.modules.viewModule.ViewModelFactory
 import com.bogdan.motivation.helpers.State
 import com.bogdan.motivation.helpers.playAnimationWithOffset
 import com.bogdan.motivation.ui.fragments.themepicker.adapter.OnClickListenerThemes
@@ -26,8 +24,7 @@ import com.bogdan.motivation.helpers.Themes as ThemesEnum
 class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickListenerThemes {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var themePickerViewModel: ThemePickerViewModel
+    lateinit var viewModel: ThemePickerViewModel
     private var _binding: FragmentThemePickerBinding? = null
     private val binding get() = _binding!!
 
@@ -40,7 +37,6 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
         savedInstanceState: Bundle?
     ): View {
         Application.appComponent.inject(this)
-        themePickerViewModel = ViewModelProvider(this, viewModelFactory).get(ThemePickerViewModel::class.java)
         _binding = FragmentThemePickerBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -70,7 +66,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
 
     @Suppress("UNCHECKED_CAST")
     private fun initializeObserver() {
-        themePickerViewModel.state.observe(viewLifecycleOwner) {
+        viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is State.SuccessState<*> -> when (it.data) {
                     is List<*> -> themesRecyclerViewAdapter.setData(it.data as List<String>)
@@ -88,7 +84,6 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
         }
     }
 
-    // TODO: Dirty
     override fun onThemeClickListener(theme: String, picked: Boolean) {
         val themeEnum = ThemesEnum.valueOfThemeName(theme)
         if (picked) pickedThemes.add(themeEnum)
@@ -98,7 +93,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
     private fun onBntContinueClicked() {
         binding.btnContinue.setOnClickListener {
             if (pickedThemes.isNotEmpty()) {
-                themePickerViewModel.updatePermissions(
+                viewModel.updateUtils(
                     Utils(
                         isSettingsPassed = true,
                         isPopupPassed = false,
@@ -106,7 +101,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker), OnClickLis
                     )
                 )
                 pickedThemes.forEach {
-                    themePickerViewModel.insertTheme(Themes(0, it))
+                    viewModel.insertTheme(Themes(0, it))
                 }
                 findNavController().navigate(ThemePickerFragmentDirections.actionThemePickerFragmentToMainFragment())
             } else {

@@ -7,7 +7,6 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.work.ListenableWorker
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.bogdan.motivation.R
@@ -16,41 +15,20 @@ import com.bogdan.motivation.data.repositories.QuotesRepository
 import com.bogdan.motivation.helpers.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import javax.inject.Provider
 
-class NotificationsWorker(
+class NotificationsWorker @Inject constructor(
     private val appContext: Context,
     workerParams: WorkerParameters,
     private val notificationsRepository: NotificationsRepository,
     private val quotesRepository: QuotesRepository,
 ) : Worker(appContext, workerParams) {
 
-    class Factory @Inject constructor(
-        private val notificationsRepository: Provider<NotificationsRepository>,
-        private val quotesRepository: Provider<QuotesRepository>
-    ) : ChildWorkerFactory {
-        override fun create(appContext: Context, workerParams: WorkerParameters): ListenableWorker {
-            return NotificationsWorker(appContext, workerParams, notificationsRepository.get(), quotesRepository.get())
-        }
-    }
-
-    private var isCorrectTime = false
-
     override fun doWork(): Result {
         isCorrectTime()
-        if (isCorrectTime) {
-            createNotificationChannel()
-            sendNotification()
-            Log.i("MyINFO", "Im logging with notify!!!")
-        } else {
-            Log.i("MyINFO", "Im logging but with no notify :C")
-        }
-
         return Result.success()
     }
 
@@ -67,7 +45,7 @@ class NotificationsWorker(
     }
 
     private fun sendNotification() {
-        GlobalScope.launch { // TODO Почему глобал а не корутин?
+        CoroutineScope(Dispatchers.IO).launch {
             val notificationsText = quotesRepository.getRandomQuote()
             val builder = NotificationCompat.Builder(applicationContext, Constants.channelId)
             builder.apply {
@@ -90,7 +68,14 @@ class NotificationsWorker(
             val currentHour = simpleDateFormat.format(Date())
             val start = notificationsRepository.getStartTime()
             val end = notificationsRepository.getEndTime()
-            isCorrectTime = currentHour.toInt() >= start.toInt() && currentHour.toInt() < end.toInt()
+            val isCorrectTime = currentHour.toInt() >= start.toInt() && currentHour.toInt() < end.toInt()
+            if (isCorrectTime) {
+                createNotificationChannel()
+                sendNotification()
+                Log.i("MyINFO", "Im logging with notify!!!")
+            } else {
+                Log.i("MyINFO", "Im logging but with no notify :C")
+            }
         }
     }
 }

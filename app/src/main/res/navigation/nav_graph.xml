@@ -59,6 +59,9 @@
         <action
             android:id="@+id/action_motivationFragment_to_themeEditorFragment"
             app:destination="@id/themeEditorFragment" />
+        <action
+            android:id="@+id/action_motivationFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
     </fragment>
     <fragment
         android:id="@+id/themePickerFragment"
@@ -89,4 +92,9 @@
             android:name="btn_categories_text"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.bogdan.motivation.ui.fragments.account.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" />
 </navigation>

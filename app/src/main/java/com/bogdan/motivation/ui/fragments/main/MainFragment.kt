@@ -1,12 +1,10 @@
 package com.bogdan.motivation.ui.fragments.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -17,7 +15,6 @@ import com.bogdan.motivation.data.entities.local.Notification
 import com.bogdan.motivation.data.entities.local.Utils
 import com.bogdan.motivation.databinding.FragmentMainBinding
 import com.bogdan.motivation.di.Application
-import com.bogdan.motivation.di.modules.viewModule.ViewModelFactory
 import com.bogdan.motivation.helpers.Constants
 import com.bogdan.motivation.helpers.State
 import com.bogdan.motivation.worker.NotificationsWorker
@@ -29,8 +26,7 @@ import javax.inject.Inject
 class MainFragment : Fragment(R.layout.fragment_main) {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    lateinit var mainViewModel: MainViewModel
+    lateinit var viewModel: MainViewModel
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
@@ -40,7 +36,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         savedInstanceState: Bundle?
     ): View {
         Application.appComponent.inject(this)
-        mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -58,14 +53,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun initializeObserver() {
-        mainViewModel.state.observe(viewLifecycleOwner) {
+        viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is State.SuccessState<*> -> when (it.data) {
-                    is Utils -> {
-                        Log.i("Check", it.data.toString())
-                        chooseActivityToOpen(it.data)
-                    }
                     is Notification -> setNotificationWorker(it.data)
+                    is Utils -> chooseActivityToOpen(it.data)
                 }
                 is State.ErrorState -> {
                 }
@@ -75,7 +67,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private fun chooseActivityToOpen(utils: Utils) {
         if (utils.isSettingsPassed) {
-            mainViewModel.getQuotesFromApi()
+            viewModel.getQuotesFromApi()
             openMotivationFragment(utils.isPopupPassed)
         } else {
             findNavController().navigate(

@@ -6,22 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
 import com.bogdan.motivation.data.entities.local.Quote
 import com.bogdan.motivation.data.entities.local.Utils
 import com.bogdan.motivation.databinding.FragmentCategoriesBinding
 import com.bogdan.motivation.di.Application
-import com.bogdan.motivation.di.modules.viewModule.ViewModelFactory
 import com.bogdan.motivation.helpers.State
 import javax.inject.Inject
 
 class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    lateinit var categoriesViewModel: CategoriesViewModel
+    lateinit var viewModel: CategoriesViewModel
     private var _binding: FragmentCategoriesBinding? = null
     private val binding get() = _binding!!
 
@@ -33,7 +30,6 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         savedInstanceState: Bundle?
     ): View {
         Application.appComponent.inject(this)
-        categoriesViewModel = ViewModelProvider(this, viewModelFactory).get(CategoriesViewModel::class.java)
         _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -52,7 +48,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
     @Suppress("UNCHECKED_CAST")
     private fun initializeObserver() {
-        categoriesViewModel.state.observe(viewLifecycleOwner) {
+        viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is State.SuccessState<*> -> when (it.data) {
                     is List<*> -> quotesList.addAll(it.data as List<Quote>) // TODO сделать дата класс с листом внутри вместо каста к Листу Квот
@@ -65,7 +61,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
     private fun onClickCategories() {
         binding.btnGeneralChose.setOnClickListener {
-            categoriesViewModel.updatePermissions(
+            viewModel.updateUtils(
                 Utils(
                     isSettingsPassed = true,
                     isPopupPassed = true,
@@ -80,7 +76,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         }
 
         binding.btnFavoriteChose.setOnClickListener {
-            categoriesViewModel.updatePermissions(
+            viewModel.updateUtils(
                 Utils(
                     isSettingsPassed = true,
                     isPopupPassed = true,

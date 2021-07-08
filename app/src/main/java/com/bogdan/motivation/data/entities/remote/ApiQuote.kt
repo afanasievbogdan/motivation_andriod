@@ -14,7 +14,7 @@ data class ApiQuote(
     @Json(name = "theme")
     val theme: String,
     @Json(name = "created_at")
-    val created_at: String, // TODO camelCase
+    val createdAt: String,
     @Json(name = "updated_at")
-    val updated_at: String
+    val updatedAt: String
 )
