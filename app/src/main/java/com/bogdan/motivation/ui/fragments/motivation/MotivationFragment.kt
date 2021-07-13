@@ -15,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.bogdan.motivation.R
 import com.bogdan.motivation.data.entities.local.Quote
+import com.bogdan.motivation.data.entities.local.QuotesList
 import com.bogdan.motivation.data.entities.local.Utils
 import com.bogdan.motivation.databinding.DialogGetitBinding
 import com.bogdan.motivation.databinding.FragmentMotivationBinding
@@ -61,7 +62,6 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
         _binding = null
     }
 
-    @Suppress("UNCHECKED_CAST")
     private fun initializeObserver() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
@@ -71,8 +71,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
                             initializePopup(it.data)
                             getQuotes(it.data.isFavoriteTabOpen)
                         }
-                        // TODO: model list<quote>
-                        is List<*> -> quotesViewPagerAdapter.setData(it.data.shuffled() as List<Quote>)
+                        is QuotesList -> quotesViewPagerAdapter.setData(it.data.quotesList.shuffled())
                     }
                 else -> {
                 }

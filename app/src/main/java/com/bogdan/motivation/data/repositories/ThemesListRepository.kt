@@ -1,18 +1,17 @@
 package com.bogdan.motivation.data.repositories
 
-import javax.inject.Inject
+import com.bogdan.motivation.data.entities.local.PickedThemes
 
-// TODO Что за пустой инжект // Без него не работает
-class ThemesListRepository @Inject constructor() {
+class ThemesListRepository {
 
     fun getThemeList() = listOf(
-        "Letting go",
-        "Happiness",
-        "Physical Health",
-        "Self-esteem",
-        "Faith & Spirituality",
-        "Stress & Anxiety",
-        "Achieving goals",
-        "Relationships"
+        PickedThemes("Letting go"),
+        PickedThemes("Happiness"),
+        PickedThemes("Physical Health"),
+        PickedThemes("Self-esteem"),
+        PickedThemes("Faith & Spirituality"),
+        PickedThemes("Stress & Anxiety"),
+        PickedThemes("Achieving goals"),
+        PickedThemes("Relationships")
     )
 }

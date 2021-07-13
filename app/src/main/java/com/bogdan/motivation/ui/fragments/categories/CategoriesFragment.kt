@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
 import com.bogdan.motivation.data.entities.local.Quote
+import com.bogdan.motivation.data.entities.local.QuotesList
 import com.bogdan.motivation.data.entities.local.Utils
 import com.bogdan.motivation.databinding.FragmentCategoriesBinding
 import com.bogdan.motivation.di.Application
@@ -46,12 +47,11 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         _binding = null
     }
 
-    @Suppress("UNCHECKED_CAST")
     private fun initializeObserver() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is State.SuccessState<*> -> when (it.data) {
-                    is List<*> -> quotesList.addAll(it.data as List<Quote>) // TODO сделать дата класс с листом внутри вместо каста к Листу Квот
+                    is QuotesList -> quotesList.addAll(it.data.quotesList)
                 }
                 is State.ErrorState -> {
                 }

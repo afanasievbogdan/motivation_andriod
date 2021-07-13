@@ -15,7 +15,6 @@ interface QuoteDao {
     @Query("SELECT * FROM Quotes WHERE favorite = 1")
     suspend fun getFavoriteQuotes(): List<Quote>
 
-    // TODO: 15.05.2021 почему не suspend?
     @Query("SELECT * FROM Quotes ORDER BY RANDOM() LIMIT 1")
     suspend fun getRandomQuote(): Quote
 

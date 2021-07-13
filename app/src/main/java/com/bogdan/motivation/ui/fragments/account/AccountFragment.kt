@@ -8,12 +8,9 @@ import androidx.fragment.app.Fragment
 import com.bogdan.motivation.R
 import com.bogdan.motivation.databinding.FragmentAccountBinding
 import com.bogdan.motivation.di.Application
-import javax.inject.Inject
 
 class AccountFragment : Fragment(R.layout.fragment_account) {
 
-    @Inject
-    lateinit var viewModel: AccountViewModel
     private var _binding: FragmentAccountBinding? = null
     private val binding get() = _binding!!
 
