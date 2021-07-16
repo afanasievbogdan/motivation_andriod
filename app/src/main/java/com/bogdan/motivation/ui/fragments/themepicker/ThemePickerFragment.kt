@@ -28,7 +28,6 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker) {
 
     @Inject
     lateinit var themesRecyclerViewAdapter: ThemesRecyclerViewAdapter
-    private val pickedThemes = ArrayList<ThemesEnum>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,21 +75,18 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker) {
     }
 
     private fun initializeRecyclerView() {
-        // with(binding.recyclerViewThemes) {
         binding.recyclerViewThemes.adapter = themesRecyclerViewAdapter
-        // themesRecyclerViewAdapter.onClickListenerThemes = this@ThemePickerFragment
-        // }
     }
-
-//    override fun onThemeClickListener(theme: String, picked: Boolean) {
-//        val themeEnum = ThemesEnum.valueOfThemeName(theme)
-//        if (picked) pickedThemes.add(themeEnum)
-//        else pickedThemes.remove(themeEnum)
-//    }
 
     private fun onBntContinueClicked() {
         binding.btnContinue.setOnClickListener {
-            if (pickedThemes.isNotEmpty()) {
+            var counter = 0
+            themesRecyclerViewAdapter.getData().forEach {
+                if (it.isPicked) {
+                    counter++
+                }
+            }
+            if (counter > 0) {
                 viewModel.updateUtils(
                     Utils(
                         isSettingsPassed = true,
@@ -100,7 +96,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker) {
                 )
                 themesRecyclerViewAdapter.getData().forEach {
                     if (it.isPicked) {
-                        viewModel.insertTheme(Themes(0, ThemesEnum.valueOf(it.name)))
+                        viewModel.insertTheme(Themes(0, ThemesEnum.valueOfThemeName(it.name)))
                     }
                 }
                 findNavController().navigate(ThemePickerFragmentDirections.actionThemePickerFragmentToMainFragment())
