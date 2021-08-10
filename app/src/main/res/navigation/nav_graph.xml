@@ -52,22 +52,25 @@
         tools:layout="@layout/fragment_motivation">
         <action
             android:id="@+id/action_motivationFragment_to_categoriesFragment"
-            app:destination="@id/categoriesFragment" />
+            app:destination="@id/categoriesFragment"
+            app:popUpTo="@id/motivationFragment" />
         <argument
             android:name="btn_categories_text"
             app:argType="string" />
         <action
             android:id="@+id/action_motivationFragment_to_themeEditorFragment"
-            app:destination="@id/themeEditorFragment" />
+            app:destination="@id/themeEditorFragment"
+            app:popUpTo="@id/motivationFragment" />
         <action
             android:id="@+id/action_motivationFragment_to_accountFragment"
-            app:destination="@id/accountFragment" />
+            app:destination="@id/accountFragment"
+            app:popUpTo="@id/motivationFragment" />
     </fragment>
     <fragment
         android:id="@+id/themePickerFragment"
-        android:name="com.bogdan.motivation.ui.fragments.themepicker.ThemePickerFragment"
+        android:name="com.bogdan.motivation.ui.fragments.themepicker.CategoriesPickerFragment"
         android:label="fragment_theme_picker"
-        tools:layout="@layout/fragment_theme_picker">
+        tools:layout="@layout/fragment_categories_picker">
         <action
             android:id="@+id/action_themePickerFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
@@ -80,7 +83,7 @@
         <action
             android:id="@+id/action_categoriesFragment_to_motivationFragment"
             app:destination="@id/motivationFragment"
-            app:popUpTo="@id/nav_graph"
+            app:popUpTo="@id/mainFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -96,5 +99,9 @@
         android:id="@+id/accountFragment"
         android:name="com.bogdan.motivation.ui.fragments.account.AccountFragment"
         android:label="fragment_account"
-        tools:layout="@layout/fragment_account" />
+        tools:layout="@layout/fragment_account">
+        <action
+            android:id="@+id/action_accountFragment_to_motivationFragment"
+            app:destination="@id/motivationFragment" />
+    </fragment>
 </navigation>

@@ -1,6 +1,6 @@
 package com.bogdan.motivation.helpers
 
-enum class Themes(val fullName: String) {
+enum class Categories(val fullName: String) {
     LETTING_GO("Letting go"),
     HAPPINESS("Happiness"),
     PHYSICAL_HEALTH("Physical Health"),
@@ -8,10 +8,11 @@ enum class Themes(val fullName: String) {
     FAITH_SPIRITUALITY("Faith & Spirituality"),
     STRESS_ANXIETY("Stress & Anxiety"),
     ACHIEVING_GOALS("Achieving goals"),
-    RELATIONSHIPS("Relationships");
+    RELATIONSHIPS("Relationships"),
+    motavation("motivation");
 
     companion object {
-        fun valueOfThemeName(themeName: String): Themes {
+        fun valueOfThemeName(themeName: String): Categories {
             return when (themeName) {
                 LETTING_GO.fullName -> LETTING_GO
                 HAPPINESS.fullName -> HAPPINESS
@@ -21,6 +22,7 @@ enum class Themes(val fullName: String) {
                 STRESS_ANXIETY.fullName -> STRESS_ANXIETY
                 ACHIEVING_GOALS.fullName -> ACHIEVING_GOALS
                 RELATIONSHIPS.fullName -> RELATIONSHIPS
+                motavation.fullName -> motavation
                 else -> throw IllegalArgumentException()
             }
         }

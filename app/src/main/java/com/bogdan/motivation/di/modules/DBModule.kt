@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.room.Room
 import com.bogdan.motivation.data.dao.QuoteDao
 import com.bogdan.motivation.data.db.ApplicationDatabase
+import com.bogdan.motivation.data.repositories.CategoriesListRepository
 import com.bogdan.motivation.data.repositories.QuotesRepository
-import com.bogdan.motivation.data.repositories.ThemesListRepository
 import com.bogdan.motivation.helpers.Constants
 import dagger.Module
 import dagger.Provides
@@ -46,5 +46,5 @@ class DBModule @Inject constructor(private val application: Application) {
     fun providesQuotesRepository(quoteDao: QuoteDao) = QuotesRepository(quoteDao)
 
     @Provides
-    fun provideThemesListRepository() = ThemesListRepository()
+    fun provideThemesListRepository() = CategoriesListRepository()
 }

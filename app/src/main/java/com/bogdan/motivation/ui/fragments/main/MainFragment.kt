@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
@@ -18,8 +17,6 @@ import com.bogdan.motivation.di.Application
 import com.bogdan.motivation.helpers.Constants
 import com.bogdan.motivation.helpers.State
 import com.bogdan.motivation.worker.NotificationsWorker
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -67,8 +64,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private fun chooseActivityToOpen(utils: Utils) {
         if (utils.isSettingsPassed) {
-            viewModel.getQuotesFromApi()
-            openMotivationFragment(utils.isPopupPassed)
+            if (utils.isPopupPassed) {
+                openMotivationFragment()
+            } else {
+                viewModel.getQuotesFromApi().invokeOnCompletion {
+                    openMotivationFragment()
+                }
+            }
         } else {
             findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToHelloFragment()
@@ -76,23 +78,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
     }
 
-    private fun openMotivationFragment(isPopupPassed: Boolean) {
-        if (isPopupPassed) {
-            findNavController().navigate(
-                MainFragmentDirections.actionMainFragmentToMotivationFragment(
-                    "General"
-                )
+    private fun openMotivationFragment() {
+        findNavController().navigate(
+            MainFragmentDirections.actionMainFragmentToMotivationFragment(
+                "General"
             )
-        } else {
-            lifecycleScope.launch {
-                delay(2000L)
-                findNavController().navigate(
-                    MainFragmentDirections.actionMainFragmentToMotivationFragment(
-                        "General"
-                    )
-                )
-            }
-        }
+        )
     }
 
     private fun setNotificationWorker(notification: Notification) {

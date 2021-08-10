@@ -2,7 +2,8 @@ package com.bogdan.motivation.ui.fragments.motivation
 
 import androidx.lifecycle.viewModelScope
 import com.bogdan.motivation.data.entities.local.Utils
-import com.bogdan.motivation.data.repositories.*
+import com.bogdan.motivation.data.repositories.QuotesRepository
+import com.bogdan.motivation.data.repositories.UtilsRepository
 import com.bogdan.motivation.helpers.State
 import com.bogdan.motivation.ui.BaseViewModel
 import kotlinx.coroutines.launch
@@ -13,11 +14,7 @@ class MotivationViewModel @Inject constructor(
     private val quotesRepository: QuotesRepository
 ) : BaseViewModel() {
 
-    init {
-        readUtils()
-    }
-
-    private fun readUtils() {
+    fun readUtils() {
         viewModelScope.launch {
             state.value = State.SuccessState(utilsRepository.getUtils())
         }

@@ -5,12 +5,12 @@ import com.bogdan.motivation.data.api.QuotesApi
 import com.bogdan.motivation.data.entities.local.Quote
 import com.bogdan.motivation.data.entities.remote.ApiQuote
 import javax.inject.Inject
-import com.bogdan.motivation.helpers.Themes as ThemesEnum
+import com.bogdan.motivation.helpers.Categories as CategoriesEnum
 
 class QuotesApiRepository @Inject constructor(
     private val quotesApi: QuotesApi,
     private val quotesRepository: QuotesRepository,
-    private val themesRepository: ThemesRepository
+    private val categoriesRepository: CategoriesRepository
 ) {
 
     suspend fun getQuotesFromApi() {
@@ -31,12 +31,18 @@ class QuotesApiRepository @Inject constructor(
 
     private suspend fun fillQuotesList(apiList: List<ApiQuote>?): List<Quote> {
         val quotesList = ArrayList<Quote>()
-        val pickedThemes = themesRepository.getTheme()
+        val pickedThemes = categoriesRepository.getCategory()
         apiList?.forEach {
             try {
-                if (pickedThemes.contains(ThemesEnum.valueOf(it.theme))) {
+                if (pickedThemes.contains(CategoriesEnum.valueOf(it.theme ?: CategoriesEnum.motavation.name))) {
                     quotesList.add(
-                        Quote(it.id, it.quote, it.quote, false, ThemesEnum.valueOf(it.theme))
+                        Quote(
+                            0,
+                            it.content ?: " ",
+                            it.author ?: " ",
+                            false,
+                            CategoriesEnum.valueOf(it.theme ?: CategoriesEnum.motavation.name)
+                        )
                     )
                 }
             } catch (e: Exception) {

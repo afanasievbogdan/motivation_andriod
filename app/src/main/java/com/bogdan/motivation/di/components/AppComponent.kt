@@ -9,7 +9,7 @@ import com.bogdan.motivation.ui.fragments.main.MainFragment
 import com.bogdan.motivation.ui.fragments.motivation.MotivationFragment
 import com.bogdan.motivation.ui.fragments.notificationsettings.NotificationSettingsFragment
 import com.bogdan.motivation.ui.fragments.styleeditor.StyleEditorFragment
-import com.bogdan.motivation.ui.fragments.themepicker.ThemePickerFragment
+import com.bogdan.motivation.ui.fragments.themepicker.CategoriesPickerFragment
 import com.bogdan.motivation.widget.AppWidget
 import dagger.Component
 import javax.inject.Singleton
@@ -22,7 +22,7 @@ interface AppComponent {
     fun inject(mainFragment: MainFragment)
     fun inject(helloFragment: HelloFragment)
     fun inject(notificationSettingsFragment: NotificationSettingsFragment)
-    fun inject(themePickerFragment: ThemePickerFragment)
+    fun inject(categoriesPickerFragment: CategoriesPickerFragment)
     fun inject(motivationFragment: MotivationFragment)
     fun inject(categoriesFragment: CategoriesFragment)
     fun inject(styleEditorFragment: StyleEditorFragment)

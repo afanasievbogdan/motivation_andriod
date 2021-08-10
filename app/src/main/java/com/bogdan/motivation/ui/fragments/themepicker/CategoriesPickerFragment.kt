@@ -1,5 +1,7 @@
 package com.bogdan.motivation.ui.fragments.themepicker
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,22 +10,22 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bogdan.motivation.R
-import com.bogdan.motivation.data.entities.local.PickedThemesList
-import com.bogdan.motivation.data.entities.local.Themes
+import com.bogdan.motivation.data.entities.local.Categories
+import com.bogdan.motivation.data.entities.local.PickedCategoriesList
 import com.bogdan.motivation.data.entities.local.Utils
-import com.bogdan.motivation.databinding.FragmentThemePickerBinding
+import com.bogdan.motivation.databinding.FragmentCategoriesPickerBinding
 import com.bogdan.motivation.di.Application
 import com.bogdan.motivation.helpers.State
 import com.bogdan.motivation.helpers.playAnimationWithOffset
 import com.bogdan.motivation.ui.fragments.themepicker.adapter.ThemesRecyclerViewAdapter
 import javax.inject.Inject
-import com.bogdan.motivation.helpers.Themes as ThemesEnum
+import com.bogdan.motivation.helpers.Categories as ThemesEnum
 
-class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker) {
+class CategoriesPickerFragment : Fragment(R.layout.fragment_categories_picker) {
 
     @Inject
-    lateinit var viewModel: ThemePickerViewModel
-    private var _binding: FragmentThemePickerBinding? = null
+    lateinit var viewModel: CategoriesPickerViewModel
+    private var _binding: FragmentCategoriesPickerBinding? = null
     private val binding get() = _binding!!
 
     @Inject
@@ -35,7 +37,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker) {
         savedInstanceState: Bundle?
     ): View {
         Application.appComponent.inject(this)
-        _binding = FragmentThemePickerBinding.inflate(inflater, container, false)
+        _binding = FragmentCategoriesPickerBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -66,7 +68,7 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker) {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is State.SuccessState<*> -> when (it.data) {
-                    is PickedThemesList -> themesRecyclerViewAdapter.setData(it.data.pickedThemesList)
+                    is PickedCategoriesList -> themesRecyclerViewAdapter.setData(it.data.pickedCategoriesList)
                 }
                 is State.ErrorState -> {
                 }
@@ -86,24 +88,35 @@ class ThemePickerFragment : Fragment(R.layout.fragment_theme_picker) {
                     counter++
                 }
             }
-            if (counter > 0) {
-                viewModel.updateUtils(
-                    Utils(
-                        isSettingsPassed = true,
-                        isPopupPassed = false,
-                        isFavoriteTabOpen = false
+            val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val netWorkInfo = connectivityManager.activeNetworkInfo
+            if (netWorkInfo != null && netWorkInfo.isConnectedOrConnecting) {
+                if (counter > 0) {
+                    viewModel.updateUtils(
+                        Utils(
+                            isSettingsPassed = true,
+                            isPopupPassed = false,
+                            isFavoriteTabOpen = false
+                        )
                     )
-                )
-                themesRecyclerViewAdapter.getData().forEach {
-                    if (it.isPicked) {
-                        viewModel.insertTheme(Themes(0, ThemesEnum.valueOfThemeName(it.name)))
+                    themesRecyclerViewAdapter.getData().forEach {
+                        if (it.isPicked) {
+                            viewModel.insertTheme(Categories(0, ThemesEnum.valueOfThemeName(it.name)))
+                        }
                     }
+                    viewModel.insertTheme(Categories(0, ThemesEnum.motavation))
+                    findNavController().navigate(CategoriesPickerFragmentDirections.actionThemePickerFragmentToMainFragment())
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Choose at least one category",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-                findNavController().navigate(ThemePickerFragmentDirections.actionThemePickerFragmentToMainFragment())
             } else {
                 Toast.makeText(
                     context,
-                    "Choose at least one category",
+                    "Check your Internet connection",
                     Toast.LENGTH_SHORT
                 ).show()
             }

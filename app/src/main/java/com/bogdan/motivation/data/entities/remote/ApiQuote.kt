@@ -5,16 +5,18 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class ApiQuote(
-    @Json(name = "id")
-    val id: Long,
-    @Json(name = "quote")
-    val quote: String,
+    @Json(name = "_id")
+    val id: String,
     @Json(name = "author")
-    val author: String,
-    @Json(name = "theme")
-    val theme: String,
-    @Json(name = "created_at")
-    val createdAt: String,
-    @Json(name = "updated_at")
-    val updatedAt: String
+    val author: String?,
+    @Json(name = "content")
+    val content: String?,
+    @Json(name = "tags")
+    val theme: String?,
+    @Json(name = "createdAt")
+    val createdAt: String?,
+    @Json(name = "updatedAt")
+    val updatedAt: String?,
+    @Json(name = "__v")
+    val __v: Int?
 )

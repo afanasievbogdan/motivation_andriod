@@ -76,14 +76,14 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         }
 
         binding.btnFavoriteChose.setOnClickListener {
-            viewModel.updateUtils(
-                Utils(
-                    isSettingsPassed = true,
-                    isPopupPassed = true,
-                    isFavoriteTabOpen = true
-                )
-            )
             if (quotesList.isNotEmpty()) {
+                viewModel.updateUtils(
+                    Utils(
+                        isSettingsPassed = true,
+                        isPopupPassed = true,
+                        isFavoriteTabOpen = true
+                    )
+                )
                 findNavController().navigate(
                     CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment(
                         "Favorite"

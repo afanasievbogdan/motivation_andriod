@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,8 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
     lateinit var quotesViewPagerAdapter: QuotesViewPagerAdapter
     private val args: MotivationFragmentArgs by navArgs()
 
+    private var position: Int = 0
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,8 +55,14 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
         binding.btnCategories.text = args.btnCategoriesText
         initializeObserver()
         initializeViewPager()
-        onClickCategoriesSelection()
-        onClickThemeEditor()
+        setOnClicks()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.readUtils()
+        Log.i("motivationFragment", "1")
     }
 
     override fun onDestroyView() {
@@ -71,7 +80,9 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
                             initializePopup(it.data)
                             getQuotes(it.data.isFavoriteTabOpen)
                         }
-                        is QuotesList -> quotesViewPagerAdapter.setData(it.data.quotesList.shuffled())
+                        is QuotesList -> {
+                            quotesViewPagerAdapter.setData(it.data.quotesList.shuffled())
+                        }
                     }
                 else -> {
                 }
@@ -126,11 +137,33 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
         }
     }
 
+    private fun onClickAccount() {
+        binding.btnAccount.setOnClickListener {
+            findNavController().navigate(
+                MotivationFragmentDirections.actionMotivationFragmentToAccountFragment()
+            )
+        }
+    }
+
+    private fun setOnClicks() {
+        onClickCategoriesSelection()
+        onClickThemeEditor()
+        onClickAccount()
+    }
+
     private fun initializeViewPager() {
         with(binding.viewPagerMotivation) {
             orientation = ViewPager2.ORIENTATION_VERTICAL
             adapter = quotesViewPagerAdapter
             quotesViewPagerAdapter.onClickListenerMotivation = this@MotivationFragment
+        }
+    }
+
+    override fun changeData() {
+        position++
+        if (position == 30) {
+            viewModel.readAllQuotesFromQuotesDb()
+            position = 0
         }
     }
 

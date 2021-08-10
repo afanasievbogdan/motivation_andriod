@@ -5,4 +5,5 @@ import com.bogdan.motivation.data.entities.local.Quote
 interface OnClickListenerMotivation {
     fun onFavoriteClickListener(quote: Quote)
     fun onShareClickListener(quote: Quote)
+    fun changeData()
 }

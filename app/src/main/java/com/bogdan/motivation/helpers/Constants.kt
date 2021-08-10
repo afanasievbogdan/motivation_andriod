@@ -3,7 +3,7 @@ package com.bogdan.motivation.helpers
 object Constants {
 
     // API CONSTANTS
-    const val BASE_URL = "http://10.0.2.2:3000/"
+    const val BASE_URL = "http://91.237.235.157:49160/"
 
     // DB CONSTANTS
     const val DATABASE_NAME = "MotivationDB"
@@ -12,7 +12,7 @@ object Constants {
     const val TABLE_UTILS = "Utils"
     const val TABLE_NOTIFICATIONS = "Notifications"
     const val TABLE_STYLE = "Styles"
-    const val TABLE_THEMES = "Themes"
+    const val TABLE_CATEGORIES = "Categories"
 
     // Widget Constants
     const val REFRESH_TEXT = "REFRESH_TEXT"

@@ -25,11 +25,11 @@ class QuotesViewPagerAdapter :
     override fun getItemCount() = quotesList.count()
 
     override fun onBindViewHolder(holder: QuotesViewHolder, position: Int) {
+        onClickListenerMotivation.changeData()
         holder.bind(quotesList[position])
     }
 
     fun setData(newList: List<Quote>) {
-        quotesList.clear()
         quotesList.addAll(newList)
         notifyDataSetChanged()
     }
