@@ -1,6 +1,7 @@
 package com.bogdan.motivation.ui.fragments.motivation.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bogdan.motivation.data.entities.local.Quote
@@ -43,6 +44,11 @@ class QuotesViewPagerAdapter :
 
                 btnLike.isSelected = quote.isFavorite
 
+                if (quote.comments.count() > 0) {
+                    tvCommentsCounter.visibility = View.VISIBLE
+                    tvCommentsCounter.text = quote.comments.count().toString()
+                }
+
                 btnLike.setOnClickListener {
                     quote.isFavorite = !quote.isFavorite
                     onClickListenerMotivation.onFavoriteClickListener(quote)
@@ -51,6 +57,10 @@ class QuotesViewPagerAdapter :
 
                 btnShare.setOnClickListener {
                     onClickListenerMotivation.onShareClickListener(quote)
+                }
+
+                btnComment.setOnClickListener {
+                    onClickListenerMotivation.onCommentClickListener(quote)
                 }
             }
         }

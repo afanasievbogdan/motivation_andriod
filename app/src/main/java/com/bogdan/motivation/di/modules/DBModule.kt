@@ -3,6 +3,7 @@ package com.bogdan.motivation.di.modules
 import android.app.Application
 import androidx.room.Room
 import com.bogdan.motivation.data.dao.QuoteDao
+import com.bogdan.motivation.data.dao.UserDao
 import com.bogdan.motivation.data.db.ApplicationDatabase
 import com.bogdan.motivation.data.repositories.CategoriesListRepository
 import com.bogdan.motivation.data.repositories.QuotesRepository
@@ -24,6 +25,10 @@ class DBModule @Inject constructor(private val application: Application) {
     @Provides
     @Singleton
     fun providesQuoteDao(applicationDatabase: ApplicationDatabase): QuoteDao = applicationDatabase.quoteDao()
+
+    @Provides
+    @Singleton
+    fun providesUserDao(applicationDatabase: ApplicationDatabase): UserDao = applicationDatabase.userDao()
 
     @Provides
     @Singleton

@@ -9,7 +9,7 @@ object StylesUtils {
     fun changeToStyle(activity: Activity, style: Styles): Styles {
         activity.finish()
         activity.startActivity(Intent(activity, activity.javaClass))
-        activity.overridePendingTransition(R.anim.anim_slide_in, R.anim.anim_slide_out)
+        activity.overridePendingTransition(R.anim.anim_enter_slide_left, R.anim.anim_exit_slide_left)
         return style
     }
 

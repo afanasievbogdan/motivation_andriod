@@ -1,6 +1,9 @@
 package com.bogdan.motivation.data.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.bogdan.motivation.data.entities.local.Quote
 
 @Dao
@@ -20,4 +23,10 @@ interface QuoteDao {
 
     @Query("UPDATE Quotes SET favorite = :favorite WHERE id = (SELECT id FROM Quotes WHERE quote = :quote)")
     suspend fun updateQuote(quote: String, favorite: Boolean)
+
+    @Query("UPDATE Quotes SET comments = :comments WHERE id = (SELECT id FROM Quotes WHERE quote = :quote)")
+    suspend fun updateQuoteComments(quote: String, comments: List<String>)
+
+    @Query("SELECT * FROM Quotes WHERE quote = :quote")
+    suspend fun getQuote(quote: String): Quote
 }

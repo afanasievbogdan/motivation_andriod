@@ -1,14 +1,14 @@
 package com.bogdan.motivation.helpers
 
 enum class Categories(val fullName: String) {
-    LETTING_GO("Letting go"),
-    HAPPINESS("Happiness"),
-    PHYSICAL_HEALTH("Physical Health"),
-    SELF_ESTEEM("Self-esteem"),
-    FAITH_SPIRITUALITY("Faith & Spirituality"),
-    STRESS_ANXIETY("Stress & Anxiety"),
-    ACHIEVING_GOALS("Achieving goals"),
-    RELATIONSHIPS("Relationships"),
+    LETTING_GO("Прощение"),
+    HAPPINESS("Счастье"),
+    PHYSICAL_HEALTH("Физическое здоровье"),
+    SELF_ESTEEM("Самооценка"),
+    FAITH_SPIRITUALITY("Вера и Духовность"),
+    STRESS_ANXIETY("Стресс и Волнение"),
+    ACHIEVING_GOALS("Достижение целей"),
+    RELATIONSHIPS("Отношения"),
     motavation("motivation");
 
     companion object {

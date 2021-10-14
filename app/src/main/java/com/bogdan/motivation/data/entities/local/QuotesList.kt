@@ -1,3 +1,7 @@
 package com.bogdan.motivation.data.entities.local
 
-data class QuotesList(var quotesList: List<Quote>)
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class QuotesList(var quotes: List<Quote>) : Parcelable

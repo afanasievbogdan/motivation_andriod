@@ -6,5 +6,5 @@ import com.bogdan.motivation.helpers.State
 
 abstract class BaseViewModel : ViewModel() {
 
-    val state: MutableLiveData<State> = MutableLiveData<State>()
+    val state = MutableLiveData<State>()
 }

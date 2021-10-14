@@ -4,27 +4,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_motivation"
     tools:context=".ui.fragments.account.AccountFragment">
 
     <TextView
-        android:id="@+id/placeholder"
-        android:text="@string/TODO"
-        android:textSize="26sp"
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="75dp"
+        android:fontFamily="@font/cynthonextregular"
+        android:paddingHorizontal="50dp"
+        android:paddingBottom="20dp"
+        android:singleLine="false"
+        android:text="@string/account"
+        android:textColor="?attr/motivationTextColor"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tv_sub_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintVertical_chainStyle="packed" />
 
-    <Button
-        android:id="@+id/btn_ok"
-        android:text="@string/ok"
+    <TextView
+        android:id="@+id/tv_sub_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/cynthonextregular"
+        android:paddingHorizontal="50dp"
+        android:singleLine="false"
+        android:text="@string/account_name"
+        android:textColor="?attr/motivationTextColor"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/placeholder"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+    <TextView
+        android:id="@+id/tv_my_info"
+        style="@style/MyAccountButtons"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/bg_settings"
+        android:fontFamily="@font/cynthonext"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="15dp"
+        android:stateListAnimator="@null"
+        android:text="@string/my_info"
+        android:textAllCaps="false"
+        android:textColor="@drawable/btn_theme_selector_text_color"
+        app:drawableStartCompat="@drawable/ic_account"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sub_title" />
+
+    <TextView
+        android:id="@+id/tv_my_likes"
+        style="@style/MyAccountButtons"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/bg_settings"
+        android:fontFamily="@font/cynthonext"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="15dp"
+        android:stateListAnimator="@null"
+        android:text="@string/my_likes"
+        android:textAllCaps="false"
+        android:textColor="@drawable/btn_theme_selector_text_color"
+        app:drawableStartCompat="@drawable/ic_favorite_unpressed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_my_info" />
+
+    <TextView
+        android:id="@+id/tv_my_comment"
+        style="@style/MyAccountButtons"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/bg_settings"
+        android:fontFamily="@font/cynthonext"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="15dp"
+        android:stateListAnimator="@null"
+        android:text="@string/my_comments"
+        android:textAllCaps="false"
+        android:textColor="@drawable/btn_theme_selector_text_color"
+        app:drawableStartCompat="@drawable/ic_comment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_my_likes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

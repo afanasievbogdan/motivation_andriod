@@ -65,4 +65,9 @@
         <item name="appWidgetTextColor">@color/iron</item>
     </style>
 
+    <style name="MyAccountButtons" parent="Theme.Motivation">
+        <item name="android:drawablePadding">10dp</item>
+        <item name="drawableTint">@color/mine_shaft</item>
+    </style>
+
 </resources>

@@ -28,8 +28,24 @@
         app:srcCompat="@drawable/photo_hello" />
 
     <TextView
+        android:id="@+id/tv_here"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cynthonext"
+        android:paddingBottom="4sp"
+        android:text="@string/here"
+        android:textAlignment="center"
+        android:textColor="?attr/helloTextColor"
+        android:textSize="20sp"
+        android:layout_marginTop="75dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_header"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
         android:id="@+id/tv_self_care"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/cynthonext"
         android:paddingBottom="4sp"
@@ -45,7 +61,7 @@
 
     <TextView
         android:id="@+id/tv_self_love"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/cynthonext"
         android:paddingBottom="4sp"
@@ -60,7 +76,7 @@
 
     <TextView
         android:id="@+id/tv_self_growth"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/cynthonext"
         android:paddingBottom="4sp"

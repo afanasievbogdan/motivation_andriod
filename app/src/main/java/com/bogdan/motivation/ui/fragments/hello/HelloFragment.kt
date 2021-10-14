@@ -40,17 +40,18 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
     private fun setAnimations() {
         with(binding) {
             ivHeader.playAnimationWithOffset(animResId = R.anim.anim_fade_slow, 0)
-            tvSelfCare.playAnimationWithOffset(animResId = R.anim.anim_fade_slow, 750)
-            tvSelfLove.playAnimationWithOffset(animResId = R.anim.anim_fade_slow, 1500)
-            tvSelfGrowth.playAnimationWithOffset(animResId = R.anim.anim_fade_slow, 2250)
-            btnGetStarted.playAnimationWithOffset(animResId = R.anim.anim_fade_slow, 3000)
+            tvHere.playAnimationWithOffset(animResId = R.anim.anim_fade_slow, 750)
+            tvSelfCare.playAnimationWithOffset(animResId = R.anim.anim_fade_slow, 2000)
+            tvSelfLove.playAnimationWithOffset(animResId = R.anim.anim_fade_slow, 2750)
+            tvSelfGrowth.playAnimationWithOffset(animResId = R.anim.anim_fade_slow, 3500)
+            btnGetStarted.playAnimationWithOffset(animResId = R.anim.anim_fade_slow, 4250)
         }
     }
 
     private fun onClickBtnGetStarted() {
         binding.btnGetStarted.setOnClickListener {
             findNavController().navigate(
-                HelloFragmentDirections.actionHelloFragmentToNotificationSettingsFragment()
+                HelloFragmentDirections.actionHelloFragmentToYouFragment()
             )
         }
     }

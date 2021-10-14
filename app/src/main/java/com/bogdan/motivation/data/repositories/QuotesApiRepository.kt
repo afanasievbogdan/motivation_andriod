@@ -38,8 +38,9 @@ class QuotesApiRepository @Inject constructor(
                     quotesList.add(
                         Quote(
                             0,
-                            it.content ?: " ",
-                            it.author ?: " ",
+                            it.content ?: "",
+                            it.author ?: "",
+                            it.comments as MutableList<String>,
                             false,
                             CategoriesEnum.valueOf(it.theme ?: CategoriesEnum.motavation.name)
                         )

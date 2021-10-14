@@ -51,7 +51,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is State.SuccessState<*> -> when (it.data) {
-                    is QuotesList -> quotesList.addAll(it.data.quotesList)
+                    is QuotesList -> quotesList.addAll(it.data.quotes)
                 }
                 is State.ErrorState -> {
                 }
@@ -69,9 +69,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
                 )
             )
             findNavController().navigate(
-                CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment(
-                    "General"
-                )
+                CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment("Общие")
             )
         }
 
@@ -85,9 +83,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
                     )
                 )
                 findNavController().navigate(
-                    CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment(
-                        "Favorite"
-                    )
+                    CategoriesFragmentDirections.actionCategoriesFragmentToMotivationFragment("Любимые")
                 )
             } else {
                 Toast.makeText(context, "You don't have any favourite yet. :(", Toast.LENGTH_LONG)

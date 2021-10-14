@@ -3,7 +3,7 @@ package com.bogdan.motivation.helpers
 object Constants {
 
     // API CONSTANTS
-    const val BASE_URL = "http://91.237.235.157:49160/"
+    const val BASE_URL = "https://run.mocky.io/v3/2f170d50-ab48-4ef6-a297-7dfa339cfab5/"
 
     // DB CONSTANTS
     const val DATABASE_NAME = "MotivationDB"
@@ -13,6 +13,7 @@ object Constants {
     const val TABLE_NOTIFICATIONS = "Notifications"
     const val TABLE_STYLE = "Styles"
     const val TABLE_CATEGORIES = "Categories"
+    const val TABLE_USER = "User"
 
     // Widget Constants
     const val REFRESH_TEXT = "REFRESH_TEXT"

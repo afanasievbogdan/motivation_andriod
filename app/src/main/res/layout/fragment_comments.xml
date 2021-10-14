@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/bg_motivation"
+    tools:context=".ui.fragments.comments.CommentsFragment">
+
+    <TextView
+        android:id="@+id/tv_comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cynthonextregular"
+        android:paddingHorizontal="50dp"
+        android:paddingBottom="20dp"
+        android:layout_marginTop="75dp"
+        android:singleLine="false"
+        android:text="@string/comments"
+        android:textColor="?attr/motivationTextColor"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tv_desc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tv_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cynthonextregular"
+        android:paddingHorizontal="50dp"
+        android:singleLine="false"
+        android:text="@string/decs"
+        android:textColor="?attr/motivationTextColor"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_comments" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_comments"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingHorizontal="50dp"
+        android:paddingVertical="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/tiComment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_desc"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_comment" />
+
+    <EditText
+        android:id="@+id/tiComment"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_submit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view_comments"
+        android:hint="@string/comments_input"
+        android:maxLines="7"
+        android:maxLength="180"
+        android:ellipsize="end"
+        android:backgroundTint="?attr/themePickerButtonSelectedColor"
+        android:textColorHint="@color/tundora"
+        android:textColor="?attr/motivationTextColor" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginVertical="25dp"
+        android:background="@drawable/bg_denim"
+        app:backgroundTint="@color/denim"
+        android:contentDescription="@string/next"
+        android:padding="10dp"
+        app:icon="@drawable/ic_send"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tiComment"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view_comments" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

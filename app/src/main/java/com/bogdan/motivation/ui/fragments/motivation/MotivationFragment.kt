@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,7 +61,6 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
         super.onResume()
 
         viewModel.readUtils()
-        Log.i("motivationFragment", "1")
     }
 
     override fun onDestroyView() {
@@ -81,7 +79,7 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
                             getQuotes(it.data.isFavoriteTabOpen)
                         }
                         is QuotesList -> {
-                            quotesViewPagerAdapter.setData(it.data.quotesList.shuffled())
+                            quotesViewPagerAdapter.setData(it.data.quotes)
                         }
                     }
                 else -> {
@@ -178,5 +176,11 @@ class MotivationFragment : Fragment(R.layout.fragment_motivation), OnClickListen
             type = "text/plain"
         }
         startActivity(sendIntent)
+    }
+
+    override fun onCommentClickListener(quote: Quote) {
+        findNavController().navigate(
+            MotivationFragmentDirections.actionMotivationFragmentToCommentsFragment(quote)
+        )
     }
 }

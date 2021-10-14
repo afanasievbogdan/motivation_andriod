@@ -8,14 +8,14 @@ class CategoriesListRepository {
     fun getCategoriesList(): PickedCategoriesList {
         return PickedCategoriesList(
             listOf(
-                PickedCategories("Letting go"),
-                PickedCategories("Happiness"),
-                PickedCategories("Physical Health"),
-                PickedCategories("Self-esteem"),
-                PickedCategories("Faith & Spirituality"),
-                PickedCategories("Stress & Anxiety"),
-                PickedCategories("Achieving goals"),
-                PickedCategories("Relationships")
+                PickedCategories("Прощение"),
+                PickedCategories("Счастье"),
+                PickedCategories("Физическое здоровье"),
+                PickedCategories("Самооценка"),
+                PickedCategories("Вера и Духовность"),
+                PickedCategories("Стресс и Волнение"),
+                PickedCategories("Достижение целей"),
+                PickedCategories("Отношения")
             )
         )
     }

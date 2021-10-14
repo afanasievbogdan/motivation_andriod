@@ -2,14 +2,17 @@ package com.bogdan.motivation.di.components
 
 import com.bogdan.motivation.di.modules.*
 import com.bogdan.motivation.ui.activity.MainActivity
+import com.bogdan.motivation.ui.fragments.aboutme.AboutMeFragment
 import com.bogdan.motivation.ui.fragments.account.AccountFragment
 import com.bogdan.motivation.ui.fragments.categories.CategoriesFragment
+import com.bogdan.motivation.ui.fragments.comments.CommentsFragment
 import com.bogdan.motivation.ui.fragments.hello.HelloFragment
 import com.bogdan.motivation.ui.fragments.main.MainFragment
 import com.bogdan.motivation.ui.fragments.motivation.MotivationFragment
 import com.bogdan.motivation.ui.fragments.notificationsettings.NotificationSettingsFragment
 import com.bogdan.motivation.ui.fragments.styleeditor.StyleEditorFragment
 import com.bogdan.motivation.ui.fragments.themepicker.CategoriesPickerFragment
+import com.bogdan.motivation.ui.fragments.you.YouFragment
 import com.bogdan.motivation.widget.AppWidget
 import dagger.Component
 import javax.inject.Singleton
@@ -27,6 +30,9 @@ interface AppComponent {
     fun inject(categoriesFragment: CategoriesFragment)
     fun inject(styleEditorFragment: StyleEditorFragment)
     fun inject(accountFragment: AccountFragment)
+    fun inject(commentsFragment: CommentsFragment)
+    fun inject(youFragment: YouFragment)
+    fun inject(aboutMeFragment: AboutMeFragment)
     fun inject(appWidget: AppWidget)
     fun workerFactoryComponent(): WorkerFactoryComponent.Builder
 }

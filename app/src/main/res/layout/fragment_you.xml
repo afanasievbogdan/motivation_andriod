@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/helloBackgroundColor"
+    android:orientation="vertical"
+    tools:context=".ui.fragments.you.YouFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_iv_header_bottom"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <ImageView
+        android:id="@+id/iv_header"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:contentDescription="@string/next"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_iv_header_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/photo_you" />
+
+    <TextView
+        android:id="@+id/tv_about_you"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/cynthonext"
+        android:text="@string/you_explanation"
+        android:textAlignment="center"
+        android:textColor="?attr/helloTextColor"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_header" />
+
+    <LinearLayout
+        android:id="@+id/container_your_login"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/bg_container"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="30dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_about_you">
+
+        <TextView
+            android:id="@+id/tv_your_login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:fontFamily="@font/cynthonext"
+            android:text="Мой логин"
+            android:textColor="?attr/helloTextColor"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/ti_your_login"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:background="@drawable/bg_settings"
+            android:ellipsize="end"
+            android:fontFamily="@font/cynthonext"
+            android:gravity="center"
+            android:hint="Ввести логин"
+            android:maxLength="16"
+            android:textColor="?attr/helloTextColor"
+            android:textColorHint="@color/tundora"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_your_password"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_container"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="30dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container_your_login">
+
+        <TextView
+            android:id="@+id/tv_your_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:fontFamily="@font/cynthonext"
+            android:text="Мой пароль"
+            android:textColor="?attr/helloTextColor"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/ti_your_password"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:background="@drawable/bg_settings"
+            android:ellipsize="end"
+            android:fontFamily="@font/cynthonext"
+            android:gravity="center"
+            android:hint="Ввести пароль"
+            android:inputType="textPassword"
+            android:maxLength="15"
+            android:textColor="?attr/helloTextColor"
+            android:textColorHint="@color/tundora"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_your_name"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/bg_container"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_about_you">
+
+        <TextView
+            android:id="@+id/tv_your_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:fontFamily="@font/cynthonext"
+            android:text="@string/you_name"
+            android:textColor="?attr/helloTextColor"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/ti_your_name"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:background="@drawable/bg_settings"
+            android:ellipsize="end"
+            android:fontFamily="@font/cynthonext"
+            android:gravity="center"
+            android:hint="@string/you_name_input"
+            android:maxLength="16"
+            android:textColor="?attr/helloTextColor"
+            android:textColorHint="@color/tundora"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_your_age"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_container"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container_your_name">
+
+        <TextView
+            android:id="@+id/tv_your_age"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:fontFamily="@font/cynthonext"
+            android:text="@string/you_age"
+            android:textColor="?attr/helloTextColor"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/ti_your_age"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:background="@drawable/bg_settings"
+            android:ellipsize="end"
+            android:fontFamily="@font/cynthonext"
+            android:gravity="center"
+            android:hint="@string/you_age_input"
+            android:inputType="number"
+            android:maxLength="2"
+            android:textColor="?attr/helloTextColor"
+            android:textColorHint="@color/tundora"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_your_sex"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_container"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container_your_age">
+
+        <TextView
+            android:id="@+id/tv_your_sex"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:fontFamily="@font/cynthonext"
+            android:text="@string/you_sex"
+            android:textColor="?attr/helloTextColor"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/spinner_your_sex"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:background="@drawable/bg_settings"
+            android:fontFamily="@font/cynthonext"
+            android:textColor="?attr/helloTextColor"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btn_log_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cynthonextregular"
+        android:text="Восстановить аккаунт"
+        android:textAlignment="center"
+        android:textColor="@color/tundora"
+        android:textSize="18sp"
+        android:layout_marginBottom="25dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_get_started"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cynthonextregular"
+        android:text="Вернуться к регистрации"
+        android:textAlignment="center"
+        android:textColor="@color/tundora"
+        android:textSize="18sp"
+        android:visibility="gone"
+        android:layout_marginBottom="25dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_get_started"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_get_started"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/bg_submit"
+        android:fontFamily="@font/cynthonext"
+        android:text="@string/you_it_me"
+        android:textAllCaps="false"
+        android:textColor="?attr/helloButtonTextColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

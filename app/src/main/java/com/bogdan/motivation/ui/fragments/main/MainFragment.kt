@@ -81,7 +81,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private fun openMotivationFragment() {
         findNavController().navigate(
             MainFragmentDirections.actionMainFragmentToMotivationFragment(
-                "General"
+                "Общие"
             )
         )
     }
